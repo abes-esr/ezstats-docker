@@ -36,11 +36,12 @@ services:
     image: bytemark/webdav
     restart: always
     ports:
-      - "80:80"
+      - "8080:80"
     environment:
       AUTH_TYPE: Digest
       volumes:
         - ezstats-logs:/var/lib/dav
+        - ./webdav/dav.conf:/usr/local/apache2/conf/conf-enabled/dav.conf
 
 
 volumes:
