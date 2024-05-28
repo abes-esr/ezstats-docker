@@ -18,6 +18,7 @@ services:
       - ./ezpaarse/exclusions:/opt/ezpaarse/exclusions
       - ./ezpaarse/config.local.json:/opt/ezpaarse/config.local.json
       - ./ezpaarse/dev:/tmp
+      - ./ezpaarse/dev/Makefile:/opt/ezpaarse/Makefile
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -28,7 +29,6 @@ services:
     depends_on:
       - ezstats-ezpaarse-db
     restart: unless-stopped
-    command: ./ezpaarse/entrypoint.dev.sh
 
   ezstats-ezpaarse-db:
     container_name: ezstats-ezpaarse-db
@@ -52,8 +52,10 @@ services:
       AUTH_TYPE: Digest
     volumes:
       - ezstats-logs:/var/lib/dav
-      - ./webdav/dav.conf:/usr/local/apache2/conf/conf-enabled/dav.conf
-      - ./webdav/user.passwd:/user.passwd:ro
+      - ./webdav/entrypoint.sh:/usr/local/apache2/webdav/entrypoint.sh
+      - ./webdav/dav.conf:/usr/local/apache2/webdav/dav.conf
+      - ./webdav/user.passwd:/user.passwd
+      #command : /bin/sh -c "/usr/local/apache2/webdav/entrypoint.sh"
 
   ezstats-watchtower:
     image: containrrr/watchtower:1.4.0
@@ -73,10 +75,10 @@ services:
       WATCHTOWER_NO_STARTUP_MESSAGE: "true"
       WATCHTOWER_WARN_ON_HEAD_FAILURE: "never"
       WATCHTOWER_RUN_ONCE: ${EZSTATS_WATCHTOWER_RUN_ONCE}
-      WATCHTOWER_NOTIFICATIONS: "slack"
-      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: ${EZSTATS_WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
-      WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: ${EZSTATS_WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
-      WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#notif-ezstats"
+      #WATCHTOWER_NOTIFICATIONS: "slack"
+      #WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: ${EZSTATS_WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
+      #WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: ${EZSTATS_WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
+      #WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#notif-ezstats"
       WATCHTOWER_SCOPE: "ezstats-watchtower-scope"
     labels:
       - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"

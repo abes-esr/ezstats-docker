@@ -1,0 +1,6 @@
+/.env
+/ezpaarse/exclusions/
+/ezpaarse/middlewares/
+/ezpaarse/platforms/
+/ezpaarse/resources/
+/ezpaarse/exclusions/scrapers/
