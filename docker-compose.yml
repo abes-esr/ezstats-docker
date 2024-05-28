@@ -11,7 +11,7 @@ services:
       #  https_proxy: ${https_proxy}
       #  no_proxy: ${no_proxy}
       NODE_ENV: "production"
-      EZPAARSE_MONGO_URL: "mongodb://ezstats-ezpaarse-db:57017/ezpaarse"
+      EZPAARSE_MONGO_URL: "mongodb://ezstats-ezpaarse-db:27017/ezpaarse"
     volumes:
       - ./platforms:/opt/ezpaarse/platforms
       - ./middlewares:/opt/ezpaarse/middlewares
