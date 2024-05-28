@@ -7,9 +7,9 @@ services:
     container_name: ezstats-ezpaarse
     image: ezpaarseproject/ezpaarse:3.9.3
     environment:
-      http_proxy:  ${http_proxy}
-      https_proxy: ${https_proxy}
-      no_proxy: ${no_proxy}
+      #  http_proxy:  ${http_proxy}
+      #  https_proxy: ${https_proxy}
+      #  no_proxy: ${no_proxy}
       NODE_ENV: "production"
       EZPAARSE_MONGO_URL: "mongodb://ezpaarse_db:57017/ezpaarse"
     volumes:
@@ -41,10 +41,10 @@ services:
       - "58080:80"
     environment:
       AUTH_TYPE: Digest
-      volumes:
-        - ezstats-logs:/var/lib/dav
-        - ./webdav/dav.conf:/usr/local/apache2/conf/conf-enabled/dav.conf
-        - ./webdav/user.passwd:/user.passwd:ro
+    volumes:
+      - ezstats-logs:/var/lib/dav
+      - ./webdav/dav.conf:/usr/local/apache2/conf/conf-enabled/dav.conf
+      - ./webdav/user.passwd:/user.passwd:ro
 
 volumes:
   ezstats-logs:
