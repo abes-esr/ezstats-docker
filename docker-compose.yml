@@ -58,6 +58,21 @@ services:
       - ./webdav/user.passwd:/user.passwd
       #command : /bin/sh -c "/usr/local/apache2/webdav/entrypoint.sh"
 
+  ezstats-batch:
+    container_name: ezstats-batch
+    build:
+      context: ./batch/
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    environment:
+      EZPAARSE_HOST: "http://ezstats-ezpaarse:59599"
+    tty: true         # to have nice debug(...) outputs
+    stdin_open: true  # to be able to use CTRL+C to stop the container
+    depends_on:
+      - ezstats-ezpaarse
+    restart: unless-stopped
+
   ezstats-watchtower:
     image: containrrr/watchtower:1.4.0
     container_name: ezstats-watchtower
