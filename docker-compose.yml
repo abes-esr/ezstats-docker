@@ -25,7 +25,7 @@ services:
     tty: true         # to have nice debug(...) outputs
     stdin_open: true  # to be able to use CTRL+C to stop the container
     ports:
-      - 59599:59599
+      - 29599:59599
     depends_on:
       - ezstats-ezpaarse-db
     restart: unless-stopped
@@ -37,7 +37,7 @@ services:
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
     ports:
-      - 57017:27017
+      - 27017:27017
     restart: unless-stopped
 
   ezstats-webdav:
@@ -47,7 +47,7 @@ services:
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
     ports:
-      - "58080:80"
+      - "28080:80"
     environment:
       AUTH_TYPE: Digest
     volumes:
