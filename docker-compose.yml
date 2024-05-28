@@ -13,13 +13,11 @@ services:
       NODE_ENV: "production"
       EZPAARSE_MONGO_URL: "mongodb://ezstats-ezpaarse-db:27017/ezpaarse"
     volumes:
-      - ./platforms:/opt/ezpaarse/platforms
+      - ./ezpaarse/platforms:/opt/ezpaarse/platforms
       - ./ezpaarse/middlewares:/opt/ezpaarse/middlewares
-      - ./middlewares:/opt/ezpaarse/middlewares
-      - ./resources:/opt/ezpaarse/resources
-      - ./exclusions:/opt/ezpaarse/exclusions
+      - ./ezpaarse/resources:/opt/ezpaarse/resources
+      - ./ezpaarse/exclusions:/opt/ezpaarse/exclusions
       - ./ezpaarse/config.local.json:/opt/ezpaarse/config.local.json
- #     - ./pm2.config.js:/opt/ezpaarse/pm2.config.js
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
