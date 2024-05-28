@@ -42,7 +42,7 @@ services:
       volumes:
         - ezstats-logs:/var/lib/dav
         - ./webdav/dav.conf:/usr/local/apache2/conf/conf-enabled/dav.conf
-
+        - ./webdav/user.passwd:/user.passwd:ro
 
 volumes:
   ezstats-logs:
