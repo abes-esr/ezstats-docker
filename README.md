@@ -15,7 +15,7 @@ Ce dépôt contient la configuration docker 🐳 pour déployer l'application EZ
 Les URLs correspondantes aux déploiements en local, test et prod de movies sont les suivantes :
 
 - local :
-    - http://lap-TRI.levant.abes.fr : homepage d'EZStats
+    - http://lap-TRI.levant.abes.fr:29599 : homepage d'EZStats
 - dev : 
 - test :
 - prod
