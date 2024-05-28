@@ -17,6 +17,7 @@ services:
       - ./ezpaarse/resources:/opt/ezpaarse/resources
       - ./ezpaarse/exclusions:/opt/ezpaarse/exclusions
       - ./ezpaarse/config.local.json:/opt/ezpaarse/config.local.json
+      # Sert juste à copier au démarrage le middleware ezpaarse/dev/thesesfr/index.js dans le répertoire middlewares (si ce dernier était vide)
       - ./ezpaarse/dev:/tmp
       - ./ezpaarse/dev/Makefile:/opt/ezpaarse/Makefile
     mem_limit: ${EZSTATS_MEM_LIMIT}

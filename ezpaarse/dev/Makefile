@@ -142,6 +142,7 @@ libs:
 	@echo 'Installing node.js dependencies...'
 	@. ./bin/env; npm install --no-save -q --unsafe-perm || (rm ./node_modules -rf && npm install --no-save -q --unsafe-perm)
 
+# Abes : ajout de cp -fr /tmp/thesesfr ...
 middlewares-update: ## Clone or update middelwares directory
 	@echo 'Updating middlewares...'
 	@if test -d middlewares/.git; \
