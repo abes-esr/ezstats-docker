@@ -1,0 +1,52 @@
+# ezpaarse docker-compose.yml dedicated to production
+version: '3'
+
+services:
+
+  ezstats-ezpaarse:
+    container_name: ezstats-ezpaarse
+    image: ezpaarseproject/ezpaarse:3.9.3
+    environment:
+      http_proxy:  ${http_proxy}
+      https_proxy: ${https_proxy}
+      no_proxy: ${no_proxy}
+      NODE_ENV: "production"
+      EZPAARSE_MONGO_URL: "mongodb://ezpaarse_db:27017/ezpaarse"
+    volumes:
+      - ./platforms:/opt/ezpaarse/platforms
+      - ./middlewares:/opt/ezpaarse/middlewares
+      - ./resources:/opt/ezpaarse/resources
+      - ./exclusions:/opt/ezpaarse/exclusions
+      - ./config.local.json:/opt/ezpaarse/config.local.json
+ #     - ./pm2.config.js:/opt/ezpaarse/pm2.config.js
+    tty: true         # to have nice debug(...) outputs
+    stdin_open: true  # to be able to use CTRL+C to stop the container
+    ports:
+      - 59599:59599
+    depends_on:
+      - ezstats-ezpaarse-db
+    restart: unless-stopped
+
+  ezstats-ezpaarse-db:
+    container_name: ezstats-ezpaarse-db
+    image: mongo:3.6.23
+    restart: unless-stopped
+
+  ezstats-webdav:
+    image: bytemark/webdav
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      AUTH_TYPE: Digest
+      volumes:
+        - ezstats-logs:/var/lib/dav
+
+
+volumes:
+  ezstats-logs:
+    driver: local
+    driver_opts:
+      type: ${VOLUME_TYPE}
+      o: ${VOLUME_O}
+      device: ${VOLUME_DEVICE}
