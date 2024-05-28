@@ -11,7 +11,7 @@ services:
       https_proxy: ${https_proxy}
       no_proxy: ${no_proxy}
       NODE_ENV: "production"
-      EZPAARSE_MONGO_URL: "mongodb://ezpaarse_db:27017/ezpaarse"
+      EZPAARSE_MONGO_URL: "mongodb://ezpaarse_db:57017/ezpaarse"
     volumes:
       - ./platforms:/opt/ezpaarse/platforms
       - ./middlewares:/opt/ezpaarse/middlewares
@@ -30,13 +30,15 @@ services:
   ezstats-ezpaarse-db:
     container_name: ezstats-ezpaarse-db
     image: mongo:3.6.23
+    ports:
+      - 57017:27017
     restart: unless-stopped
 
   ezstats-webdav:
     image: bytemark/webdav
     restart: always
     ports:
-      - "8080:80"
+      - "58080:80"
     environment:
       AUTH_TYPE: Digest
       volumes:
