@@ -1,5 +1,4 @@
-# ezpaarse docker-compose.yml dedicated to production
-version: '3.4'
+# ezstats docker-compose.yml
 
 services:
 
@@ -18,6 +17,7 @@ services:
       - ./ezpaarse/resources:/opt/ezpaarse/resources
       - ./ezpaarse/exclusions:/opt/ezpaarse/exclusions
       - ./ezpaarse/config.local.json:/opt/ezpaarse/config.local.json
+      - ./ezpaarse/dev:/tmp
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -28,6 +28,7 @@ services:
     depends_on:
       - ezstats-ezpaarse-db
     restart: unless-stopped
+    command: ./ezpaarse/entrypoint.dev.sh
 
   ezstats-ezpaarse-db:
     container_name: ezstats-ezpaarse-db
