@@ -144,9 +144,9 @@ Ou bien [lancer le conteneur ``ezstats-watchtower``](https://github.com/abes-esr
 
 ## Architecture
 
-<img alt="schéma d'architecture" src="https://docs.google.com/drawings/d/e/2PACX-1vRfKzc04c7Pfjw4UvCkyww0OpTr6Fski_QHVGCKa9rwYUyWxbJlhCgjf8lDTi5pZ7ds4fpQ72g4mavm/pub?w=1134&amp;h=554">
+<img alt="schéma d'architecture" src="https://docs.google.com/drawings/d/e/2PACX-1vR4EXYWBmah6Jeh1FJWdL_sVCiwUjtShgdIc0Uaa64bmpRFgH0wJGjQJhezEYRhzxGJYs0rVV_-5Qvv/pub?w=1135&h=564">
 
-([lien](https://docs.google.com/drawings/d/1hxpXxQbjK4eDCddP6yrQpWQwsmTWptCUwnM24tmKhPc/edit) pour modifier le schéma - droits requis)
+([lien](https://docs.google.com/drawings/d/1ixoo9xEQD0p1jGV9T_CraN0o7vDaFLlZz2QjQSRJBhU/edit) pour modifier le schéma - droits requis)
 
 Les codes de source d'EZStats sont ici :
 - https://github.com/ezpaarse-project/ezpaarse : Logiciel EZPaarse
