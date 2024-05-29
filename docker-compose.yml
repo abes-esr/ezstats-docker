@@ -53,10 +53,9 @@ services:
       AUTH_TYPE: Digest
     volumes:
       - ezstats-logs:/var/lib/dav
-      - ./webdav/entrypoint.sh:/usr/local/apache2/webdav/entrypoint.sh
-      - ./webdav/dav.conf:/usr/local/apache2/webdav/dav.conf
+      - ./webdav:/usr/local/apache2/webdav
+      - ./webdav/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./webdav/user.passwd:/user.passwd
-      #command : /bin/sh -c "/usr/local/apache2/webdav/entrypoint.sh"
 
   ezstats-batch:
     container_name: ezstats-batch

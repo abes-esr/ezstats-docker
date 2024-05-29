@@ -1,1 +1,0 @@
-cat dav.conf | tee /usr/local/apache2/conf/conf-available/dav.conf
