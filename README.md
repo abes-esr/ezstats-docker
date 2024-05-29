@@ -33,6 +33,7 @@ Déployer la configuration docker dans un répertoire :
 # adaptez /opt/pod/ avec l'emplacement où vous souhaitez déployer l'application
 cd /opt/pod/
 git clone https://github.com/abes-esr/ezstats-docker.git
+chmod +x webdav/docker-entrypoint.sh
 ```
 
 Configurer l'application depuis l'exemple du [fichier ``.env-dist``](./.env-dist) (ce fichier contient la liste des variables) :
