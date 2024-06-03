@@ -1,17 +1,10 @@
 {
-  "EZPAARSE_DEFAULT_HEADERS": {
-    "Force-Parser": "thesesfr",
-    "Output-Fields": "+etabSoutenanceN,+etabSoutenancePpn",
-    "Log-Format-apache": "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}<.*>\" \"%{Shib-Identity-Provider}i\" \"%{eppn}i\" \"%{primary-affiliation}i\" \"%{supannEtablissement}i\""
-  },
   "EZPAARSE_MIDDLEWARES": [
     "filter",
     "parser",
     "deduplicator",
-    "thesesfr",
     "geolocalizer",
     "qualifier",
     "anonymizer"
-  ],
-  "filter-platforms": "thesesfr"
+  ]
 }

@@ -27,9 +27,9 @@ module.exports = function () {
 
     let baseUrl = "https://theses.fr/api/v1/theses/recherche/";
 
-    if (isNaN(baseWaitTime)) { baseWaitTime = 1000; }
+    if (isNaN(baseWaitTime)) { baseWaitTime = 10; } //1000
     if (isNaN(maxTries)) { maxTries = 5; }
-    if (isNaN(throttle)) { throttle = 100; }
+    if (isNaN(throttle)) { throttle = 10; } //100
     if (isNaN(ttl)) { ttl = 3600 * 24 * 7; }
 
     if (!cache) {

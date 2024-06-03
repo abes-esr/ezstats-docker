@@ -26,7 +26,7 @@ services:
     tty: true         # to have nice debug(...) outputs
     stdin_open: true  # to be able to use CTRL+C to stop the container
     ports:
-      - 29599:59599
+      - 59599:59599
     depends_on:
       - ezstats-ezpaarse-db
     restart: unless-stopped
@@ -37,8 +37,8 @@ services:
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
-    ports:
-      - 27017:27017
+#    ports:
+#      - 27017:27017
     restart: unless-stopped
 
   ezstats-webdav:
@@ -48,7 +48,7 @@ services:
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
     ports:
-      - "28080:80"
+      - "58080:80"
     environment:
       AUTH_TYPE: Digest
     volumes:
@@ -56,21 +56,6 @@ services:
       - ./webdav:/usr/local/apache2/webdav
       - ./webdav/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./webdav/user.passwd:/user.passwd
-    restart: unless-stopped
-
-  ezstats-batch:
-    container_name: ezstats-batch
-    build:
-      context: ./batch/
-    mem_limit: ${EZSTATS_MEM_LIMIT}
-    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
-    cpus: ${EZSTATS_CPU_LIMIT}
-    environment:
-      EZPAARSE_HOST: "http://ezstats-ezpaarse:59599"
-    tty: true         # to have nice debug(...) outputs
-    stdin_open: true  # to be able to use CTRL+C to stop the container
-    depends_on:
-      - ezstats-ezpaarse
     restart: unless-stopped
 
   ezstats-watchtower:
@@ -98,6 +83,23 @@ services:
       WATCHTOWER_SCOPE: "ezstats-watchtower-scope"
     labels:
       - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
+
+  ezstats-batch-theses:
+    container_name: ezstats-batch-theses
+    build:
+      context: ./batch/
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    volumes:
+      - ezstats-logs:/home/node/logtheses
+    environment:
+      EZPAARSE_HOST: "ezstats-ezpaarse:59599"
+    tty: true         # to have nice debug(...) outputs
+    stdin_open: true  # to be able to use CTRL+C to stop the container
+    depends_on:
+      - ezstats-ezpaarse
+    restart: unless-stopped
 
 volumes:
   ezstats-logs:
