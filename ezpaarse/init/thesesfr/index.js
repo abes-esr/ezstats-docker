@@ -181,7 +181,7 @@ module.exports = function () {
         }
 
         //ACT TODO : traiter les PPN
-        const query = `?nombre=200&q=nnt:${nnts[0]}`; //`?nombre=200&q=${subQueries.join(' OR ')}`;
+        const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
         logger.info(' query ==> ' + query);
 
         return new Promise((resolve, reject) => {
