@@ -41,6 +41,10 @@ Configurer l'application depuis l'exemple du [fichier ``.env-dist``](./.env-dist
 cd /opt/pod/ezstats-docker/
 cp .env-dist .env
 # personnaliser alors le contenu du .env
+
+Définir le mot de passe du compte admin pour WebDAV (droits en lecture et écriture):
+cd webdav
+htdigest user.passwd WebDAV admin
 ```
 
 ## Démarrage et arrêt

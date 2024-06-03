@@ -42,8 +42,8 @@ services:
     restart: unless-stopped
 
   ezstats-webdav:
+    container_name: ezstats-webdav
     image: bytemark/webdav
-    restart: always
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -56,6 +56,7 @@ services:
       - ./webdav:/usr/local/apache2/webdav
       - ./webdav/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./webdav/user.passwd:/user.passwd
+    restart: unless-stopped
 
   ezstats-batch:
     container_name: ezstats-batch
