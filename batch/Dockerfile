@@ -18,8 +18,11 @@ RUN apt-get update && apt-get install -y vim && apt-get install -y cron
 # ezp bulk -r logtheses/data/thesesfr/logs/ logtheses/data/thesesfr/results/ -H "Force-Parser: thesesfr" -H "filter-platforms: thesesfr" -H "ezPAARSE-Middlewares: thesesfr" -H "Output-Fields: +etabSoutenanceN,+etabSoutenancePpn" -H "Log-Format-apache: %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}<.*>\" \"%{Shib-Identity-Provider}i\" \"%{eppn}i\" \"%{primary-affiliation}i\" \"%{supannEtablissement}i\""
 
 #=== Set custom entrypoint ===
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+#=== Shell to launch ezp bulk programm ===
 COPY launch-ezp.sh /home/node
-RUN chmod +x /usr/local/bin/docker-entrypoint
 RUN chmod +x /home/node/launch-ezp.sh
-ENTRYPOINT [ "docker-entrypoint" ]
+
+ENTRYPOINT [ "docker-entrypoint.sh" ]

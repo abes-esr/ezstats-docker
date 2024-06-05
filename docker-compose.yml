@@ -23,8 +23,6 @@ services:
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
-    tty: true         # to have nice debug(...) outputs
-    stdin_open: true  # to be able to use CTRL+C to stop the container
     ports:
       - 59599:59599
     depends_on:
@@ -95,8 +93,6 @@ services:
       - ezstats-logs:/home/node/logtheses
     #environment:
     #  EZPAARSE_HOST: "ezstats-ezpaarse:59599"
-    tty: true         # to have nice debug(...) outputs
-    stdin_open: true  # to be able to use CTRL+C to stop the container
     command: "sleep infinity"
     depends_on:
       - ezstats-ezpaarse
