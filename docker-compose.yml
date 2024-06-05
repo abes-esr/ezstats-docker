@@ -93,8 +93,8 @@ services:
     cpus: ${EZSTATS_CPU_LIMIT}
     volumes:
       - ezstats-logs:/home/node/logtheses
-    environment:
-      EZPAARSE_HOST: "ezstats-ezpaarse:59599"
+    #environment:
+    #  EZPAARSE_HOST: "ezstats-ezpaarse:59599"
     tty: true         # to have nice debug(...) outputs
     stdin_open: true  # to be able to use CTRL+C to stop the container
     depends_on:
