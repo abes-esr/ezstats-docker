@@ -97,6 +97,7 @@ services:
     #  EZPAARSE_HOST: "ezstats-ezpaarse:59599"
     tty: true         # to have nice debug(...) outputs
     stdin_open: true  # to be able to use CTRL+C to stop the container
+    command: "sleep infinity"
     depends_on:
       - ezstats-ezpaarse
     restart: unless-stopped
