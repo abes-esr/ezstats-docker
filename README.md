@@ -42,9 +42,10 @@ cd /opt/pod/ezstats-docker/
 cp .env-dist .env
 # personnaliser alors le contenu du .env
 
-Définir le mot de passe du compte admin pour WebDAV (droits en lecture et écriture):
+Définir le mot de passe du compte admin pour WebDAV (qui aura les droits en lecture et écriture), et changer les autorisations du fichiers (644):
 cd webdav
 htdigest user.passwd WebDAV admin
+chmod 644 user.passwd
 ```
 
 ## Démarrage et arrêt
