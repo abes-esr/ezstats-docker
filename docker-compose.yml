@@ -93,7 +93,6 @@ services:
       - ezstats-logs:/home/node/logtheses
     #environment:
     #  EZPAARSE_HOST: "ezstats-ezpaarse:59599"
-    command: "sleep infinity"
     depends_on:
       - ezstats-ezpaarse
     restart: unless-stopped

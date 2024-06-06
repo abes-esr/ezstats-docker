@@ -7,6 +7,5 @@
 
 # start cron
 echo "Starting EZP bulk cron..."
-service cron start
-
-exec "$@"
+#service cron start
+cron -f
