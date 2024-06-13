@@ -3,29 +3,29 @@
 const co = require('co');
 const request = require('request');
 const { bufferedProcess, wait } = require('../utils.js');
-const cache = ezpaarse.lib('cache')('thesesfr');
+const cache = ezpaarse.lib('cache')('thesesfr-persons');
 
 module.exports = function () {
     const logger = this.logger;
     const report = this.report;
     const req = this.request;
 
-    logger.info('Initializing thesesfr middleware');
+    logger.info('Initializing thesesfr-persons middleware');
 
-    const cacheEnabled = !/^false$/i.test(req.header('thesesfr-cache'));
+    const cacheEnabled = !/^false$/i.test(req.header('thesesfr-persons-cache'));
 
-    logger.info(`Thesesfr cache: ${cacheEnabled ? 'enabled' : 'disabled'}`);
+    logger.info(`Thesesfr-persons cache: ${cacheEnabled ? 'enabled' : 'disabled'}`);
 
     // Time-to-live of cached documents
-    let ttl = parseInt(req.header('thesesfr-ttl'));
+    let ttl = parseInt(req.header('thesesfr-persons-ttl'));
     // Minimum wait time before each request (in ms)
-    let throttle = parseInt(req.header('thesesfr-throttle'));
+    let throttle = parseInt(req.header('thesesfr-persons-throttle'));
     // Maximum enrichment attempts
-    let maxTries = parseInt(req.header('thesesfr-max-tries'));
+    let maxTries = parseInt(req.header('thesesfr-persons-max-tries'));
     // Base wait time after a request fails
-    let baseWaitTime = parseInt(req.header('thesesfr-base-wait-time'));
+    let baseWaitTime = parseInt(req.header('thesesfr-persons-base-wait-time'));
 
-    let baseUrl = "https://theses.fr/api/v1/theses/recherche/";
+    let baseUrl = "https://theses.fr/api/v1/personnes/recherche/";
 
     if (isNaN(baseWaitTime)) { baseWaitTime = 10; } //1000
     if (isNaN(maxTries)) { maxTries = 5; }
@@ -33,14 +33,14 @@ module.exports = function () {
     if (isNaN(ttl)) { ttl = 3600 * 24 * 7; }
 
     if (!cache) {
-        const err = new Error('failed to connect to mongodb, cache not available for Thesesfr');
+        const err = new Error('failed to connect to mongodb, cache not available for Thesesfr-persons');
         err.status = 500;
         return err;
     }
 
-    report.set('thesesfr', 'thesesfr-queries', 0);
-    report.set('thesesfr', 'thesesfr-query-fails', 0);
-    report.set('thesesfr', 'thesesfr-cache-fails', 0);
+    report.set('thesesfr-persons', 'thesesfr-persons-queries', 0);
+    report.set('thesesfr-persons', 'thesesfr-persons-query-fails', 0);
+    report.set('thesesfr-persons', 'thesesfr-persons-cache-fails', 0);
 
     const process = bufferedProcess(this, {
         /**
@@ -49,7 +49,7 @@ module.exports = function () {
          * @returns {Boolean|Promise} true if the EC should be enriched, false otherwise
          */
         filter: ec => {
-            if (!ec.unitid || ec.rtype=='BIO') { return false; }
+            if (!ec.unitid || ec.rtype!='BIO') { return false; }
             if (!cacheEnabled) { return true; }
 
             return findInCache(ec.unitid).then(cachedDoc => {
@@ -68,8 +68,8 @@ module.exports = function () {
         // Verify cache indices and time-to-live before starting
         cache.checkIndexes(ttl, function (err) {
             if (err) {
-                logger.error(`Thesesfr: failed to verify indexes : ${err}`);
-                return reject(new Error('failed to verify indexes for the cache of Thesesfr'));
+                logger.error(`Thesesfr-persons: failed to verify indexes : ${err}`);
+                return reject(new Error('failed to verify indexes for the cache of Thesesfr-persons'));
             }
 
             resolve(process);
@@ -93,14 +93,14 @@ module.exports = function () {
 
         while (!docs) {
             if (++tries > maxAttempts) {
-                const err = new Error(`Failed to query Thesesfr ${maxAttempts} times in a row`);
+                const err = new Error(`Failed to query Thesesfr-persons ${maxAttempts} times in a row`);
                 return Promise.reject(err);
             }
 
             try {
                 docs = yield query(unitids);
             } catch (e) {
-                logger.error(`Thesesfr: ${e.message}`);
+                logger.error(`Thesesfr-persons: ${e.message}`);
             }
 
             yield wait(throttle);
@@ -122,7 +122,7 @@ module.exports = function () {
                 // If we can't find a result for a given ID, we cache an empty document
                 yield cacheResult(unitid, doc || {});
             } catch (e) {
-                report.inc('thesesfr', 'thesesfr-cache-fails');
+                report.inc('thesesfr-persons', 'thesesfr-persons-cache-fails');
             }
 
             if (doc) {
@@ -141,19 +141,19 @@ module.exports = function () {
      */
     function enrichEc(ec, result) {
         const {
-            etabSoutenanceN,
-            etabSoutenancePpn
+            nom,
+            prenom
         } = result;
 
-        if (etabSoutenanceN) {
-            ec['etabSoutenanceN'] = etabSoutenanceN;
+        if (nom) {
+            ec['personneNom'] = nom;
         }
 
-        if (etabSoutenancePpn) {
-            ec['etabSoutenancePpn'] = etabSoutenancePpn;
+        if (prenom) {
+            ec['personnePrenom'] = prenom;
         }
 
-        logger.info(' etab Soutenance ==> ' + ec['etabSoutenancePpn'] + ' ' +ec['etabSoutenanceN']);
+        logger.info(' personne ==> ' + ec['personneNom'] + ' ' +ec['personnePrenom']);
     }
 
     /**
@@ -161,28 +161,21 @@ module.exports = function () {
      * @param {Array} unitids the ids to query
      */
     function query(unitids) {
-        report.inc('thesesfr', 'thesesfr-queries');
+        report.inc('thesesfr-persons', 'thesesfr-persons-queries');
 
         const subQueries = [];
-        const nnts   = [];
-        const numSujets  = [];
         const ppns  = [];
 
         unitids.forEach(id => {
-            /^(([0-9]{4})([a-z]{4})[0-9a-z]+)$/i.test(id) ? nnts.push(id) : /^(s[0-9]+)$/i.test(id) ? numSujets.push(id) : ppns.push(id);
+            ppns.push(id);
         });
 
-        if (nnts.length > 0) {
-            subQueries.push(`nnt:(${nnts.join(' OR ')})`);
+        if (ppns.length > 0) {
+            subQueries.push(`${ppns.join(' OR ')}`);
         }
 
-        if (numSujets.length > 0) {
-            subQueries.push(`numSujet:("${numSujets.join('" OR "')}")`);
-        }
-
-        //ACT TODO : traiter les PPN
         const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
-        logger.info(' query ==> ' + query);
+        logger.info(' query persons ==> ' + query);
 
         return new Promise((resolve, reject) => {
             const options = {
@@ -193,7 +186,7 @@ module.exports = function () {
 
             request(options, (err, response, result) => {
                 if (err) {
-                    report.inc('thesesfr', 'thesesfr-query-fails');
+                    report.inc('thesesfr-persons', 'thesesfr-persons-query-fails');
                     return reject(err);
                 }
 
@@ -202,16 +195,16 @@ module.exports = function () {
                 }
 
                 if (response.statusCode !== 200 && response.statusCode !== 304) {
-                    report.inc('thesesfr', 'thesesfr-query-fails');
+                    report.inc('thesesfr-persons', 'thesesfr-persons-query-fails');
                     return reject(new Error(`${response.statusCode} ${response.statusMessage}`));
                 }
 
-                if (!Array.isArray(result && result.theses)) {
-                    report.inc('thesesfr', 'thesesfr-query-fails');
+                if (!Array.isArray(result && result.personnes)) {
+                    report.inc('thesesfr-persons', 'thesesfr-persons-query-fails');
                     return reject(new Error('invalid response'));
                 }
 
-                return resolve(result.theses);
+                return resolve(result.personnes);
             });
         });
     }
