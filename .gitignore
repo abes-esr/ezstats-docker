@@ -5,3 +5,7 @@
 /ezpaarse/resources/
 /ezpaarse/exclusions/scrapers/
 /webdav/user.passwd
+/ezstats-logs/data/
+/ezstats-logs/DavLock
+/ezstats-logs/DavLock.dir
+/ezstats-logs/DavLock.pag

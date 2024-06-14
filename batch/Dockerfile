@@ -13,10 +13,6 @@ RUN npm install -g @ezpaarse-project/ezpaarse
 
 RUN apt-get update && apt-get install -y vim && apt-get install -y cron
 
-#OK: curl -X POST http://ezstats-ezpaarse:59599 -F "files[]=@./logtheses/data/mini.log" -o result.csv
-#OK : ezp process mini.log -v -h ezstats-ezpaarse:59599
-# ezp bulk -r logtheses/data/thesesfr/logs/ logtheses/data/thesesfr/results/ -H "Force-Parser: thesesfr" -H "filter-platforms: thesesfr" -H "ezPAARSE-Middlewares: thesesfr" -H "Output-Fields: +etabSoutenanceN,+etabSoutenancePpn" -H "Log-Format-apache: %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}<.*>\" \"%{Shib-Identity-Provider}i\" \"%{eppn}i\" \"%{primary-affiliation}i\" \"%{supannEtablissement}i\""
-
 #=== Set custom entrypoint ===
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
