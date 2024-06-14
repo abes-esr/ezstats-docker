@@ -85,7 +85,7 @@ services:
   ezstats-batch-theses:
     container_name: ezstats-batch-theses
     build:
-      context: ./batch/
+      context: batch-theses/
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
