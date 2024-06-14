@@ -147,7 +147,7 @@ middlewares-update: ## Clone or update middelwares directory
 	@echo 'Updating middlewares...'
 	@if test -d middlewares/.git; \
 	then cd middlewares; git pull; \
-	else git clone https://github.com/ezpaarse-project/ezpaarse-middlewares.git middlewares; cp -fr /tmp/thesesfr* /opt/ezpaarse/middlewares/; \
+	else git clone https://github.com/ezpaarse-project/ezpaarse-middlewares.git middlewares; cp -fr /tmp/thesesfr /opt/ezpaarse/middlewares/; \
 	fi
 	@. ./bin/env; cd middlewares; npm install --no-save -q --unsafe-perm;
 
