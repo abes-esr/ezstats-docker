@@ -13,7 +13,7 @@ RUN npm install -g @ezpaarse-project/ezpaarse
 
 RUN apt-get update && apt-get install -y vim && apt-get install -y cron
 
-#=== Set custom entrypoint ===
+#=== Set custom entrypoint ====
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
