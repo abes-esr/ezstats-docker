@@ -96,6 +96,22 @@ services:
     depends_on:
       - ezstats-ezpaarse
     restart: unless-stopped
+    
+  ezstats-batch-logs:
+    container_name: ezstats-batch-logs
+    build:
+      context: batch-logs/
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    volumes:
+      - ezstats-logs:/home/node/logtheses/logs
+      - ezstats-logstash:/home/node/logstash
+    #environment:
+    #  EZPAARSE_HOST: "ezstats-ezpaarse:59599"
+    #   depends_on:
+    #  - ezstats-ezpaarse
+    restart: unless-stopped
 
 volumes:
   ezstats-logs:
@@ -104,3 +120,9 @@ volumes:
       type: ${EZSTATS_VOLUME_TYPE}
       o: ${EZSTATS_VOLUME_O}
       device: ${EZSTATS_VOLUME_DEVICE}
+  ezstats-logstash:
+    driver: local
+    driver_opts:
+      type: ${EZSTATS_LOGSTASH_VOLUME_TYPE}
+      o: ${EZSTATS_LOGSTASH_VOLUME_O}
+      device: ${EZSTATS_LOGSTASH_VOLUME_DEVICE}
