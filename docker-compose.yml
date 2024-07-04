@@ -99,8 +99,7 @@ services:
     
   ezstats-batch-logs:
     container_name: ezstats-batch-logs
-    build:
-      context: batch-logs/
+    image: abesesr/ezstats:develop-ezstats-batch-logs
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
