@@ -95,6 +95,13 @@ services:
     depends_on:
       - ezstats-ezpaarse
     restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-batch-theses"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
     
   ezstats-batch-logs:
     container_name: ezstats-batch-logs
@@ -110,6 +117,13 @@ services:
     #   depends_on:
     #  - ezstats-ezpaarse
     restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-batch-logs"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
 
 volumes:
   ezstats-logs:
