@@ -9,7 +9,7 @@ ENV PATH /opt/ezpaarse/bin:/opt/ezpaarse/node_modules/.bin:/usr/local/bin:/usr/b
 WORKDIR /home/node/
 
 RUN npm install -g @ezpaarse-project/ezpaarse
-#RUN npm install -g @ezpaarse-project/ezmesure
+RUN npm install -g @ezpaarse-project/ezmesure
 
 RUN apt-get update && apt-get install -y vim && apt-get install -y cron
 
