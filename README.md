@@ -57,7 +57,7 @@ chmod +x docker-entrypoint.sh
 
 ```bash
 # pour démarrer l'application (ou pour appliquer des modifications 
-# faites dans /opt/pod/movies-docker/.env)
+# faites dans /opt/pod/ezstats-docker/.env)
 cd /opt/pod/ezstats-docker/
 
 docker-compose up -d
@@ -101,9 +101,9 @@ Pour configurer l'application, vous devez créer et personnaliser un fichier ``/
 
 Pour ajuster l'allocation de ressources pour les conteneurs (par exemple, mémoire, CPU), vous pouvez définir la valeur des variables d'environnement suivantes dans votre fichier ``.env`` :
 
-- `EZSTATS_MEM_LIMIT`: Mémoire allouée au conteneur movies (par exemple: "512m" pour 512 Mo), valeur par défaut "5g".
+- `EZSTATS_MEM_LIMIT`: Mémoire allouée au conteneur ezpaarse (par exemple: "512m" pour 512 Mo), valeur par défaut "5g".
 - `EZSTATS_MEMSWAP_LIMIT`: Quantité totale de mémoire et de swap que le conteneur est autorisé à utiliser. Si vous définissez cette valeur à 0, cela signifie que le swap est désactivé pour le conteneur.
-- `EZSTATS_CPU_LIMIT`: CPU alloué au conteneur movies (par exemple: "0.5" pour allouer 50% d'un CPU), valeur par défaut "5".
+- `EZSTATS_CPU_LIMIT`: CPU alloué au conteneur ezpaarse (par exemple: "0.5" pour allouer 50% d'un CPU), valeur par défaut "5".
 
 Ces valeurs ne sont que des exemples. Ajustez-les selon vos besoins et les ressources disponibles sur votre machine ou votre serveur.
 
@@ -114,7 +114,7 @@ Les objectifs des déploiements continus de EZStats sont les suivants (cf [polde
 - git push (le plus couramment merge) sur la branche ``main`` provoque un déploiement automatique sur le serveur ``diplotaxis6-test``
 - git tag X.X.X (associé à une release) sur la branche ``main`` permet un déploiement (non automatique) sur le serveur ``diplotaxis6-prod``
 
-Movies est déployé automatiquement en utilisant l'outil WatchTower. Pour permettre ce déploiement automatique avec WatchTower, il suffit de positionner à ``false`` la variable suivante dans le fichier ``/opt/pod/ezstats-docker/.env`` :
+EZStats est déployé automatiquement en utilisant l'outil WatchTower. Pour permettre ce déploiement automatique avec WatchTower, il suffit de positionner à ``false`` la variable suivante dans le fichier ``/opt/pod/ezstats-docker/.env`` :
 ```env
 EZSTATS_WATCHTOWER_RUN_ONCE=false
 ```
@@ -129,7 +129,7 @@ Les éléments suivants sont à sauvegarder:
 - ``/opt/pod/ezstats-docker/.env`` : contient la configuration spécifique de notre déploiement
 - ``/opt/pod/ezstats-docker/ezstats-logs`` : contient les logs quotidiens
 
-/!\ A noter : le répertoire ``/opt/pod/movies-docker/ezstats-logs`` est un montage NFS.
+/!\ A noter : le répertoire ``/opt/pod/ezstats-docker/ezstats-logs`` est un montage NFS.
 
 ### Restauration depuis une sauvegarde
 
