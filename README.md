@@ -12,7 +12,7 @@ Ce dépôt contient la configuration docker 🐳 pour déployer l'application EZ
 
 ## URLs d'EZStats
 
-Les URLs correspondantes aux déploiements en local, test et prod de movies sont les suivantes :
+Les URLs correspondantes aux déploiements en local, test et prod sont les suivantes :
 
 - local :
     - http://lap-TRI.levant.abes.fr:59599 : homepage d'EZStats
@@ -40,12 +40,13 @@ Configurer l'application depuis l'exemple du [fichier ``.env-dist``](./.env-dist
 ```bash
 cd /opt/pod/ezstats-docker/
 cp .env-dist .env
-# personnaliser alors le contenu du .env
+```
+personnaliser alors le contenu du .env
 
 Définir le mot de passe du compte admin pour WebDAV (qui aura les droits en lecture et écriture), 
 changer les autorisations du fichiers (644) et 
 les droits d'exécution de docker-entrypoint.sh
-
+```
 cd webdav
 htdigest user.passwd WebDAV admin
 chmod 644 user.passwd
