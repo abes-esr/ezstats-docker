@@ -28,22 +28,22 @@ Disposer de :
 
 ## Installation
 
-Déployer la configuration docker dans un répertoire :
+- Déployer la configuration docker dans un répertoire :
 ```bash
-# adaptez /opt/pod/ avec l'emplacement où vous souhaitez déployer l'application
-cd /opt/pod/
+# La variable $INSTALL est pour nos serveurs de dev/test/prod, /opt/pod . En local, le chemin peut être différent (ex : si on utilise Windows).
+cd $INSTALL
 git clone https://github.com/abes-esr/ezstats-docker.git
 chmod +x webdav/docker-entrypoint.sh
 ```
 
-Configurer l'application depuis l'exemple du [fichier ``.env-dist``](./.env-dist) (ce fichier contient la liste des variables) :
+- Configurer l'application depuis l'exemple du [fichier ``.env-dist``](./.env-dist) (ce fichier contient la liste des variables) :
 ```bash
-cd /opt/pod/ezstats-docker/
+cd $INSTALL/ezstats-docker/
 cp .env-dist .env
 ```
 personnaliser alors le contenu du .env
 
-Définir le mot de passe du compte admin pour WebDAV (qui aura les droits en lecture et écriture), 
+- Définir le mot de passe du compte admin pour WebDAV (qui aura les droits en lecture et écriture), 
 changer les autorisations du fichiers (644) et 
 les droits d'exécution de docker-entrypoint.sh
 ```
@@ -53,12 +53,26 @@ chmod 644 user.passwd
 chmod +x docker-entrypoint.sh
 ```
 
+- Créer le répertoire contenant les logs (_défini dans le .env par les variables :
+EZSTATS_VOLUME_DEVICE et EZSTATS_LOGSTASH_VOLUME_DEVICE_)   
+Ce répertoire de log (dans le .env-dist, $INSTALL/ezstats-logs) doit avoir 2 sous répertoires : data/thesesfr/logs et data/thesesfr/results.  
+Le répertoire data/thesesfr/logs contiendra les fichiers de logs et le répertoire data/thesesfr/results contiendra les fichiers générés par EZPaarse
+
+Erreur possible si le répertoire n'est pas trouvé :
+```bash
+"Error response from daemon : failed to mount local volume : 
+mount /run/desktop/mnt/host/wsl/docker-desktop-bind-mounts/Ubuntu/42282d145e43b6c89fdd0323e81c2d6163d636aedc75eb507a698be98fdf5b7b :/var/lib/docker/volumes/ezstats-docker_ezstats-logs/_data, flags : 0x1000 : no such file or directory"
+Alors il faut vérifier que le répertoire contenant les logs est bien existant.
+```
+
+- Retours à la ligne à changer si installation sous Windows :  
+Ouvrir avec un éditeur de texte le fichier webdav/docker-entrypoint.sh et changer "Windows CR+LF" en "UNIX LF" pour le fichier : webdav/docker-entrypoint.sh
+
 ## Démarrage et arrêt
 
 ```bash
-# pour démarrer l'application (ou pour appliquer des modifications 
-# faites dans /opt/pod/ezstats-docker/.env)
-cd /opt/pod/ezstats-docker/
+# pour démarrer l'application (ou pour appliquer des modifications faites dans $INSTALL/ezstats-docker/.env)
+cd $INSTALL/ezstats-docker/
 
 docker-compose up -d
 ```
@@ -66,7 +80,7 @@ docker-compose up -d
 Remarque : retirer le ``-d`` pour voir passer les logs dans le terminal et utiliser alors CTRL+C pour stopper l'application
 
 ```bash
-cd /opt/pod/ezstats-docker/
+cd $INSTALL/ezstats-docker/
 
 # pour stopper l'application
 docker-compose stop
@@ -86,7 +100,7 @@ docker-compose down -v
 
 ```bash
 # pour visualiser les logs de l'appli
-cd /opt/pod/ezstats-docker/
+cd $INSTALL/ezstats-docker/
 docker-compose logs -f --tail=100
 ```
 
@@ -95,7 +109,7 @@ Cela va afficher les 100 dernière lignes de logs générées par l'application 
 
 ## Configuration
 
-Pour configurer l'application, vous devez créer et personnaliser un fichier ``/opt/pod/ezstats-docker/.env`` (cf section [Installation](#installation)). Les paramètres à placer dans ce fichier ``.env`` sont indiqués dans le fichier [``.env-dist``](https://github.com/abes-esr/ezstats-docker/blob/develop/.env-dist)
+Pour configurer l'application, vous devez créer et personnaliser un fichier ``$INSTALL/ezstats-docker/.env`` (cf section [Installation](#installation)). Les paramètres à placer dans ce fichier ``.env`` sont indiqués dans le fichier [``.env-dist``](https://github.com/abes-esr/ezstats-docker/blob/develop/.env-dist)
 
 ### Allocation de ressources pour les conteneurs
 
@@ -126,20 +140,20 @@ Le fait de passer ``EZSTATS_WATCHTOWER_RUN_ONCE`` à false va faire en sorte d'e
 ## Sauvegardes
 
 Les éléments suivants sont à sauvegarder:
-- ``/opt/pod/ezstats-docker/.env`` : contient la configuration spécifique de notre déploiement
-- ``/opt/pod/ezstats-docker/ezstats-logs`` : contient les logs quotidiens
+- ``$INSTALL/ezstats-docker/.env`` : contient la configuration spécifique de notre déploiement
+- ``$INSTALL/ezstats-docker/ezstats-logs`` : contient les logs quotidiens
 
-/!\ A noter : le répertoire ``/opt/pod/ezstats-docker/ezstats-logs`` est un montage NFS.
+/!\ A noter : le répertoire ``$INSTALL/ezstats-docker/ezstats-logs`` est un montage NFS.
 
 ### Restauration depuis une sauvegarde
 
-Réinstallez l'application EZStats depuis la [procédure d'installation ci-dessus](#installation) et récupéré depuis les sauvegardes le fichier ``.env`` et placez le dans ``/opt/pod/ezstats-docker/.env`` sur la machine qui doit faire repartir EZStats.
+Réinstallez l'application EZStats depuis la [procédure d'installation ci-dessus](#installation) et récupéré depuis les sauvegardes le fichier ``.env`` et placez le dans ``$INSTALL/ezstats-docker/.env`` sur la machine qui doit faire repartir EZStats.
 
 Relancer le traitement de tous les logs :
 
 Lancer la commande :
 ```bash
-cd /opt/pod/ezstats-docker/
+cd $INSTALL/ezstats-docker/
 ```
 
 ### Mise à jour de la dernière version
