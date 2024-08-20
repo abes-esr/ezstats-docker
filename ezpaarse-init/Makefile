@@ -147,7 +147,7 @@ middlewares-update: ## Clone or update middelwares directory
 	@echo 'Updating middlewares...'
 	@if test -d middlewares/.git; \
 	then cd middlewares; git pull; \
-	else git clone https://github.com/ezpaarse-project/ezpaarse-middlewares.git middlewares; cp -fr /tmp/thesesfr /opt/ezpaarse/middlewares/; \
+	else git clone https://github.com/ezpaarse-project/ezpaarse-middlewares.git middlewares; cp -fr /tmp/middlewares/* /opt/ezpaarse/middlewares/; \
 	fi
 	@. ./bin/env; cd middlewares; npm install --no-save -q --unsafe-perm;
 
@@ -162,7 +162,7 @@ platforms-update: ## Clone or update platforms directory
 	@echo 'Updating platforms...'
 	@if test -d platforms/.git; \
 	then cd platforms; git pull; \
-	else git clone https://github.com/ezpaarse-project/ezpaarse-platforms.git platforms; \
+	else git clone https://github.com/ezpaarse-project/ezpaarse-platforms.git platforms; cp -fr /tmp/platforms/* /opt/ezpaarse/platforms/; \
 	fi
 
 exclusions-update: ## Clone or update exclusions directory

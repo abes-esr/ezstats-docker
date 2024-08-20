@@ -1,10 +1,10 @@
-# ezstats docker-compose.yml
+# EZStats docker-compose.yml
 
 services:
 
   ezstats-rp:
-    image: nginx:1.25
     container_name: ezstats-rp
+    image: nginx:1.26.1
     restart: unless-stopped
     ports:
       - "80:80"
@@ -30,10 +30,10 @@ services:
       - ./ezpaarse/middlewares:/opt/ezpaarse/middlewares
       - ./ezpaarse/resources:/opt/ezpaarse/resources
       - ./ezpaarse/exclusions:/opt/ezpaarse/exclusions
-      - ./ezpaarse/config.local.json:/opt/ezpaarse/config.local.json
-      # Sert juste à copier au démarrage le middleware ezpaarse/dev/thesesfr/index.js dans le répertoire middlewares (si ce dernier était vide)
-      - ./ezpaarse/init:/tmp
-      - ./ezpaarse/init/Makefile:/opt/ezpaarse/Makefile
+      - ./ezpaarse-init/config.local.json:/opt/ezpaarse/config.local.json
+      # Sert juste à copier au démarrage les middlewares /tmp/thesesfr[...]/index.js dans le répertoire middlewares (si ce dernier était vide)
+      - ./ezpaarse-init:/tmp
+      - ./ezpaarse-init/Makefile:/opt/ezpaarse/Makefile
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -42,9 +42,6 @@ services:
     depends_on:
       - ezstats-ezpaarse-db
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.ezpaarse.rule=PathPrefix(`/`)
 
   ezstats-ezpaarse-db:
     container_name: ezstats-ezpaarse-db
@@ -58,7 +55,7 @@ services:
 
   ezstats-webdav:
     container_name: ezstats-webdav
-    image: bytemark/webdav
+    image: bytemark/webdav:2.4
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -70,11 +67,6 @@ services:
       - ./webdav/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./webdav/user.passwd:/user.passwd
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.webdav.rule=PathPrefix(`/webdav`)
-      - traefik.http.middlewares.webdav.replacepathregex.regex=^/webdav/(.*)
-      - traefik.http.middlewares.webdav.replacepathregex.replacement=/$$1
 
   ezstats-watchtower:
     image: containrrr/watchtower:1.4.0
@@ -111,8 +103,6 @@ services:
     cpus: ${EZSTATS_CPU_LIMIT}
     volumes:
       - ezstats-logs:/home/node/logtheses
-    #environment:
-    #  EZPAARSE_HOST: "ezstats-ezpaarse:59599"
     depends_on:
       - ezstats-ezpaarse
     restart: unless-stopped
@@ -127,10 +117,6 @@ services:
     volumes:
       - ezstats-logs:/home/node/logtheses/logs
       - ezstats-logstash:/home/node/logstash
-    #environment:
-    #  EZPAARSE_HOST: "ezstats-ezpaarse:59599"
-    #   depends_on:
-    #  - ezstats-ezpaarse
     restart: unless-stopped
 
 volumes:
