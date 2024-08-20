@@ -27,26 +27,26 @@ if [ "x$SERVER_NAMES" != "x" ]; then
         -i "$HTTPD_PREFIX"/conf/sites-available/default*.conf
 fi
 
-# Configure dav.conf
-if [ "x$LOCATION" != "x" ]; then
-    sed -e "s|Alias .*|Alias $LOCATION /var/lib/dav/data/|" \
-        -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
-fi
-if [ "x$REALM" != "x" ]; then
-    sed -e "s|AuthName .*|AuthName \"$REALM\"|" \
-        -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
-else
-    REALM="WebDAV"
-fi
-if [ "x$AUTH_TYPE" != "x" ]; then
-    # Only support "Basic" and "Digest".
-    if [ "$AUTH_TYPE" != "Basic" ] && [ "$AUTH_TYPE" != "Digest" ]; then
-        printf '%s\n' "$AUTH_TYPE: Unknown AuthType" 1>&2
-        exit 1
-    fi
-    sed -e "s|AuthType .*|AuthType $AUTH_TYPE|" \
-        -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
-fi
+## Configure dav.conf
+#if [ "x$LOCATION" != "x" ]; then
+#    sed -e "s|Alias .*|Alias $LOCATION /var/lib/dav/data/|" \
+#        -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
+#fi
+#if [ "x$REALM" != "x" ]; then
+#    sed -e "s|AuthName .*|AuthName \"$REALM\"|" \
+#        -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
+#else
+#    REALM="WebDAV"
+#fi
+#if [ "x$AUTH_TYPE" != "x" ]; then
+#    # Only support "Basic" and "Digest".
+#    if [ "$AUTH_TYPE" != "Basic" ] && [ "$AUTH_TYPE" != "Digest" ]; then
+#        printf '%s\n' "$AUTH_TYPE: Unknown AuthType" 1>&2
+#        exit 1
+#    fi
+#    sed -e "s|AuthType .*|AuthType $AUTH_TYPE|" \
+#        -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
+#fi
 
 # Add password hash, unless "user.passwd" already exists (ie, bind mounted).
 if [ ! -e "/user.passwd" ]; then
@@ -63,17 +63,17 @@ if [ ! -e "/user.passwd" ]; then
     fi
 fi
 
-# If specified, allow anonymous access to specified methods.
-if [ "x$ANONYMOUS_METHODS" != "x" ]; then
-    if [ "$ANONYMOUS_METHODS" = "ALL" ]; then
-        sed -e "s/Require valid-user/Require all granted/" \
-            -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
-    else
-        ANONYMOUS_METHODS="`printf '%s\n' "$ANONYMOUS_METHODS" | tr ',' ' '`"
-        sed -e "/Require valid-user/a\ \ \ \ Require method $ANONYMOUS_METHODS" \
-            -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
-    fi
-fi
+## If specified, allow anonymous access to specified methods.
+#if [ "x$ANONYMOUS_METHODS" != "x" ]; then
+#    if [ "$ANONYMOUS_METHODS" = "ALL" ]; then
+#        sed -e "s/Require valid-user/Require all granted/" \
+#            -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
+#    else
+#        ANONYMOUS_METHODS="`printf '%s\n' "$ANONYMOUS_METHODS" | tr ',' ' '`"
+#        sed -e "/Require valid-user/a\ \ \ \ Require method $ANONYMOUS_METHODS" \
+#            -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
+#    fi
+#fi
 
 # If specified, generate a selfsigned certificate.
 if [ "${SSL_CERT:-none}" = "selfsigned" ]; then
@@ -102,7 +102,5 @@ fi
 [ ! -d "/var/lib/dav/data" ] && mkdir -p "/var/lib/dav/data"
 [ ! -e "/var/lib/dav/DavLock" ] && touch "/var/lib/dav/DavLock"
 chown -R www-data:www-data "/var/lib/dav"
-
-cp /usr/local/apache2/webdav/dav.conf /usr/local/apache2/conf/conf-available/dav.conf
 
 exec "$@"

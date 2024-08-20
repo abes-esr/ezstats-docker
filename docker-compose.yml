@@ -2,6 +2,20 @@
 
 services:
 
+  ezstats-rp:
+    image: nginx:1.25
+    container_name: ezstats-rp
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./reverse-proxy/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - default
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+
   ezstats-ezpaarse:
     container_name: ezstats-ezpaarse
     image: ezpaarseproject/ezpaarse:3.9.3
@@ -28,6 +42,9 @@ services:
     depends_on:
       - ezstats-ezpaarse-db
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ezpaarse.rule=PathPrefix(`/`)
 
   ezstats-ezpaarse-db:
     container_name: ezstats-ezpaarse-db
@@ -47,14 +64,17 @@ services:
     cpus: ${EZSTATS_CPU_LIMIT}
     ports:
       - "58080:80"
-    environment:
-      AUTH_TYPE: Digest
     volumes:
       - ezstats-logs:/var/lib/dav
-      - ./webdav:/usr/local/apache2/webdav
+      - ./webdav/dav.conf:/usr/local/apache2/conf/conf-available/dav.conf
       - ./webdav/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./webdav/user.passwd:/user.passwd
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.webdav.rule=PathPrefix(`/webdav`)
+      - traefik.http.middlewares.webdav.replacepathregex.regex=^/webdav/(.*)
+      - traefik.http.middlewares.webdav.replacepathregex.replacement=/$$1
 
   ezstats-watchtower:
     image: containrrr/watchtower:1.4.0
@@ -84,7 +104,8 @@ services:
 
   ezstats-batch-theses:
     container_name: ezstats-batch-theses
-    image: abesesr/ezstats:develop-ezstats-batch-theses
+    build:
+      context: batch-theses/
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -95,17 +116,11 @@ services:
     depends_on:
       - ezstats-ezpaarse
     restart: unless-stopped
-    labels:
-      - "co.elastic.logs/enabled=true"
-      - "co.elastic.logs/processors.add_fields.target="
-      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
-      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-batch-theses"
-      # pour que les mises à jour de cette image soient auto-déployées par watchtower
-      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
     
   ezstats-batch-logs:
     container_name: ezstats-batch-logs
-    image: abesesr/ezstats:develop-ezstats-batch-logs
+    build:
+      context: batch-logs/
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -117,13 +132,6 @@ services:
     #   depends_on:
     #  - ezstats-ezpaarse
     restart: unless-stopped
-    labels:
-      - "co.elastic.logs/enabled=true"
-      - "co.elastic.logs/processors.add_fields.target="
-      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
-      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-batch-logs"
-      # pour que les mises à jour de cette image soient auto-déployées par watchtower
-      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
 
 volumes:
   ezstats-logs:
