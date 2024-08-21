@@ -95,7 +95,7 @@ module.exports = function () {
 
         if (ecs.length === 0) { return; }
 
-        const unitids = ecs.filter(([ec, done]) => ec.rtype != 'RECORD').map(([ec, done]) => ec.unitid);
+        const unitids = ecs.filter(([ec, done]) => (ec.rtype === 'PHD_THESIS')||(ec.rtype === 'ABS')).map(([ec, done]) => ec.unitid);
 
         const maxAttempts = 5;
         let tries = 0;
