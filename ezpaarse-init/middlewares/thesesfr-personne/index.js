@@ -3,16 +3,16 @@
 const co = require('co');
 const request = require('request');
 const { bufferedProcess, wait } = require('../utils.js');
-const cache = ezpaarse.lib('cache')('thesesfr');
+const cache = ezpaarse.lib('cache')('thesesfr-personne');
 
 module.exports = function () {
     const logger = this.logger;
     const report = this.report;
     const req = this.request;
 
-    logger.info('Initializing THOMAS thesesfr middleware');
+    logger.info('Initializing THOMAS thesesfr-personne middleware');
 
-    const cacheEnabled = !/^false$/i.test(req.header('thesesfr-cache'));
+    const cacheEnabled = !/^false$/i.test(req.header('thesesfr-personne-cache'));
 
     logger.info(`Thesesfr cache: ${cacheEnabled ? 'enabled' : 'disabled'}`);
 
@@ -31,7 +31,7 @@ module.exports = function () {
     if (isNaN(packetSize)) { packetSize = 100; } //Default : 50
     if (isNaN(bufferSize)) { bufferSize = 1000; } //Default : 1000
 
-    let baseUrl = "https://theses.fr/api/v1/theses/recherche/";
+    let baseUrl = "https://theses.fr/api/v1/personnes/recherche/";
 
     if (isNaN(baseWaitTime)) { baseWaitTime = 10; } //1000
     if (isNaN(maxTries)) { maxTries = 5; }
@@ -44,9 +44,9 @@ module.exports = function () {
         return err;
     }
 
-    report.set('thesesfr', 'thesesfr-queries', 0);
-    report.set('thesesfr', 'thesesfr-query-fails', 0);
-    report.set('thesesfr', 'thesesfr-cache-fails', 0);
+    report.set('thesesfr-personne', 'thesesfr-queries', 0);
+    report.set('thesesfr-personne', 'thesesfr-query-fails', 0);
+    report.set('thesesfr-personne', 'thesesfr-cache-fails', 0);
 
     const process = bufferedProcess(this, {
         packetSize,
@@ -62,8 +62,8 @@ module.exports = function () {
 
             return findInCache(ec.unitid).then(cachedDoc => {
                 if (cachedDoc) {
-                    //logger.info('from cache : ec rtype '+ec.rtype+' doc.nnt '+doc.nnt);
-                    logger.info('from cache thesesfr: ec rtype '+ec.rtype);
+                    //logger.info('from cache : ec rtype '+ec.rtype+' doc.nom '+doc.nom+ ' doc.prenom '+doc.prenom);
+                    logger.info('from cache thesesfr-personne: ec rtype '+ec.rtype);
                     enrichEc(ec, cachedDoc);
                     return false;
                 }
@@ -95,7 +95,7 @@ module.exports = function () {
 
         if (ecs.length === 0) { return; }
 
-        const unitids = ecs.filter(([ec, done]) => ec.rtype != 'RECORD').map(([ec, done]) => ec.unitid);
+        const unitids = ecs.filter(([ec, done]) => ec.rtype === 'RECORD').map(([ec, done]) => ec.unitid);
 
         const maxAttempts = 5;
         let tries = 0;
@@ -135,12 +135,12 @@ module.exports = function () {
                 // If we can't find a result for a given ID, we cache an empty document
                 yield cacheResult(unitid, doc || {});
             } catch (e) {
-                report.inc('thesesfr', 'thesesfr-cache-fails');
+                report.inc('thesesfr-personne', 'thesesfr-cache-fails');
             }
 
             if (doc) {
-                //logger.info('depuis onPacket:  ec rtype '+ec.rtype+' doc.nnt '+doc.nnt);
-                logger.info('depuis onPacket thesesfr:  ec rtype ');
+                //logger.info('depuis onPacket:  ec rtype '+ec.rtype+' doc.nom '+doc.nom+ ' doc.prenom '+doc.prenom);
+                logger.info('depuis onPacket thesesfr-personne:  ec rtype '+ec.rtype);
                 enrichEc(ec, doc);
             }
 
@@ -156,101 +156,40 @@ module.exports = function () {
      */
     function enrichEc(ec, result) {
 
-            //Thèse soutenue
-            if (result.nnt) {
-                ec['nnt'] = result.nnt;
-            }
-            else {
-                ec['numSujet'] = result.id; //Sujet de thèse
-            }
-            if (result.datePremiereInscriptionDoctorat) {
-                ec['dateInscription'] = result.datePremiereInscriptionDoctorat; //Sujet de thèse
-            }
-            if (result.etabSoutenanceN) {
-                ec['etabSoutenanceN'] = result.etabSoutenanceN;
-            }
-            if (result.etabSoutenancePpn) {
-                ec['etabSoutenancePpn'] = result.etabSoutenancePpn;
-            }
-            if (result.dateSoutenance) {
-                ec['dateSoutenance'] = result.dateSoutenance;
-            }
-            if (result.status) {
-                ec['statut'] = result.status;
-            }
-            //accessible
-            //source
-            if (result.discipline) {
-                ec['discipline'] = result.discipline;
-            }
-            //domaine
-            //langue
-            if (result.ecolesDoctorale) {
-                ec['ecolesDoctoraleN'] = result.ecolesDoctorale.map(elt=>elt.nom).join(" / ");
-                ec['ecolesDoctoralePpn'] = result.ecolesDoctorale.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.partenairesDeRecherche) {
-                ec['partenaireRechercheN'] = result.partenairesDeRecherche.map(elt=>elt.nom).join(" / ");
-                ec['partenaireRecherchePpn'] = result.partenairesDeRecherche.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.partenairesDeRecherche) {
-                ec['partenaireRechercheN'] = result.partenairesDeRecherche.map(elt=>elt.nom).join(" / ");
-                ec['partenaireRecherchePpn'] = result.partenairesDeRecherche.map(elt=>elt.ppn).join(" / ");
-            }
-            //coTutelleN, coTutellePpn
-            if (result.auteurs) {
-                ec['auteurN'] = result.auteurs.map(elt=>elt.nom+" "+elt.prenom).join(" / ");
-                ec['auteurPpn'] = result.auteurs.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.directeurs) {
-                ec['directeurN'] = result.directeurs.map(elt=>elt.nom+" "+elt.prenom).join(" / ");
-                ec['directeurPpn'] = result.directeurs.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.president && result.president.nom && result.president.prenom && result.president.ppn) {
-                ec['presidentN'] = result.president.nom + " " + result.president.prenom;
-                ec['presidentPpn'] = result.president.ppn;
-            }
-            if (result.rapporteurs) {
-                ec['rapporteursN'] = result.rapporteurs.map(elt=>elt.nom+" "+elt.prenom).join(" / ");
-                ec['rapporteursPpn'] = result.rapporteurs.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.examinateurs) {
-                ec['membresN'] = result.examinateurs.map(elt=>elt.nom+" "+elt.prenom).join(" / ");
-                ec['membresPpn'] = result.examinateurs.map(elt=>elt.ppn).join(" / ");
+            //il s'agit d'une Personne (PPN)
+            if (result.nom && result.prenom) {
+                ec['personneN'] = result.nom+ " "+result.prenom;
             }
 
-        //logger.info(' etab Soutenance ==> ' + ec['etabSoutenancePpn'] + ' ' +ec['etabSoutenanceN']);
-        //if (ec.rtype === 'PHD_THESIS') {
-        
+            ec['personnePpn'] = ec.unitid;
+            logger.verbose(' personne ==> ' + ec['personneN'] + ' ' +ec['personnePpn']);
 
-        //}
+            // TODO TMX changer le ec.rtype pour 'BIO' afin de les ignorer dans le middleware suivant qui devra traiter uniquement les ec d'organismes restant toujours à 'RECORD'
+        ec.rtype = 'BIO'
+        logger.verbose(' personne ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
     }
+
+
+
 
     /**
      * Request metadata from ThesesFr API for given IDs
      * @param {Array} unitids the ids to query
      */
     function query(unitids) {
-        report.inc('thesesfr', 'thesesfr-queries');
+        report.inc('thesesfr-personne', 'thesesfr-queries');
 
         const subQueries = [];
-        const nnts   = [];
-        const numSujets  = [];
         const ppns  = [];
 
         unitids.forEach(id => {
-            /^(([0-9]{4})([a-z]{4})[0-9a-z]+)$/i.test(id) ? nnts.push(id) : /^(s[0-9]+)$/i.test(id) ? numSujets.push(id) : ppns.push(id);
+            ppns.push(id);
         });
 
-        if (nnts.length > 0) {
-            subQueries.push(`nnt:(${nnts.join(' OR ')})`);
+        if (ppns.length > 0) {
+            subQueries.push(`${ppns.join(' OR ')}`);
         }
 
-        if (numSujets.length > 0) {
-            subQueries.push(`numSujet:("${numSujets.join('" OR "')}")`);
-        }
-
-        //ACT TODO : traiter les PPN
         const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
         logger.info(' query ==> ' + query);
 
@@ -263,7 +202,7 @@ module.exports = function () {
 
             request(options, (err, response, result) => {
                 if (err) {
-                    report.inc('thesesfr', 'thesesfr-query-fails');
+                    report.inc('thesesfr-personne', 'thesesfr-query-fails');
                     return reject(err);
                 }
 
@@ -272,16 +211,16 @@ module.exports = function () {
                 }
 
                 if (response.statusCode !== 200 && response.statusCode !== 304) {
-                    report.inc('thesesfr', 'thesesfr-query-fails');
+                    report.inc('thesesfr-personne', 'thesesfr-query-fails');
                     return reject(new Error(`${response.statusCode} ${response.statusMessage}`));
                 }
 
-                if (!Array.isArray(result && result.theses)) {
-                    report.inc('thesesfr', 'thesesfr-query-fails');
+                if (!Array.isArray(result && result.personnes)) {
+                    report.inc('thesesfr-personne', 'thesesfr-query-fails');
                     return reject(new Error('invalid response'));
                 }
 
-                return resolve(result.theses);
+                return resolve(result.personnes);
             });
         });
     }
