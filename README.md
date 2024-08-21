@@ -173,7 +173,13 @@ Ou bien [lancer le conteneur ``ezstats-watchtower``](https://github.com/abes-esr
 
 ([lien](https://docs.google.com/drawings/d/1ixoo9xEQD0p1jGV9T_CraN0o7vDaFLlZz2QjQSRJBhU/edit) pour modifier le schéma - droits requis)
 
-Les codes de source d'EZStats sont ici :
-- https://github.com/ezpaarse-project/ezpaarse : Logiciel EZPaarse
-- https://github.com/ezpaarse-project/ezmesure : Logiciel EZMesure
-- https://github.com/ezpaarse-project/ezreeport : Logiciel EZReeport
+Les images d'ezstats-batch-theses et d'ezstats-batch-logs sont ici :
+- https://github.com/abes-esr/ezstats-batch-theses
+- https://github.com/abes-esr/ezstats-batch-logs
+
+Les codes sources d'EZPaarse (et lib NodeJS), EZMesure (et lib NodeJS) et EZReport (maintenus par l'INIST) sont ici : 
+- https://github.com/ezpaarse-project/ezpaarse
+- https://github.com/ezpaarse-project/node-ezpaarse
+- https://github.com/ezpaarse-project/ezmesure
+- https://github.com/ezpaarse-project/node-ezmesure
+- https://github.com/ezpaarse-project/ezreeport
