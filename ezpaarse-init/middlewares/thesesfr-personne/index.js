@@ -162,11 +162,11 @@ module.exports = function () {
             }
 
             ec['personnePpn'] = ec.unitid;
-            logger.verbose(' personne ==> ' + ec['personneN'] + ' ' +ec['personnePpn']);
+            logger.info(' personne ==> ' + ec['personneN'] + ' ' +ec['personnePpn']);
 
             // TODO TMX changer le ec.rtype pour 'BIO' afin de les ignorer dans le middleware suivant qui devra traiter uniquement les ec d'organismes restant toujours à 'RECORD'
         ec.rtype = 'BIO'
-        logger.verbose(' personne ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
+        logger.info(' personne ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
     }
 
 
