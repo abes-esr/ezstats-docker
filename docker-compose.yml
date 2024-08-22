@@ -15,6 +15,11 @@ services:
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-rp"
 
   ezstats-ezpaarse:
     container_name: ezstats-ezpaarse
@@ -42,6 +47,11 @@ services:
     depends_on:
       - ezstats-ezpaarse-db
     restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-ezpaarse"
 
   ezstats-ezpaarse-db:
     container_name: ezstats-ezpaarse-db
@@ -52,6 +62,11 @@ services:
 #    ports:
 #      - 27017:27017
     restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-ezpaarse-db"
 
   ezstats-webdav:
     container_name: ezstats-webdav
@@ -67,6 +82,11 @@ services:
       - ./webdav/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./webdav/user.passwd:/user.passwd
     restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-webdav"
 
   ezstats-watchtower:
     image: containrrr/watchtower:1.4.0
@@ -96,21 +116,28 @@ services:
 
   ezstats-batch-theses:
     container_name: ezstats-batch-theses
-    build:
-      context: batch-theses/
+    image: abesesr/ezstats:develop-ezstats-batch-theses
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
+    environment:
+      EZMESURE_TOKEN: ${EZMESURE_TOKEN}
     volumes:
       - ezstats-logs:/home/node/logtheses
     depends_on:
       - ezstats-ezpaarse
     restart: unless-stopped
-    
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-batch-theses"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
+
   ezstats-batch-logs:
     container_name: ezstats-batch-logs
-    build:
-      context: batch-logs/
+    image: abesesr/ezstats:develop-ezstats-batch-logs
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -118,6 +145,13 @@ services:
       - ezstats-logs:/home/node/logtheses/logs
       - ezstats-logstash:/home/node/logstash
     restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-batch-logs"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
 
 volumes:
   ezstats-logs:
