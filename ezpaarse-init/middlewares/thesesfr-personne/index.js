@@ -155,18 +155,18 @@ module.exports = function () {
      * @param {Object} result the document used to enrich the EC
      */
     function enrichEc(ec, result) {
-
+        if (ec.rtype === 'RECORD' && result.nom && result.prenom) {
             //il s'agit d'une Personne (PPN)
-            if (result.nom && result.prenom) {
-                ec['personneN'] = result.nom+ " "+result.prenom;
-            }
+
+            ec['personneN'] = result.nom + " " + result.prenom;
 
             ec['personnePpn'] = ec.unitid;
-            logger.info(' personne ==> ' + ec['personneN'] + ' ' +ec['personnePpn']);
+            logger.info(' personne ==> ' + ec['personneN'] + ' ' + ec['personnePpn']);
 
             // TODO TMX changer le ec.rtype pour 'BIO' afin de les ignorer dans le middleware suivant qui devra traiter uniquement les ec d'organismes restant toujours à 'RECORD'
-        ec.rtype = 'BIO'
-        logger.info(' personne ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
+            ec.rtype = 'BIO'
+            logger.info(' personne ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' + ec['personnePpn']);
+        }
     }
 
 
