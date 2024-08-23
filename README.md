@@ -14,11 +14,18 @@ Ce dépôt contient la configuration docker 🐳 pour déployer l'application EZ
 
 Les URLs correspondantes aux déploiements en local, test et prod sont les suivantes :
 
-- local :
-    - http://lap-TRI.levant.abes.fr:59599 : homepage d'EZStats
+- local : 
+  - http://lap-TRI.levant.abes.fr:59599
+  - http://lap-TRI.levant.abes.fr:58080
 - dev : 
-- test :
-- prod
+  - https://ezstats-dev.abes.fr/
+  - https://ezstats-dev.abes.fr/webdav/
+- test : 
+  - https://ezstats-test.abes.fr/
+  - https://ezstats-test.abes.fr/webdav/
+- prod : 
+  - https://ezstats.abes.fr/
+  - https://ezstats.abes.fr/webdav/
 
 ## Prérequis
 
