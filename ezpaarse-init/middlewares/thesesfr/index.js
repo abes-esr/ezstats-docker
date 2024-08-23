@@ -64,7 +64,12 @@ module.exports = function () {
                 if (cachedDoc) {
                     //logger.info('from cache : ec rtype '+ec.rtype+' doc.nnt '+doc.nnt);
                     logger.info('from cache thesesfr: ec rtype '+ec.rtype);
-                    enrichEc(ec, cachedDoc);
+                    if(Object.keys(cachedDoc).length === 0){
+                            logger.info('cachedDoc est vide pour ec.unitid '+ec.unitid);
+                     }
+                    else {
+                     enrichEc(ec, cachedDoc);
+                    }
                     return false;
                 }
                 return true;
@@ -140,7 +145,7 @@ module.exports = function () {
 
             if (doc) {
                 //logger.info('depuis onPacket:  ec rtype '+ec.rtype+' doc.nnt '+doc.nnt);
-                logger.info('depuis onPacket thesesfr:  ec rtype ');
+                logger.info('depuis onPacket thesesfr:  ec rtype '+ec.rtype);
                 enrichEc(ec, doc);
             }
 
@@ -239,7 +244,7 @@ module.exports = function () {
         const ppns  = [];
 
         unitids.forEach(id => {
-            /^(([0-9]{4})([a-z]{4})[0-9a-z]+)$/i.test(id) ? nnts.push(id) : /^(s[0-9]+)$/i.test(id) ? numSujets.push(id) : ppns.push(id);
+            /^(([0-9]{4})([a-z]{2}[0-9a-z]{2})[0-9a-z]+)$/i.test(id) ? nnts.push(id) : /^(s[0-9]+)$/i.test(id) ? numSujets.push(id) : ppns.push(id);
         });
 
         if (nnts.length > 0) {
