@@ -121,7 +121,9 @@ services:
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
     environment:
+      EZMESURE_URL: ${EZMESURE_URL}
       EZMESURE_TOKEN: ${EZMESURE_TOKEN}
+      EZMESURE_INDEX: ${EZMESURE_INDEX}
     volumes:
       - ezstats-logs:/home/node/logtheses
     depends_on:

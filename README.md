@@ -27,6 +27,9 @@ Les URLs correspondantes aux déploiements en local, test et prod sont les suiva
   - https://ezstats.abes.fr/
   - https://ezstats.abes.fr/webdav/
 
+Le téléchargement de fichier depuis WebDav, par Windows (lecteur réseau) est limité à 47 Mo.  
+Si le fichier est plus gros, il faut passer par un navigateur web et faire "Enregistrer la cible sous..."
+
 ## Prérequis
 
 Disposer de :
