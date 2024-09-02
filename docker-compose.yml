@@ -123,7 +123,7 @@ services:
     environment:
       EZMESURE_URL: ${EZMESURE_URL}
       EZMESURE_TOKEN: ${EZMESURE_TOKEN}
-      EZMESURE_INDEX: ${EZMESURE_INDEX}
+      EZMESURE_INDEX: ${EZMESURE_THESESFR_INDEX}
     volumes:
       - ezstats-logs:/home/node/logtheses
     depends_on:
