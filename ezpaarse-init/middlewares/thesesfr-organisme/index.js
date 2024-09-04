@@ -58,6 +58,7 @@ module.exports = function () {
          */
         filter: ec => {
             if (!ec.unitid) { return false; }
+            if (!(ec.rtype === 'RECORD')) { return false; } //pas la peine d'interroger le cache mongodb si l'EC n'est pas un organisme
             if (!cacheEnabled) { return true; }
 
             return findInCache(ec.unitid).then(cachedDoc => {
@@ -65,14 +66,14 @@ module.exports = function () {
             //TMX cas ou il y a un objet : dans le cas de thesesfr-organismes il sera forcemment vide {} = convention identique aux autres middlewares
                 if (cachedDoc && (typeof cachedDoc === 'object')) {
 
-                    logger.info ('cachedDoc est un objet');
+                    logger.info ('cached doc est un objet');
 
                     if(Object.keys(cachedDoc).length === 0){
-                            logger.info('cachedDoc from thesesfr-organisme est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
+                            logger.warn('missed cache, doc from thesesfr-organisme est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
                      }
                     else {
                     logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-organisme');
-                    logger.info ('cachedDoc est un objet NON VIDE avec '+ Object.keys(cachedDoc).length +' propriétés');
+                    logger.info('cached doc est un objet NON VIDE avec '+ Object.keys(cachedDoc).length +' propriétés');
 
                      enrichEc(ec, cachedDoc);
                      return false;
@@ -82,10 +83,10 @@ module.exports = function () {
             //TMX cas "normal" dans thesesfr-organisme la réponse est une chaine de texte, deux sous-cas : vide ou pas vide
                 if (cachedDoc && typeof cachedDoc !== 'object') {
 
-                    logger.info ('cachedDoc différent de objet : '+typeof cachedDoc);
+                    //logger.info ('cached doc différent de objet : '+typeof cachedDoc);
 
                     if(cachedDoc.length === 0){
-                            logger.info('cachedDoc from thesesfr-organisme DIFFERENT de objet mais taille 0 pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
+                            logger.warn('missed cache, doc from thesesfr-organisme DIFFERENT de objet mais taille 0 pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
                      }
                     else {
                     logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-organisme');
@@ -195,7 +196,7 @@ for (const [ec, done] of ecs) {
 
             if (doc && typeof doc !== 'object') {
 
-                    logger.info ('la réponse de onPacket query différent de objet : '+typeof doc);
+                    //logger.info ('la réponse de onPacket query différent de objet : '+typeof doc);
 
                     if(doc.length === 0){
                             logger.info('objet réponse DIFFERENT de objet mais taille 0 pour id '+id);

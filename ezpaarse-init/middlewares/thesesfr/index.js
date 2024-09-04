@@ -58,13 +58,14 @@ module.exports = function () {
          */
         filter: ec => {
             if (!ec.unitid) { return false; }
+            if (!((ec.rtype === 'PHD_THESIS')||(ec.rtype === 'ABS'))) { return false; } //pas la peine d'interroger le cache mongodb si l'EC n'est pas une thèses/une notice de thèse
             if (!cacheEnabled) { return true; }
 
             return findInCache(ec.unitid).then(cachedDoc => {
                 if (cachedDoc) {
 
                     if(Object.keys(cachedDoc).length === 0){
-                       logger.info('cachedDoc from thesesfr est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
+                       logger.warn('missed cache, doc from thesesfr est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
                      }
                     else {
                     logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr');
