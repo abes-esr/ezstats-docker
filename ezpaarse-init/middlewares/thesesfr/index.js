@@ -10,7 +10,7 @@ module.exports = function () {
     const report = this.report;
     const req = this.request;
 
-    logger.info('Initializing THOMAS thesesfr middleware');
+    logger.info('Initializing ABES thesesfr middleware');
 
     const cacheEnabled = !/^false$/i.test(req.header('thesesfr-cache'));
 
@@ -62,12 +62,12 @@ module.exports = function () {
 
             return findInCache(ec.unitid).then(cachedDoc => {
                 if (cachedDoc) {
-                    //logger.info('from cache : ec rtype '+ec.rtype+' doc.nnt '+doc.nnt);
-                    logger.info('from cache thesesfr: ec rtype '+ec.rtype);
+
                     if(Object.keys(cachedDoc).length === 0){
-                            logger.info('cachedDoc est vide pour ec.unitid '+ec.unitid);
+                       logger.info('cachedDoc from thesesfr est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
                      }
                     else {
+                    logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr');
                      enrichEc(ec, cachedDoc);
                     }
                     return false;
@@ -106,7 +106,7 @@ module.exports = function () {
         let tries = 0;
         let docs;
 
-                logger.info('dans onPacket avant le while');
+                //logger.info('dans onPacket avant le while');
 
         while (!docs) {
             if (++tries > maxAttempts) {
@@ -115,7 +115,7 @@ module.exports = function () {
             }
 
             try {
-                logger.info('avant query');
+                //logger.info('avant query');
                 docs = yield query(unitids);
             } catch (e) {
                 logger.error(`Thesesfr: ${e.message}`);
@@ -144,8 +144,7 @@ module.exports = function () {
             }
 
             if (doc) {
-                //logger.info('depuis onPacket:  ec rtype '+ec.rtype+' doc.nnt '+doc.nnt);
-                logger.info('depuis onPacket thesesfr:  ec rtype '+ec.rtype);
+                logger.info('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr'); 
                 enrichEc(ec, doc);
             }
 
@@ -224,11 +223,6 @@ module.exports = function () {
                 ec['membresPpn'] = result.examinateurs.map(elt=>elt.ppn).join(" / ");
             }
 
-        //logger.info(' etab Soutenance ==> ' + ec['etabSoutenancePpn'] + ' ' +ec['etabSoutenanceN']);
-        //if (ec.rtype === 'PHD_THESIS') {
-        
-
-        //}
     }
 
     /**

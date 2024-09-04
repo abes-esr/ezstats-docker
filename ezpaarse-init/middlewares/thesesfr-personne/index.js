@@ -10,7 +10,7 @@ module.exports = function () {
     const report = this.report;
     const req = this.request;
 
-    logger.info('Initializing THOMAS thesesfr-personne middleware');
+    logger.info('Initializing ABES thesesfr-personne middleware');
 
     const cacheEnabled = !/^false$/i.test(req.header('thesesfr-personne-cache'));
 
@@ -62,12 +62,12 @@ module.exports = function () {
 
             return findInCache(ec.unitid).then(cachedDoc => {
                 if (cachedDoc) {
-                    //logger.info('from cache : ec rtype '+ec.rtype+' doc.nom '+doc.nom+ ' doc.prenom '+doc.prenom);
-                    logger.info('from cache thesesfr-personne: ec rtype '+ec.rtype);
+
                     if(Object.keys(cachedDoc).length === 0){
-                            logger.info('cachedDoc est vide pour ec.unitid '+ec.unitid);
+                       logger.info('cachedDoc from thesesfr-personne est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
                      }
                     else {
+                    logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-personne');
                      enrichEc(ec, cachedDoc);
                     }
                     return false;
@@ -106,7 +106,7 @@ module.exports = function () {
         let tries = 0;
         let docs;
 
-                logger.info('dans onPacket avant le while');
+                //logger.info('dans onPacket avant le while');
 
         while (!docs) {
             if (++tries > maxAttempts) {
@@ -115,7 +115,7 @@ module.exports = function () {
             }
 
             try {
-                logger.info('avant query');
+                //logger.info('avant query');
                 docs = yield query(unitids);
             } catch (e) {
                 logger.error(`Thesesfr: ${e.message}`);
@@ -144,8 +144,7 @@ module.exports = function () {
             }
 
             if (doc) {
-                //logger.info('depuis onPacket:  ec rtype '+ec.rtype+' doc.nom '+doc.nom+ ' doc.prenom '+doc.prenom);
-                logger.info('depuis onPacket thesesfr-personne:  ec rtype '+ec.rtype);
+                logger.info('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr-personne');
                 enrichEc(ec, doc);
             }
 
@@ -167,11 +166,11 @@ module.exports = function () {
             }
 
             ec['personnePpn'] = ec.unitid;
-            logger.info(' personne ==> ' + ec['personneN'] + ' ' +ec['personnePpn']);
+      
 
-            // TODO TMX changer le ec.rtype pour 'BIO' afin de les ignorer dans le middleware suivant qui devra traiter uniquement les ec d'organismes restant toujours à 'RECORD'
+            // TMX changer le ec.rtype pour 'BIO' afin de les ignorer dans le middleware suivant qui devra traiter uniquement les ec d'organismes restant toujours à 'RECORD'
         ec.rtype = 'BIO'
-        logger.info(' personne ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
+        logger.info(' personne enrichie ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
     }
 
 

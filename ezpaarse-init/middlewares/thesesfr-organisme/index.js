@@ -10,7 +10,7 @@ module.exports = function () {
     const report = this.report;
     const req = this.request;
 
-    logger.info('Initializing THOMAS thesesfr-organisme middleware');
+    logger.info('Initializing ABES thesesfr-organisme middleware');
 
     const cacheEnabled = !/^false$/i.test(req.header('thesesfr-organisme-cache'));
 
@@ -247,7 +247,7 @@ if( result && (typeof result === 'object') && (Object.keys(result).length === 0)
         return new Promise((resolve, reject) => {
             const options = {
                 method: 'GET',
-// TMX ce n'est pas du JSON das la response
+// TMX ce n'est pas du JSON dans la response
                 uri: `${baseUrl}${id}`
             };
 
