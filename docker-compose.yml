@@ -70,7 +70,7 @@ services:
 
   ezstats-webdav:
     container_name: ezstats-webdav
-    image: bytemark/webdav:2.4
+    image: abesesr/ezstats:develop-ezstats-webdav
     mem_limit: ${EZSTATS_MEM_LIMIT}
     memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
     cpus: ${EZSTATS_CPU_LIMIT}
@@ -78,9 +78,12 @@ services:
       - "58080:80"
     volumes:
       - ezstats-logs:/var/lib/dav
-      - ./webdav/dav.conf:/usr/local/apache2/conf/conf-available/dav.conf
-      - ./webdav/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+      # Utilisation des variables USERNAME et PASSWORD pour avoir un user admin.
+      # Sinon, on peut utiliser la commande : htdigest user.passwd WebDAV "user" pour définir d'autres utilisateurs
       - ./webdav/user.passwd:/user.passwd
+    environment:
+      USERNAME: ${EZSTATS_WEBDAV_USERNAME}
+      PASSWORD: ${EZSTATS_WEBDAV_PASSWORD}
     restart: unless-stopped
     labels:
       - "co.elastic.logs/enabled=true"

@@ -43,7 +43,6 @@ Disposer de :
 # La variable $INSTALL est pour nos serveurs de dev/test/prod, /opt/pod . En local, le chemin peut être différent (ex : si on utilise Windows).
 cd $INSTALL
 git clone https://github.com/abes-esr/ezstats-docker.git
-chmod +x webdav/docker-entrypoint.sh
 ```
 
 - Configurer l'application depuis l'exemple du [fichier ``.env-dist``](./.env-dist) (ce fichier contient la liste des variables) :
@@ -52,16 +51,6 @@ cd $INSTALL/ezstats-docker/
 cp .env-dist .env
 ```
 personnaliser alors le contenu du .env
-
-- Définir le mot de passe du compte admin pour WebDAV (qui aura les droits en lecture et écriture), 
-changer les autorisations du fichiers (644) et 
-les droits d'exécution de docker-entrypoint.sh
-```
-cd webdav
-htdigest user.passwd WebDAV admin
-chmod 644 user.passwd
-chmod +x docker-entrypoint.sh
-```
 
 - Créer le répertoire contenant les logs (_défini dans le .env par les variables :
 EZSTATS_VOLUME_DEVICE et EZSTATS_LOGSTASH_VOLUME_DEVICE_)   
