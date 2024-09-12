@@ -1,0 +1,2564 @@
+{
+  "head" : {
+    "vars" : [ "etabLabel", "codeEtab", "idpRenater", "ppn" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "AGPT"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp1.agroparistech.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "139408088"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "AgroParisTech"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "AIXM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idpv3.univ-amu.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "15863621X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Aix-Marseille Université"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "AMIE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.u-picardie.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403714"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Picardie Jules Verne - Amiens"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "AMIE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.u-picardie.fr/idp5/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403714"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Picardie Jules Verne - Amiens"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ANGE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-angers.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026402920"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université d'Angers (1972-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ANTI"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-antilles.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "187841578"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université des Antilles"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ARTO"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-artois.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "034634894"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université d'Artois"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "AVIG"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp3.univ-avignon.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026369044"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université d'Avignon (1984-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "BELF"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://federation.utbm.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "068859813"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de technologie de Belfort Montbéliard"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "BESA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp1.univ-fcomte.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403188"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Franche-Comté - Besançon (1970-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "BOR3"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.u-bordeaux-montaigne.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027548392"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Bordeaux-Montaigne - Bordeaux 3"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "BORD"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp-ubx.u-bordeaux.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "175206562"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Bordeaux (2014-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "BRES"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://federation3.univ-brest.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403021"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Bretagne Occidentale - Brest"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "CAEN"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp4.unicaen.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403064"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Caen Normandie"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "CHAM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.univ-savoie.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026369125"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Savoie Mont Blanc - Chambéry"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "CNAM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.lecnam.net/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027404978"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Conservatoire national des arts et métiers"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "COAZ"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-cotedazur.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241035694"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Côte d'Azur (EPE)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "COAZ"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:unice.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241035694"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Côte d'Azur (EPE)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "COMP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:utc.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026570564"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de technologie de Compiègne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "CORT"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.univ-corse.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "029473284"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Corse-Pascal-Paoli - Corte"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "CSUP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://sso-ciation-saclay.centralesupelec.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "184443237"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "CentraleSupélec"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "CYUN"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.u-cergy.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241871808"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "CY Cergy Paris Université"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "DENS"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.ens-paris-saclay.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028237080"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École normale supérieure de Cachan"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "DENS"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp1.ens-paris-saclay.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028237080"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École normale supérieure de Cachan"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EHES"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idpv3.ehess.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026374889"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole des hautes études en sciences sociales"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "DUNK"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-littoral.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030969379"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université du Littoral Côte d'Opale - Dunkerque"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ECDL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://identites.ec-lyon.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "033894221"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole centrale de Lyon"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ECDN"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibbov3-vm.ec-nantes.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "03063525X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole centrale de Nantes"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ECDN"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibbov3b-vm.ec-nantes.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "03063525X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole centrale de Nantes"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ECLI"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.centralelille.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "256304629"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole centrale de Lille"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ECLI"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.centralelille.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027964361"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole centrale de Lille"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EHEC"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp3.hec.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027321118"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole des hautes études commerciales"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EMAC"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shib.mines-albi.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "035022116"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École nationale supérieure des mines d'Albi-Carmaux"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EMAL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shib3.mines-ales.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "032486111"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École nationale supérieure des mines d'Alès"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EMNA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://nte.gemtech.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "033236720"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École nationale supérieure des mines de Nantes"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EMSE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.emse.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028028694"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École nationale supérieure des mines de Saint-Étienne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EMSE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp2.emse.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028028694"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École nationale supérieure des mines de Saint-Étienne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENAC"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.enac.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027771881"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale de l'aviation civile"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENAM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.ensam.eu/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02637515X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieure d'arts et métiers"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENCM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.enscm.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027956768"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieure de chimie de Montpellier"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENCP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth03.chartes.psl.eu/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375052"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale des chartes"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENCR"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://ident-shib.ensc-rennes.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "081711883"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieures de chimie de Rennes"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENIB"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.enib.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "120796899"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale d'ingénieurs de Brest"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENIS"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibbo3.enise.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030267676"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale d'ingénieurs de saint-Etienne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENMP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.mines-paristech.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375249"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieure des mines de Paris"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENPC"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.enpc.fr/saml/metadata"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375060"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale des ponts et chaussées"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENSL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.ens-lyon.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "149154992"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École normale supérieure de Lyon (2010-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENST"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.telecom-paristech.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375273"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieure des télécommunications"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENSU"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://federation.ens.psl.eu/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "031738419"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École normale supérieure"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENTA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://identite.ensta-bretagne.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "177263660"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieure de techniques avancées Bretagne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENTP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://si-idp04.entpe.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027941426"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale des travaux publics"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EPHE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibbov3.ephe.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375478"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole pratique des hautes études"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EPXX"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.polytechnique.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027309320"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole polytechnique"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ESAE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://eliot.isae.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "159330114"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut supérieur de l'aéronautique et de l'espace"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ESEC"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://login.essec.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028029429"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole supérieure des sciences économiques et commerciales"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ESTA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.ensta.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028139577"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieure des techniques avancées"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EVRY"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.univ-evry.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030820529"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Evry Val d'Essonne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "EVRY"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibbolethv3.univ-evry.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030820529"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Evry Val d'Essonne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "GRAL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.univ-grenoble-alpes.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "240648315"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Grenoble Alpes (EPE)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "IEPP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://federation.sciences-po.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027918459"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut d'études politiques de Paris"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "IMTA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.imt-atlantique.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "202743233"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieure Mines-Télécom Atlantique Bretagne Pays de la Loire"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "INAL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.inalco.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388715"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des langues et civilisation orientales"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "IOTA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://sso.institutoptique.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "110047702"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut d'optique théorique et appliquée"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "IOTA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://sso.institutoptique.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "033592497"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut d'optique théorique et appliquée"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "IPPA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://cerbere.ip-paris.fr/saml2/idp"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "238327159"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut Polytechnique de Paris"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ISAB"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp-insa-cvl.renater.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "203592077"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des sciences appliquées Centre Val de Loire"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ISAL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idauth.insa-lyon.fr/realms/insa-lyon"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "052444724"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des sciences appliquées de Lyon"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ISAL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://llng-auth.insa-lyon.fr/saml/metadata"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "052444724"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des sciences appliquées de Lyon"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ISAL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://login.insa-lyon.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "052444724"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des sciences appliquées de Lyon"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ISAM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.insa-rouen.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "033364346"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des sciences appliquées de Rouen"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ISAM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.insa-rouen.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "050228064"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des sciences appliquées de Rouen"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENSR"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.ens-rennes.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "17864577X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École normale supérieure de Rennes"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "UREN"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-rennes1.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "26693823X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Rennes (EPE)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "VALE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-valenciennes.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404079"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Valenciennes et du Hainaut-Cambrésis"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "VERS"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.csi.uvsq.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "03082057X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Versailles – Saint-Quentin-en-Yvelines"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ECDM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://auth.centrale-marseille.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "163078998"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole centrale de Marseille"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "INPG"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.grenoble-inp.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388804"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national polytechnique de Grenoble"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ESAL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.lyon.archi.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "140178198"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École nationale supérieure d'architecture de Lyon"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "INPT"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.inp-toulouse.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388820"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national polytechnique de Toulouse"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ENVA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.vet-alfort.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "031803695"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale vétérinaire d'Alfort"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "HESP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.ehesp.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "161356915"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École des hautes études en santé publique"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "NSAI"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp2.ensai.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "034052410"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "École Nationale de Statistique et Analyse de l'Information"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "DIJO"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth.u-bourgogne.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02819005X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Bourgogne - Dijon (1970-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "TOUC"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp3.ut-capitole.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404354"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Toulouse Capitole"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "TOUC"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp3.ut-capitole.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "271180641"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Toulouse Capitole"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "TLSE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://identification.univ-toulouse.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "269359931"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Toulouse (EPE, 2022-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ISAR"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.insa-rennes.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "050228064"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des sciences appliquées de Rennes"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ISAT"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://srv-fii.insa-toulouse.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388766"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Institut national des sciences appliquées de Toulouse"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LARE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://id.univ-reunion.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404451"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de La Réunion"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LARE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-reunion.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404451"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de La Réunion"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LARO"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://apps.univ-lr.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "035375043"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "La Rochelle Université"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LEMA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-lemans.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404435"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université du Mans"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LIMO"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:unilim.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403315"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Limoges"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LORI"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-ubs.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "05017746X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Bretagne Sud"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LORR"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp3.univ-lorraine.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "157040569"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Lorraine"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LYO1"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-lyon1.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026402823"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Claude Bernard - Lyon 1"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LYO2"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-lyon2.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02640334X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Lumière - Lyon 2"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LYO3"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-lyon3.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404494"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Jean Moulin - Lyon 3"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "LYSE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://cas.universite-lyon.fr/idp"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "190915757"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Lyon (COMUE)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "MNHN"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp3.mnhn.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026394944"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Museum national d'histoire naturelle"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "MON3"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp-v4.univ-montp3.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404702"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paul-Valéry - Montpellier 3"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "MON3"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-montp3.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404702"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paul-Valéry - Montpellier 3"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "MTLD"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://multipass.imt-nord-europe.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "20073511X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale supérieure Mines-Télécom Lille Douai"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "MULH"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.uha.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403250"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université du Haut-Rhin - Mulhouse"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "NANU"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-nantes.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "258086599"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Nantes Université"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "NIME"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://federation.unimes.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "115588701"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Nîmes"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "NORM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.normandie-univ.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "190906332"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Normandie Université (COMUE)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "NSAM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.supagro.fr/idp"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "117553956"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Montpellier SupAgro"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "OBSP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shibboleth3.obspm.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026550520"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Observatoire de Paris"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ONIR"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.oniris-nantes.fr/realms/master"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "157779092"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Ecole nationale vétérinaire, agroalimentaire et de l’alimentation, Nantes Atlantique - ONIRIS"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ORLE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-orleans.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026402971"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université d'Orléans (1966-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA01"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-paris1.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027361802"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paris 1 Panthéon-Sorbonne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA02"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.u-paris2.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403145"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Panthéon-Assas - Paris 2"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA03"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-paris3.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027361837"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Sorbonne Nouvelle - Paris 3"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA05"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.parisdescartes.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404788"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paris-Descartes - Paris 5"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA06"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.upmc.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027787087"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Pierre et Marie Curie - Paris 6"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA07"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://auth.univ-paris-diderot.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027542084"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paris-Diderot - Paris 7"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA08"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp2.univ-paris8.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403552"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paris-VIII-Vincennes-Saint-Denis - Paris 8"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA09"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.ent.dauphine.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027787109"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paris Dauphine - Paris 9"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA10"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://upnidp2.parisnanterre.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403587"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paris Nanterre - Paris 10"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA12"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://auth.u-pec.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028021037"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paris-Est Créteil - Paris 12"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PA13"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-paris13.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02640463X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Sorbonne Paris Nord - Paris 13"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PAUU"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-pau.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403668"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Pau et des Pays de l'Adour"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PERP"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://federation2.univ-perp.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403692"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Perpignan Via Domitia"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "POIT"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-poitiers.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403765"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Poitiers (1970-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "POLF"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://federation.upf.pf/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "067101925"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de la Polynésie Française"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PSLE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.psl.eu/idp/saml2/metadata"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "182292592"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de recherche Paris sciences et lettres - PSL"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "PSLE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.psl.eu/idp/saml2/metadata"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241597595"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de recherche Paris sciences et lettres - PSL"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "REIM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idpv3.crous-reims.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403838"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Reims Champagne-Ardenne (1967-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "REIM"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://shib.univ-reims.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403838"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Reims Champagne-Ardenne (1967-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "REN2"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:uhb.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "054447658"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Haute-Bretagne - Rennes 2"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ROUE"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "urn:mace:cru.fr:federation:univ-rouen.fr"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403919"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Rouen-Normandie"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "STET"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp-ng.univ-st-etienne.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028209966"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Jean Monnet - Saint-Etienne"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "STRA"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.unistra.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "131056549"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Strasbourg (2008-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "TOU2"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://ruhnu.univ-tlse2.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403994"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Jean Jaurès - Toulouse 2"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "TOU3"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-tlse3.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404672"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paul Sabatier - Toulouse 3"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "TOUL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-tln.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "031122337"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Toulon"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "TOUR"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-tours.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404478"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Tours"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "ULIL"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.univ-lille.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "259265152"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Lille (EPE)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "UMON"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://federation.umontpellier.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "25843614X"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université de Montpellier (EPE, 2022-....)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "UPAS"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.universite-paris-saclay.fr/idp"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241345251"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Paris-Saclay (EPE)"
+      }
+    }, {
+      "codeEtab" : {
+        "type" : "literal",
+        "value" : "UPHF"
+      },
+      "idpRenater" : {
+        "type" : "literal",
+        "value" : "https://idp.uphf.fr/idp/shibboleth"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "242335675"
+      },
+      "etabLabel" : {
+        "xml:lang" : "fr",
+        "type" : "literal",
+        "value" : "Université Polytechnique Hauts-de-France"
+      }
+    } ]
+  }
+}
