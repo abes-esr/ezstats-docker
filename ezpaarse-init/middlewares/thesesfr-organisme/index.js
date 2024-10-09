@@ -173,11 +173,6 @@ for (const [ec, done] of ecs) {
                 report.inc('thesesfr-organisme erreur yield cacheResult ', 'thesesfr-cache-fails');
             }
 
-
-
-       
-
-
             if (doc && (typeof doc === 'object')) {
 
                     //logger.info ('la réponse de onPacket query est un objet');
@@ -190,8 +185,6 @@ for (const [ec, done] of ecs) {
                             logger.info ('CAS IMPREVU !!! objet réponse est un objet NON VIDE avec '+ Object.keys(doc).length +' propriétés');
 
                     }
-
-
             }
 
             if (doc && typeof doc !== 'object') {
@@ -212,36 +205,78 @@ for (const [ec, done] of ecs) {
         }
 
     }
-
     /**
      * Enrich an EC using the result of a query
      * @param {Object} ec the EC to be enriched
      * @param {Object} result the document used to enrich the EC
      */
+
+    /* ERM header cible
+ 	# -H "Output-Fields: +nnt, +numSujet, +doiThese, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +accessible, +source, +discipline, +domaine, +langue, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +cotutelleN, +cotutellePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +idp_etab_nom, +idp_etab_ppn, +idp_etab_code_court, +platform_name " \
+    */
     function enrichEc(ec, result) {
-
-if( result && (typeof result === 'object') && (Object.keys(result).length === 0)) {
-
-                    logger.info ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
-
-}
-
+            if( result && (typeof result === 'object') && (Object.keys(result).length === 0)) {
+                logger.info ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
+            }
             //il s'agit d'un Organisme (PPN)
             if (result && (typeof result === 'string') && (result.length !== 0)) {
                 ec['organismeN'] = result;
+                ec['organismePpn'] = ec.unitid;
+                logger.info(' organisme enrichi ==> ' + ec['rtype'] + ' ' + ec['organismeN'] + ' ' +ec['organismePpn']);
+                ec['nnt']= 'sans objet';
+                ec['numSujet']= 'sans objet';
+                /*//doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+                  //ec['doiThese]'= 'sans objet';*/
+                ec['etabSoutenanceN']= 'sans objet';
+                ec['etabSoutenancePpn']= 'sans objet';
+                ec['codeCourt']= 'sans objet';
+                ec['dateSoutenance']= 'sans objet';
+                ec['anneeSoutenance']= 'sans objet';
+                ec['dateInscription']= 'sans objet';
+                ec['anneeInscription']= 'sans objet';
+                ec['statut']= 'sans objet';
+                /*// accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+                ec['accessible'] = 'sans objet';*/
+                /*// source > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+                ec['source']= 'sans objet';
+                }*/
+                ec['discipline']= 'sans objet';
+                /*// domaine > obligatoire  > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+                ec['domaine'] = 'sans objet';
+                }*/
+                /*// langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+                              ec['langue'] = 'sans objet';*/
+                ec['ecoleDoctoraleN']= 'sans objet';
+                ec['ecoleDoctoralePpn']= 'sans objet';
+                ec['partenaireRechercheN']= 'sans objet';
+                ec['partenaireRecherchePpn']= 'sans objet';
+                /*//coTutelleN, coTutellePpn > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)*/
+                ec['auteurN']= 'sans objet';
+                ec['auteurPpn']= 'sans objet';
+                ec['directeurN']= 'sans objet';
+                ec['directeurPpn']= 'sans objet';
+                ec['presidentN']= 'sans objet';
+                ec['presidentPpn']= 'sans objet';
+                ec['rapporteursN']= 'sans objet';
+                ec['rapporteursPpn']= 'sans objet';
+                ec['membresN']= 'sans objet';
+                ec['membresPpn']= 'sans objet';
+                ec['personneN']= 'sans objet';
+                ec['personnePpn']= 'sans objet';
+                ec['idp_etab_nom'] = 'sans objet';
+                ec['idp_etab_ppn'] = 'sans objet';
+                ec['idp_etab_code_court'] = 'sans objet';
+                ec['platform_name']= 'sans objet';
             }
-
-            ec['organismePpn'] = ec.unitid;
-            logger.info(' organisme enrichi ==> ' + ec['rtype'] + ' ' + ec['organismeN'] + ' ' +ec['organismePpn']);
     }
 
 
+   /**
+    * Request metadata from ThesesFr API for given IDs
+    * @param {Array} unitids the ids to query
+    */
 
 
-    /**
-     * Request metadata from ThesesFr API for given IDs
-     * @param {Array} unitids the ids to query
-     */
     function query(id) {
         report.inc('thesesfr-organisme', 'thesesfr-queries');
 

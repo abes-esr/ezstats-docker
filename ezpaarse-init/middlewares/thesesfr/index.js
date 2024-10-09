@@ -2,6 +2,8 @@
 
 const co = require('co');
 const request = require('request');
+const fs = require('fs');
+const path = require('path');
 const { bufferedProcess, wait } = require('../utils.js');
 const cache = ezpaarse.lib('cache')('thesesfr');
 
@@ -9,6 +11,8 @@ module.exports = function () {
     const logger = this.logger;
     const report = this.report;
     const req = this.request;
+
+    let list_idp;
 
     logger.info('Initializing ABES thesesfr middleware');
 
@@ -28,15 +32,27 @@ module.exports = function () {
     let packetSize = parseInt(req.header('thesesfr-packet-size'));
     // Minimum number of ECs to keep before resolving them
     let bufferSize = parseInt(req.header('thesesfr-buffer-size'));
-    if (isNaN(packetSize)) { packetSize = 100; } //Default : 50
-    if (isNaN(bufferSize)) { bufferSize = 1000; } //Default : 1000
+    if (isNaN(packetSize)) {
+        packetSize = 100;
+    } //Default : 50
+    if (isNaN(bufferSize)) {
+        bufferSize = 1000;
+    } //Default : 1000
 
     let baseUrl = "https://theses.fr/api/v1/theses/recherche/";
 
-    if (isNaN(baseWaitTime)) { baseWaitTime = 10; } //1000
-    if (isNaN(maxTries)) { maxTries = 5; }
-    if (isNaN(throttle)) { throttle = 10; } //100
-    if (isNaN(ttl)) { ttl = 3600 * 24 * 7; }
+    if (isNaN(baseWaitTime)) {
+        baseWaitTime = 10;
+    } //1000
+    if (isNaN(maxTries)) {
+        maxTries = 5;
+    }
+    if (isNaN(throttle)) {
+        throttle = 10;
+    } //100
+    if (isNaN(ttl)) {
+        ttl = 3600 * 24 * 7;
+    }
 
     if (!cache) {
         const err = new Error('failed to connect to mongodb, cache not available for Thesesfr');
@@ -57,19 +73,24 @@ module.exports = function () {
          * @returns {Boolean|Promise} true if the EC should be enriched, false otherwise
          */
         filter: ec => {
-            if (!ec.unitid) { return false; }
-            if (!((ec.rtype === 'PHD_THESIS')||(ec.rtype === 'ABS'))) { return false; } //pas la peine d'interroger le cache mongodb si l'EC n'est pas une thèses/une notice de thèse
-            if (!cacheEnabled) { return true; }
+            if (!ec.unitid) {
+                return false;
+            }
+            if (!((ec.rtype === 'PHD_THESIS') || (ec.rtype === 'ABS'))) {
+                return false;
+            } //pas la peine d'interroger le cache mongodb si l'EC n'est pas une thèses/une notice de thèse
+            if (!cacheEnabled) {
+                return true;
+            }
 
             return findInCache(ec.unitid).then(cachedDoc => {
                 if (cachedDoc) {
 
-                    if(Object.keys(cachedDoc).length === 0){
-                       logger.warn('missed cache, doc from thesesfr est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
-                     }
-                    else {
-                    logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr');
-                     enrichEc(ec, cachedDoc);
+                    if (Object.keys(cachedDoc).length === 0) {
+                        logger.warn('missed cache, doc from thesesfr est un objet vide pour ec.unitid ' + ec.unitid + ' ec.rtype ' + ec.rtype);
+                    } else {
+                        logger.info('le doc pour enrichEc un ' + ec.rtype + ' provient du cache thesesfr');
+                        enrichEc(ec, cachedDoc);
                     }
                     return false;
                 }
@@ -80,34 +101,98 @@ module.exports = function () {
         onPacket: co.wrap(onPacket)
     });
 
-    return new Promise(function (resolve, reject) {
-        // Verify cache indices and time-to-live before starting
-        cache.checkIndexes(ttl, function (err) {
+
+
+    /**
+     * Mapping entre l'uri de l'IDP Renater (Shib-Identity-Provider) et la base du référentiel des établissements Abes (Movies)
+     * Afin d'ajouter le PPN, le Code court et le Nom de l'établissement correspondant
+     *
+     * Url du web service du référentiel dans Movies (accès interne Abes)
+     * https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_idp.json
+     *
+     * Si l'url n'est pas accessible, le middleware utilisera la copie du mapping list.json
+     *
+     */
+
+    return new Promise((resolve, reject) => {
+
+        //Chargement du mapping par appel au web service Movies
+        const options = {
+            method: 'GET',
+            json: true,
+            uri: `https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_idp.json`
+        };
+
+        request(options, (err, response, result) => {
+
+            //Si erreur, chargement du fichier list_idp.json, a la place
+            if (err || response.statusCode !== 200) {
+                chargeFichier();
+            };
+
+            if (!err && response.statusCode == 200) {
+                if (Array.isArray(result.results.bindings)) {
+                    list_idp = result;
+                    logger.info('Chargement du mapping par web service OK');
+                }
+                else {
+                    //Si erreur, chargement du fichier list_idp.json, a la place
+                    chargeFichier();
+                }
+            };
+
+
+            resolve(
+                new Promise(function (resolve2, reject2) {
+                    // Verify cache indices and time-to-live before starting
+                    cache.checkIndexes(ttl, function (err) {
+                        if (err) {
+                            logger.error(`Thesesfr: failed to verify indexes : ${err}`);
+                            return reject2(new Error('failed to verify indexes for the cache of Thesesfr'));
+                        }
+                        resolve2(process);
+                    });
+                })
+            );
+
+        });
+
+    });
+
+    //Chargement du mapping par fichier list.json
+    function chargeFichier(){
+        fs.readFile(path.resolve(__dirname, 'list_idp.json'), 'utf8', (err, content) => {
             if (err) {
-                logger.error(`Thesesfr: failed to verify indexes : ${err}`);
-                return reject(new Error('failed to verify indexes for the cache of Thesesfr'));
+                return reject(err);
             }
 
-            resolve(process);
+            try {
+                list_idp = JSON.parse(content);
+                logger.info('Erreur chargement du mapping par web service. Chargement par le fichier list_idp.json OK');
+            } catch (e) {
+                return reject(e);
+            }
         });
-    });
+    }
 
     /**
      * Process a packet of ECs
      * @param {Array<Object>} ecs
      * @param {Map<String, Set<String>>} groups
      */
-    function* onPacket({ ecs }) {
+    function* onPacket({ecs}) {
 
-        if (ecs.length === 0) { return; }
+        if (ecs.length === 0) {
+            return;
+        }
 
-        const unitids = ecs.filter(([ec, done]) => (ec.rtype === 'PHD_THESIS')||(ec.rtype === 'ABS')).map(([ec, done]) => ec.unitid);
+        const unitids = ecs.filter(([ec, done]) => (ec.rtype === 'PHD_THESIS') || (ec.rtype === 'ABS')).map(([ec, done]) => ec.unitid);
 
         const maxAttempts = 5;
         let tries = 0;
         let docs;
 
-                //logger.info('dans onPacket avant le while');
+        //logger.info('dans onPacket avant le while');
 
         while (!docs) {
             if (++tries > maxAttempts) {
@@ -145,7 +230,7 @@ module.exports = function () {
             }
 
             if (doc) {
-                logger.info('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr'); 
+                logger.info('le doc pour enrichEc un ' + ec.rtype + ' provient de onPacket thesesfr');
                 enrichEc(ec, doc);
             }
 
@@ -159,71 +244,267 @@ module.exports = function () {
      * @param {Object} ec the EC to be enriched
      * @param {Object} result the document used to enrich the EC
      */
-    function enrichEc(ec, result) {
 
-            //Thèse soutenue
+    /* ERM header cible
+  	# -H "Output-Fields: +nnt, +numSujet, +doiThese, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +accessible, +source, +discipline, +domaine, +langue, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +cotutelleN, +cotutellePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +idp_etab_nom, +idp_etab_ppn, +idp_etab_code_court, +platform_name " \
+     */
+    function enrichEc(ec, result) {
+        logger.info(' debut enrich ');
+        /*
+         ******Tronc commun*****
+         */
+        // etabSoutenanceN > obligatoire
+        if (result.etabSoutenanceN) {
+            ec['etabSoutenanceN'] = result.etabSoutenanceN;
+        }
+
+        // etabSoutenancePpn > obligatoire
+        if (result.etabSoutenancePpn) {
+            ec['etabSoutenancePpn'] = result.etabSoutenancePpn;
+        }
+
+        /*// codeCourt > obligatoire > TODO via Api Movies */
+        ec['codeCourt']= 'sans objet';
+
+        //statut > obligatoire
+        if (result.status) {
+            ec['statut'] = result.status;
+        }
+
+        /*// TODO source > obligatoire > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+        if (result.source) {
+            ec['statut'] = result.source;
+        }*/
+
+        //discipline > obligatoire
+        if (result.discipline) {
+            ec['discipline'] = result.discipline;
+        }
+        /*// TODO domaine > obligatoire  > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+        if (result.domaine) {
+        ec['domaine'] = result.domaine;
+        }*/
+
+        // partenairesDeRecherche > répétable > nom + prenom facultatif / ppn facultatif
+        if (result.partenairesDeRecherche == null || result.partenairesDeRecherche == '') {
+            ec['partenaireRechercheN'] = 'NR';
+            ec['partenaireRecherchePpn'] = 'NR';
+        } else {
+            ec['partenaireRechercheN'] =  result.partenairesDeRecherche.map(elt => {
+                if (elt.nom == null || elt.nom =='') { return 'NR'}
+                else { return elt.nom}
+            }).join(" / ");
+            ec['partenaireRecherchePpn'] = result.partenairesDeRecherche.map(elt => {
+                if (elt.ppn == null || elt.ppn =='') { return 'NR'}
+                else { return elt.ppn}
+            }).join(" / ")
+        }
+
+        /*// TODO coTutelleN, coTutellePpn > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)*/
+
+        // auteurs > répétable > nom + prenom obligatoire / ppn facultatif
+        if (result.auteurs) {
+            ec['auteurN'] = result.auteurs.map(elt => elt.nom + " " + elt.prenom).join(" / ");
+            ec['auteurPpn'] = result.auteurs.map(elt => {
+                if (elt.ppn == null || elt.ppn =='') { return 'NR'}
+                else { return elt.ppn}
+            }).join(" / ");
+        }
+
+        // directeurs > répétable > nom + prenom obligatoire / ppn facultatif
+        if (result.directeurs) {
+            ec['directeurN'] = result.directeurs.map(elt => elt.nom + " " + elt.prenom).join(" / ");
+            ec['directeurPpn'] = result.directeurs.map(elt => {
+                if (elt.ppn == null || elt.ppn =='') { return 'NR'}
+                else { return elt.ppn}
+            }).join(" / ");
+        }
+
+        // president > nom + prenom facultatif / ppn facultatif
+        if (result.president.nom && result.president.prenom) {
+            ec['presidentN'] = result.president.nom + " " + result.president.prenom;
+        } else {
+            ec['presidentN'] = 'NR';
+        }
+        if (result.president.ppn) {
+            ec['presidentPpn'] = result.president.ppn;
+        } else {
+            ec['presidentPpn'] = 'NR';
+        }
+
+        // rapporteurs > répétable > nom + prenom facultatif / ppn facultatif
+        if (result.rapporteurs == null || result.rapporteurs == '') {
+            ec['rapporteursN'] = 'NR';
+            ec['rapporteursPpn'] = 'NR';
+        } else {
+            ec['rapporteursN'] =  result.rapporteurs.map(elt => {
+                if (elt.nom == null || elt.nom =='') { return 'NR'}
+                else { return (elt.nom + " " + elt.prenom)}
+            }).join(" / ");
+            ec['rapporteursPpn'] = result.rapporteurs.map(elt => {
+                if (elt.ppn == null || elt.ppn =='') { return 'NR'}
+                else { return elt.ppn}
+            }).join(" / ")
+        }
+
+        // examinateurs > répétable > nom + prenom facultatif / ppn facultatif
+        if (result.examinateurs == null || result.examinateurs == '') {
+            ec['membresN'] = 'NR';
+            ec['membresPpn'] = 'NR';
+        } else {
+            ec['membresN'] =  result.examinateurs.map(elt => {
+                if (elt.nom == null || elt.nom =='') { return 'NR'}
+                else { return (elt.nom + " " + elt.prenom)}
+            }).join(" / ");
+            ec['membresPpn'] = result.examinateurs.map(elt => {
+                if (elt.ppn == null || elt.ppn =='') { return 'NR'}
+                else { return elt.ppn}
+            }).join(" / ")
+        }
+
+        // les 'sans objet' pour les notices thèses et sujets + accès document thèse
+        ec['personneN'] = 'sans objet';
+        ec['personnePpn'] = 'sans objet';
+        ec['organismeN'] = 'sans objet';
+        ec['organismePpn'] = 'sans objet';
+        // les 'sans objet' pour les notices thèses et sujets + accès document thèse non soumis à authentification
+        ec['idp_etab_nom'] = 'sans objet';
+        ec['idp_etab_ppn'] = 'sans objet';
+        ec['idp_etab_code_court'] = 'sans objet';
+
+        /* // platform_name = Code court de l'étab de soutenance > obligatoire > récupéré via API movies
+          en attendant rempli 'sans objet'
+           */
+        ec['platform_name']= 'sans objet';
+
+        /*
+         ******* Spécificités pour Thèse en cours : status = 'enCours'******
+         */
+        if (result.status === 'enCours') {
+
+            //NNT facultatif
+            if (result.nnt) {
+                ec['nnt'] = result.nnt;
+            } else {
+                ec['nnt'] = 'NR';
+            }
+
+            //numSujet > obligatoire
+            if (result.id) {
+                ec['numSujet'] = result.id;
+            }
+
+            /*// TODO doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+             ec['doiThese'] = 'sans objet';*/
+
+            // dateSoutenance et anneSoutenance > facultative
+            if (result.dateSoutenance) {
+                ec['dateSoutenance'] = result.dateSoutenance;
+                ec['anneeSoutenance'] = result.dateSoutenance.substring(6, 10);
+            } else {
+                ec['dateSoutenance'] = 'NR';
+                ec['anneeSoutenance'] = 'NR';
+            }
+
+            // dateInscription et anneInscription > obligatoire
+            if (result.datePremiereInscriptionDoctorat) {
+                ec['dateInscription'] = result.datePremiereInscriptionDoctorat;
+                ec['anneeInscription'] = result.datePremiereInscriptionDoctorat.substring(6, 10);
+            }
+
+            /*// TODO accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            ec['accessible'] = 'sans objet';*/
+
+            /*// TODO langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            ec['langue'] = 'sans objet';*/
+
+            // ecolesDoctorale > répétable > nom obligatoire / ppn facultatif
+            if (result.ecolesDoctorale) {
+                ec['ecoleDoctoraleN'] = result.ecolesDoctorale.map(elt => elt.nom).join(" / ");
+                ec['ecoleDoctoralePpn'] = result.ecolesDoctorale.map(elt => {
+                    if (elt.ppn == null || elt.ppn =='') { return 'NR'}
+                    else { return elt.ppn}
+                }).join(" / ");
+            }
+        }
+
+        /*
+        ******* Spécificités pour Thèse : status = 'soutenue' ********
+        */
+        if (result.status === 'soutenue') {
+
+            //NNT obligatoire
             if (result.nnt) {
                 ec['nnt'] = result.nnt;
             }
-            else {
-                ec['numSujet'] = result.id; //Sujet de thèse
-            }
-            if (result.datePremiereInscriptionDoctorat) {
-                ec['dateInscription'] = result.datePremiereInscriptionDoctorat; //Sujet de thèse
-            }
-            if (result.etabSoutenanceN) {
-                ec['etabSoutenanceN'] = result.etabSoutenanceN;
-            }
-            if (result.etabSoutenancePpn) {
-                ec['etabSoutenancePpn'] = result.etabSoutenancePpn;
-            }
+
+            //numSujet > sans objet
+            ec['numSujet'] = 'sans objet';
+
+            /* // TODO doiThese > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            if (result.doi) {
+           ec['doiThese'] = result.doi;
+           } else {
+           ec['doiThese'] = 'NR';
+            }*/
+
+            /* // Code court de l'étab de soutenance > obligatoire > récupéré via API movies
+            en attendant rempli par le tronc commune 'sans objet'
+             */
+
+            // dateSoutenance et anneSoutenance > obligatoire
             if (result.dateSoutenance) {
                 ec['dateSoutenance'] = result.dateSoutenance;
-            }
-            if (result.status) {
-                ec['statut'] = result.status;
-            }
-            //accessible
-            //source
-            if (result.discipline) {
-                ec['discipline'] = result.discipline;
-            }
-            //domaine
-            //langue
-            if (result.ecolesDoctorale) {
-                ec['ecolesDoctoraleN'] = result.ecolesDoctorale.map(elt=>elt.nom).join(" / ");
-                ec['ecolesDoctoralePpn'] = result.ecolesDoctorale.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.partenairesDeRecherche) {
-                ec['partenaireRechercheN'] = result.partenairesDeRecherche.map(elt=>elt.nom).join(" / ");
-                ec['partenaireRecherchePpn'] = result.partenairesDeRecherche.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.partenairesDeRecherche) {
-                ec['partenaireRechercheN'] = result.partenairesDeRecherche.map(elt=>elt.nom).join(" / ");
-                ec['partenaireRecherchePpn'] = result.partenairesDeRecherche.map(elt=>elt.ppn).join(" / ");
-            }
-            //coTutelleN, coTutellePpn
-            if (result.auteurs) {
-                ec['auteurN'] = result.auteurs.map(elt=>elt.nom+" "+elt.prenom).join(" / ");
-                ec['auteurPpn'] = result.auteurs.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.directeurs) {
-                ec['directeurN'] = result.directeurs.map(elt=>elt.nom+" "+elt.prenom).join(" / ");
-                ec['directeurPpn'] = result.directeurs.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.president && result.president.nom && result.president.prenom && result.president.ppn) {
-                ec['presidentN'] = result.president.nom + " " + result.president.prenom;
-                ec['presidentPpn'] = result.president.ppn;
-            }
-            if (result.rapporteurs) {
-                ec['rapporteursN'] = result.rapporteurs.map(elt=>elt.nom+" "+elt.prenom).join(" / ");
-                ec['rapporteursPpn'] = result.rapporteurs.map(elt=>elt.ppn).join(" / ");
-            }
-            if (result.examinateurs) {
-                ec['membresN'] = result.examinateurs.map(elt=>elt.nom+" "+elt.prenom).join(" / ");
-                ec['membresPpn'] = result.examinateurs.map(elt=>elt.ppn).join(" / ");
+                ec['anneeSoutenance'] = result.dateSoutenance.substring(6, 10);
             }
 
+            // dateInscription et anneInscription > 'sans objet'
+            ec['dateInscription'] = 'sans objet';
+            ec['anneeInscription'] = 'sans objet';
+
+            /* // TODO accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            if (result.accessible) {
+              ec['accessible'] = result.accessible;
+            }
+            else {
+            ec['accessible'] = 'NR';*/
+
+            /*// TODO langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            if (result.langues) {
+                ec['langue'] = result.langues.map(elt => elt).join(" / ");
+            } else {
+                ec['langue'] = 'NR';
+            }*/
+
+            // ecolesDoctorale > répétable > nom facultatif / ppn facultatif
+            if (result.ecolesDoctorale == null || result.ecolesDoctorale == '') {
+                ec['ecoleDoctoraleN'] = 'NR';
+                ec['ecoleDoctoralePpn'] = 'NR';
+            } else {
+                ec['ecoleDoctoraleN'] =  result.ecolesDoctorale.map(elt => {
+                    if (elt.nom == null || elt.nom =='') { return 'NR'}
+                    else { return elt.nom}
+                }).join(" / ");
+                ec['ecoleDoctoralePpn'] = result.ecolesDoctorale.map(elt => {
+                    if (elt.ppn == null || elt.ppn =='') { return 'NR'}
+                    else { return elt.ppn}
+                }).join(" / ")
+            }
+
+            //  Pour la consultation des theses soumises à identification
+            if (ec['Shib-Identity-Provider']) {
+                logger.info('IDP => '+ec['Shib-Identity-Provider']);
+                var etab = list_idp.results.bindings.find(elt => elt.idpRenater.value === ec['Shib-Identity-Provider']);
+                //logger.info('Etab trouve => '+util.inspect(etab, {showHidden: false, depth: null, colors: true}));
+
+                if (etab) {
+                    ec['idp_etab_nom'] = etab.etabLabel.value;
+                    ec['idp_etab_ppn'] = etab.ppn.value;
+                    ec['idp_etab_code_court'] = etab.codeEtab.value;
+                    //logger.info('Ok pour : ' + etab.etabLabel.value);
+                }
+            }
+        }
     }
 
     /**
@@ -316,4 +597,5 @@ module.exports = function () {
             });
         });
     }
+
 };
