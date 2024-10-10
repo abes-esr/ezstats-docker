@@ -1,0 +1,2006 @@
+{
+  "head" : {
+    "vars" : [ "codeCourt", "ppn" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AGPT"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "139408088"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AGUY"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026603136"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AIX1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403781"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AIX2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026402882"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AIX3"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403153"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AIXM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "15863621X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ALGF"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028968832"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AMIE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403714"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ANGE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026402920"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ANTI"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "187841578"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ARTO"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "034634894"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ASSA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "260745863"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AVIG"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026369044"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "AZUR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "185433669"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BELF"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "068859813"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BESA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403188"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BOR1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027548341"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BOR2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403005"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BOR3"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027548392"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BOR4"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "034137823"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BORD"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "175206562"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BORU"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030142199"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "BRES"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403021"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CAEN"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403064"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CERG"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "03463486X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CHAM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026369125"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CLF1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028032829"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CLF2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403102"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CLFA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "196200032"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CLFD"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030142865"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CLIL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "256304629"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CNAM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027404978"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "COAZ"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241035694"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "COMP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026570564"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CORT"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "029473284"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CSUP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "184443237"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "CYUN"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241871808"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "DENS"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028237080"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "DIJO"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02819005X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "DUNK"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030969379"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ECAP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027960250"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ECDL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "033894221"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ECDM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "163078998"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ECDN"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "03063525X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ECLI"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "256304629"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ECLI"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027964361"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EHEC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027321118"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EHES"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026374889"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EIAA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "034751386"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EMAC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "035022116"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EMAL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "032486111"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EMDO"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030937809"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EMNA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "033236720"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EMSE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028028694"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENAC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027771881"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENAM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02637515X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENCM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027956768"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENCP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375052"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENCR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "081711883"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENGR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026436930"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENIB"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "120796899"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENIS"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030267676"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENMP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375249"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENPC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375060"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENSA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026523477"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENSF"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "077755138"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENSL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028232224"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENSL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "149154992"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENSR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "17864577X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENST"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375273"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENSU"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "031738419"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENTA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "177263660"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENTP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027941426"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ENVA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "031803695"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EPHE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026375478"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EPXX"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027309320"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ESAE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026523493"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ESAE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "159330114"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ESAL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "140178198"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ESEC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028029429"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ESTA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028139577"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "EVRY"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030820529"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GFDE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "029884942"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GFLH"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "072323965"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GRAL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "240648315"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GRE1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404796"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GRE2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02640432X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GRE3"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404125"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GREA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "184668794"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GREN"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030327202"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GRFD"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "155569678"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "GRFL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "155078771"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "HESA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "238277429"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "HESP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "161356915"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "IAVF"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "196213428"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "IEPP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027918459"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "IMTA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "202743233"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "INAL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388715"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "INAP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026387859"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "INPG"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388804"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "INPL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388812"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "INPT"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388820"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "IOTA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "110047702"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "IOTA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "033592497"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "IPPA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "238327159"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ISAB"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "203592077"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ISAL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "052444724"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ISAM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "033364346"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ISAM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "050228064"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ISAR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "050228064"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ISAT"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026388766"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LARE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404451"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LARO"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "035375043"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LEHA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "031308570"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LEMA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404435"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LIFS"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "034124098"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LIL1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404184"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LIL2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404389"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LIL3"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404524"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LILL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027291340"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LILU"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "223446556"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LIMO"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403315"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LORI"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "05017746X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LORR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "157040569"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LYFM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "169816079"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LYFS"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "169815714"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LYMP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "169855392"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LYO1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026402823"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LYO2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02640334X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LYO3"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404494"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LYON"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028025261"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "LYSE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "190915757"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MARN"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030820499"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "METZ"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403366"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MNHN"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026394944"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MON1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028032837"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MON2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404214"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MON3"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404702"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MONT"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "183316401"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MONT"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "030091896"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MTLD"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "20073511X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "MULH"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403250"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NAFD"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "155501984"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NAFL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "15512918X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NAFS"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "171914686"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NAN1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403390"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NAN2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403412"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NANT"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403447"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NANU"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "258086599"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NCAL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "060121076"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NICE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403498"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NIME"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "115588701"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NORM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "190906332"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NSAI"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "034052410"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NSAM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "117553956"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NSAR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "077195876"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NSAR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "147800374"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "NSAR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026637065"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "OBSP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026550520"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ONIR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "157779092"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ORLE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026402971"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA00"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "034526110"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA01"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027361802"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA02"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403145"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA03"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027361837"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA04"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403633"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA05"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404788"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA06"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027787087"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA07"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027542084"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA08"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403552"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA09"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "027787109"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA10"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403587"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA11"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404664"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA12"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028021037"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PA13"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02640463X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PAUU"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403668"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PERP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403692"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PESC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "190456396"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PEST"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "121855465"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "POIT"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403765"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "POLF"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "067101925"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PSLE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "182292592"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "PSLE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241597595"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "REIM"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403838"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "REN0"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "074314807"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "REN1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02778715X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "REN2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "054447658"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ROUE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403919"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "SACL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "188120777"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "SORU"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "221333754"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "STET"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "028209966"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "STR0"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "02809509X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "STR1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404540"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "STR2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026438763"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "STR3"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404311"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "STRA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "131056549"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "SUPL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026524031"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TELB"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "031235409"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TLSE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "269359931"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TOU1"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404354"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TOU2"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026403994"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TOU3"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404672"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TOUC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404354"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TOUC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "271180641"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TOUL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "031122337"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TOUR"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404478"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "TROY"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "050522604"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UBFC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "200716271"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UCFA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "252404955"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UEFL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "244936234"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "ULIL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "259265152"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UMON"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "25843614X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UNIP"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "236453505"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UPAS"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241345251"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UPHF"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "242335675"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UPSL"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "241597595"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "UREN"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "26693823X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "USPC"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "19077990X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "VALE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "026404079"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "VERS"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "03082057X"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "VETA"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "231125755"
+      }
+    }, {
+      "codeCourt" : {
+        "type" : "literal",
+        "value" : "YANE"
+      },
+      "ppn" : {
+        "type" : "literal",
+        "value" : "188204024"
+      }
+    } ]
+  }
+}
