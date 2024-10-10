@@ -12,6 +12,7 @@ module.exports = function () {
     const report = this.report;
     const req = this.request;
 
+    let list_code_court;
     let list_idp;
 
     logger.info('Initializing ABES thesesfr middleware');
@@ -104,71 +105,99 @@ module.exports = function () {
 
 
     /**
-     * Mapping entre l'uri de l'IDP Renater (Shib-Identity-Provider) et la base du référentiel des établissements Abes (Movies)
-     * Afin d'ajouter le PPN, le Code court et le Nom de l'établissement correspondant
+     * Chargement des mappings Code Court et IdP avec les web services de Movies (accès interne Abes)
      *
-     * Url du web service du référentiel dans Movies (accès interne Abes)
+     * https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_code_court.json
      * https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_idp.json
      *
-     * Si l'url n'est pas accessible, le middleware utilisera la copie du mapping list.json
+     * Si l'url n'est pas accessible, le middleware utilisera la copie du mapping list_code_court.json et list_idp.json
      *
      */
 
-    return new Promise((resolve, reject) => {
+
+    return new Promise((resolveCodeCourt, rejectCodeCourt) => {
 
         //Chargement du mapping par appel au web service Movies
-        const options = {
+        const optionsCodeCourt = {
             method: 'GET',
             json: true,
-            uri: `https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_idp.json`
+            uri: `https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_code_court.json`
         };
 
-        request(options, (err, response, result) => {
+        request(optionsCodeCourt, (errCodeCourt, responseCodeCourt, resultCodeCourt) => {
 
-            //Si erreur, chargement du fichier list_idp.json, a la place
-            if (err || response.statusCode !== 200) {
-                chargeFichier();
+            //Si erreur, chargement du fichier list_code_court.json, a la place
+            if (errCodeCourt || responseCodeCourt.statusCode !== 200) {
+                chargeMapping('list_code_court.json');
             };
 
-            if (!err && response.statusCode == 200) {
-                if (Array.isArray(result.results.bindings)) {
-                    list_idp = result;
-                    logger.info('Chargement du mapping par web service OK');
+            if (!errCodeCourt && responseCodeCourt.statusCode == 200) {
+                if (Array.isArray(resultCodeCourt.results.bindings)) {
+                    list_code_court = resultCodeCourt;
+                    logger.info('Chargement du mapping Code court, par web service OK');
                 }
                 else {
-                    //Si erreur, chargement du fichier list_idp.json, a la place
-                    chargeFichier();
+                    //Si erreur, chargement du fichier list_code_court.json, a la place
+                    chargeMapping('list_code_court.json');
                 }
             };
 
+            resolveCodeCourt(
+                new Promise((resolveIdP, rejectIdP) => {
+                    //Chargement du mapping par appel au web service Movies
+                    const optionsIdP = {
+                        method: 'GET',
+                        json: true,
+                        uri: `https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_idp.json`
+                    };
 
-            resolve(
-                new Promise(function (resolve2, reject2) {
-                    // Verify cache indices and time-to-live before starting
-                    cache.checkIndexes(ttl, function (err) {
-                        if (err) {
-                            logger.error(`Thesesfr: failed to verify indexes : ${err}`);
-                            return reject2(new Error('failed to verify indexes for the cache of Thesesfr'));
-                        }
-                        resolve2(process);
+                    request(optionsIdP, (errIdP, responseIdP, resultIdP) => {
+                        //Si erreur, chargement du fichier list_idp.json, a la place
+                        if (errIdP || responseIdP.statusCode !== 200) {
+                            chargeMapping('list_idp.json');
+                        };
+
+                        if (!errIdP && responseIdP.statusCode == 200) {
+                            if (Array.isArray(resultIdP.results.bindings)) {
+                                list_idp = resultIdP;
+                                logger.info('Chargement du mapping IdP par web service OK');
+                            }
+                            else {
+                                //Si erreur, chargement du fichier list_idp.json, a la place
+                                chargeMapping('list_idp.json');
+                            }
+                        };
+
+                        resolveIdP(
+                            new Promise(function (resolveCache, rejectCache) {
+                                // Verify cache indices and time-to-live before starting
+                                cache.checkIndexes(ttl, function (errCache) {
+                                    if (errCache) {
+                                        logger.error(`Thesesfr: failed to verify indexes : ${errCache}`);
+                                        return rejectCache(new Error('failed to verify indexes for the cache of Thesesfr'));
+                                    }
+                                    resolveCache(process);
+                                });
+                            })
+                        );
                     });
                 })
+
             );
-
         });
-
     });
 
-    //Chargement du mapping par fichier list.json
-    function chargeFichier(){
-        fs.readFile(path.resolve(__dirname, 'list_idp.json'), 'utf8', (err, content) => {
+
+    //Chargement du mapping par fichier list_code_court.json ou list_idp.json
+    function chargeMapping(nomFichier){
+        fs.readFile(path.resolve(__dirname, nomFichier), 'utf8', (err, content) => {
             if (err) {
                 return reject(err);
             }
 
             try {
                 list_idp = JSON.parse(content);
-                logger.info('Erreur chargement du mapping par web service. Chargement par le fichier list_idp.json OK');
+                logger.info('Erreur chargement du mapping par web service. Chargement par le fichier '+nomFichier+' OK');
             } catch (e) {
                 return reject(e);
             }

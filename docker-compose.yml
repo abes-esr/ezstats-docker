@@ -23,7 +23,7 @@ services:
 
   ezstats-ezpaarse:
     container_name: ezstats-ezpaarse
-    image: ezpaarseproject/ezpaarse:3.9.3
+    image: ezpaarseproject/ezpaarse:3.10.2
     environment:
       #  http_proxy:  ${http_proxy}
       #  https_proxy: ${https_proxy}
