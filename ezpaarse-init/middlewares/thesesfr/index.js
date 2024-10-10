@@ -292,9 +292,14 @@ module.exports = function () {
             ec['etabSoutenancePpn'] = result.etabSoutenancePpn;
         }
 
-        /*// codeCourt > obligatoire > TODO via Api Movies */
-        ec['codeCourt']= 'sans objet';
+        // codeCourt > obligatoire > via Api Movies
 
+        var eltCodeCourt = list_code_court.results.bindings.find(elt => elt.ppn.value ===  result.etabSoutenancePpn);
+         if (eltCodeCourt) {
+            ec['codeCourt'] = eltCodeCourt.codeCourt.value;
+            ec['platform_name'] = eltCodeCourt.codeCourt.value;
+
+        }
         //statut > obligatoire
         if (result.status) {
             ec['statut'] = result.status;
@@ -400,11 +405,6 @@ module.exports = function () {
         ec['idp_etab_nom'] = 'sans objet';
         ec['idp_etab_ppn'] = 'sans objet';
         ec['idp_etab_code_court'] = 'sans objet';
-
-        /* // platform_name = Code court de l'étab de soutenance > obligatoire > récupéré via API movies
-          en attendant rempli 'sans objet'
-           */
-        ec['platform_name']= 'sans objet';
 
         /*
          ******* Spécificités pour Thèse en cours : status = 'enCours'******
