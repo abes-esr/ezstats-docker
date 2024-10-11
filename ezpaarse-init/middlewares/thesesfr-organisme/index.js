@@ -222,6 +222,7 @@ for (const [ec, done] of ecs) {
             if (result && (typeof result === 'string') && (result.length !== 0)) {
                 ec['organismeN'] = result;
                 ec['organismePpn'] = ec.unitid;
+                ec.rtype = 'ORGANISME';
                 logger.info(' organisme enrichi ==> ' + ec['rtype'] + ' ' + ec['organismeN'] + ' ' +ec['organismePpn']);
                 ec['nnt']= 'sans objet';
                 ec['numSujet']= 'sans objet';
