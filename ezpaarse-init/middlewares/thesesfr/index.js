@@ -532,6 +532,11 @@ module.exports = function () {
                     ec['idp_etab_code_court'] = etab.codeEtab.value;
                     //logger.info('Ok pour : ' + etab.etabLabel.value);
                 }
+                else {
+                    ec['idp_etab_nom'] = "Non trouvé";
+                    ec['idp_etab_ppn'] = "Non trouvé";
+                    ec['idp_etab_code_court'] = "Non trouvé";
+                }
             }
         }
     }
