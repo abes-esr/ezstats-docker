@@ -281,10 +281,14 @@ for (const [ec, done] of ecs) {
     function query(id) {
         report.inc('thesesfr-organisme', 'thesesfr-queries');
 
+        const userAgent = 'ezPAARSE (https://readmetrics.org; mailto:ezteam@couperin.org)';
+
         return new Promise((resolve, reject) => {
             const options = {
                 method: 'GET',
-// TMX ce n'est pas du JSON dans la response
+                headers: {
+                           'User-Agent': userAgent
+                },
                 uri: `${baseUrl}${id}`
             };
 
