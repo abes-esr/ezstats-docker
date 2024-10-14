@@ -241,10 +241,15 @@ module.exports = function () {
         const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
         logger.info(' query ==> ' + query);
 
+        const userAgent = 'ezPAARSE (https://readmetrics.org; mailto:ezteam@couperin.org)';
+
         return new Promise((resolve, reject) => {
             const options = {
                 method: 'GET',
                 json: true,
+                headers: {
+                           'User-Agent': userAgent
+                },
                 uri: `${baseUrl}${query}`
             };
 
