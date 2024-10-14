@@ -128,7 +128,7 @@ module.exports = function () {
 
             //Si erreur, chargement du fichier list_code_court.json, a la place
             if (errCodeCourt || responseCodeCourt.statusCode !== 200) {
-                chargeMapping('list_code_court.json');
+                chargeMapping('list_code_court.json', rejectCodeCourt);
             };
 
             if (!errCodeCourt && responseCodeCourt.statusCode == 200) {
@@ -138,7 +138,7 @@ module.exports = function () {
                 }
                 else {
                     //Si erreur, chargement du fichier list_code_court.json, a la place
-                    chargeMapping('list_code_court.json');
+                    chargeMapping('list_code_court.json', rejectCodeCourt);
                 }
             };
 
@@ -154,7 +154,7 @@ module.exports = function () {
                     request(optionsIdP, (errIdP, responseIdP, resultIdP) => {
                         //Si erreur, chargement du fichier list_idp.json, a la place
                         if (errIdP || responseIdP.statusCode !== 200) {
-                            chargeMapping('list_idp.json');
+                            chargeMapping('list_idp.json', rejectIdP);
                         };
 
                         if (!errIdP && responseIdP.statusCode == 200) {
@@ -164,7 +164,7 @@ module.exports = function () {
                             }
                             else {
                                 //Si erreur, chargement du fichier list_idp.json, a la place
-                                chargeMapping('list_idp.json');
+                                chargeMapping('list_idp.json', rejectIdP);
                             }
                         };
 
@@ -189,15 +189,20 @@ module.exports = function () {
 
 
     //Chargement du mapping par fichier list_code_court.json ou list_idp.json
-    function chargeMapping(nomFichier){
+    function chargeMapping(nomFichier, reject){
         fs.readFile(path.resolve(__dirname, nomFichier), 'utf8', (err, content) => {
             if (err) {
                 return reject(err);
             }
 
             try {
-                list_idp = JSON.parse(content);
-                logger.info('Erreur chargement du mapping par web service. Chargement par le fichier '+nomFichier+' OK');
+                if (nomFichier === "list_code_court.json") {
+                    list_code_court = JSON.parse(content);
+                }
+                else if (nomFichier === "list_idp.json") {
+                    list_idp = JSON.parse(content);
+                }
+                logger.info('Erreur chargement du mapping par web service : chargement par le fichier '+nomFichier+' OK');
             } catch (e) {
                 return reject(e);
             }
@@ -295,7 +300,7 @@ module.exports = function () {
         // codeCourt > obligatoire > via Api Movies
 
         var eltCodeCourt = list_code_court.results.bindings.find(elt => elt.ppn.value ===  result.etabSoutenancePpn);
-         if (eltCodeCourt) {
+        if (eltCodeCourt) {
             ec['codeCourt'] = eltCodeCourt.codeCourt.value;
             ec['platform_name'] = eltCodeCourt.codeCourt.value;
 
@@ -577,7 +582,7 @@ module.exports = function () {
                 method: 'GET',
                 json: true,
                 headers: {
-                           'User-Agent': userAgent
+                    'User-Agent': userAgent
                 },
                 uri: `${baseUrl}${query}`
             };
