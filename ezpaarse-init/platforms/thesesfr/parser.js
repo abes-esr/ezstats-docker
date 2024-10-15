@@ -44,7 +44,9 @@ module.exports = new Parser(function analyseEC(parsedUrl, ec) {
 
   let match;
 
-  if (ec['User-Agent'] === 'node') {
+  const userAgentezPAARSE = 'ezPAARSE (https://readmetrics.org; mailto:ezteam@couperin.org)';
+
+  if ((ec['User-Agent'] === 'node') or (ec['User-Agent'] === userAgentezPAARSE)) {
     //NOP
 
   } else if (
@@ -55,8 +57,6 @@ module.exports = new Parser(function analyseEC(parsedUrl, ec) {
     // /api/v1/document/2020EMAC0007 Accès au PDF d’une thèse soutenue PHD_THESIS disponible en ligne
     result.rtype = 'PHD_THESIS';
     result.unitid = match[1];
-    result.publication_date = match[2];
-    result.institution_code = match[3];
 
     switch (Number.parseInt(ec.status, 10)) {
     case 200:
@@ -75,8 +75,6 @@ module.exports = new Parser(function analyseEC(parsedUrl, ec) {
     result.rtype = 'PHD_THESIS';
     result.mime = 'PDF';
     result.unitid = match[1];
-    result.publication_date = match[2];
-    result.institution_code = match[3];
 
   } else if ((match = apiPersonRegex.exec(path)) !== null) {
     // RECORD person JSON, will be changed to BIO in middleware thesesfr-personne
@@ -120,16 +118,12 @@ module.exports = new Parser(function analyseEC(parsedUrl, ec) {
     result.rtype = 'ABS';
     result.mime = isHumanBrowsing(match[1]) ? 'HTML' : 'JSON';
     result.unitid = match[1];
-    result.publication_date = match[2];
-    result.institution_code = match[3];
 
   } else if ((match = /^\/(([0-9]{4})([a-z]{2}[0-9a-z]{2})[0-9a-z]+)$/i.exec(path)) !== null) {
     // /2023UPASP097 ABStract notice d’une thèse soutenue HTML
     result.rtype = 'ABS';
     result.mime = 'HTML';
     result.unitid = match[1];
-    result.publication_date = match[2];
-    result.institution_code = match[3];
   }
 
   return result;
