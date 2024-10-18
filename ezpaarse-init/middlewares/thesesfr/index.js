@@ -103,7 +103,6 @@ module.exports = function () {
     });
 
 
-
     /**
      * Chargement des mappings Code Court et IdP avec les web services de Movies (accès interne Abes)
      *
@@ -113,9 +112,7 @@ module.exports = function () {
      * Si l'url n'est pas accessible, le middleware utilisera la copie du mapping list_code_court.json et list_idp.json
      *
      */
-
-
-    return new Promise((resolveCodeCourt, rejectCodeCourt) => {
+    const promiseCodeCourt = new Promise((resolveCodeCourt, rejectCodeCourt) => {
 
         //Chargement du mapping par appel au web service Movies
         const optionsCodeCourt = {
@@ -128,86 +125,86 @@ module.exports = function () {
 
             //Si erreur, chargement du fichier list_code_court.json, a la place
             if (errCodeCourt || responseCodeCourt.statusCode !== 200) {
-                chargeMapping('list_code_court.json', rejectCodeCourt);
+                chargeMapping('list_code_court.json', resolveCodeCourt, rejectCodeCourt);
             };
 
             if (!errCodeCourt && responseCodeCourt.statusCode == 200) {
                 if (Array.isArray(resultCodeCourt.results.bindings)) {
-                    list_code_court = resultCodeCourt;
                     logger.info('Chargement du mapping Code court, par web service OK');
+                    resolveCodeCourt(resultCodeCourt);
                 }
                 else {
                     //Si erreur, chargement du fichier list_code_court.json, a la place
-                    chargeMapping('list_code_court.json', rejectCodeCourt);
+                    chargeMapping('list_code_court.json', resolveCodeCourt, rejectCodeCourt);
                 }
             };
 
-            resolveCodeCourt(
-                new Promise((resolveIdP, rejectIdP) => {
-                    //Chargement du mapping par appel au web service Movies
-                    const optionsIdP = {
-                        method: 'GET',
-                        json: true,
-                        uri: `https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_idp.json`
-                    };
-
-                    request(optionsIdP, (errIdP, responseIdP, resultIdP) => {
-                        //Si erreur, chargement du fichier list_idp.json, a la place
-                        if (errIdP || responseIdP.statusCode !== 200) {
-                            chargeMapping('list_idp.json', rejectIdP);
-                        };
-
-                        if (!errIdP && responseIdP.statusCode == 200) {
-                            if (Array.isArray(resultIdP.results.bindings)) {
-                                list_idp = resultIdP;
-                                logger.info('Chargement du mapping IdP par web service OK');
-                            }
-                            else {
-                                //Si erreur, chargement du fichier list_idp.json, a la place
-                                chargeMapping('list_idp.json', rejectIdP);
-                            }
-                        };
-
-                        resolveIdP(
-                            new Promise(function (resolveCache, rejectCache) {
-                                // Verify cache indices and time-to-live before starting
-                                cache.checkIndexes(ttl, function (errCache) {
-                                    if (errCache) {
-                                        logger.error(`Thesesfr: failed to verify indexes : ${errCache}`);
-                                        return rejectCache(new Error('failed to verify indexes for the cache of Thesesfr'));
-                                    }
-                                    resolveCache(process);
-                                });
-                            })
-                        );
-                    });
-                })
-
-            );
         });
     });
 
 
-    //Chargement du mapping par fichier list_code_court.json ou list_idp.json
-    function chargeMapping(nomFichier, reject){
+    const promiseIdP = new Promise((resolveIdP, rejectIdP) => {
+        //Chargement du mapping par appel au web service Movies
+        const optionsIdP = {
+            method: 'GET',
+            json: true,
+            uri: `https://movies.abes.fr/api-git/abes-esr/movies-api/subdir/v1/TH_liste_etabs_idp.json`
+        };
+
+        request(optionsIdP, (errIdP, responseIdP, resultIdP) => {
+            //Si erreur, chargement du fichier list_idp.json, a la place
+            if (errIdP || responseIdP.statusCode !== 200) {
+                chargeMapping('list_idp.json', resolveIdP, rejectIdP);
+            };
+
+            if (!errIdP && responseIdP.statusCode == 200) {
+                if (Array.isArray(resultIdP.results.bindings)) {
+                    logger.info('Chargement du mapping IdP par web service OK');
+                    resolveIdP(resultIdP);
+                }
+                else {
+                    //Si erreur, chargement du fichier list_idp.json, a la place
+                    chargeMapping('list_idp.json', resolveIdP, rejectIdP);
+                }
+            };
+
+            resolveIdP("resolveIdP");
+        });
+    });
+
+    //Chargement du mapping par fichier (list_code_court.json ou list_idp.json)
+    function chargeMapping(nomFichier, resolve, reject){
         fs.readFile(path.resolve(__dirname, nomFichier), 'utf8', (err, content) => {
             if (err) {
                 return reject(err);
             }
 
             try {
-                if (nomFichier === "list_code_court.json") {
-                    list_code_court = JSON.parse(content);
-                }
-                else if (nomFichier === "list_idp.json") {
-                    list_idp = JSON.parse(content);
-                }
                 logger.info('Erreur chargement du mapping par web service : chargement par le fichier '+nomFichier+' OK');
+                return resolve(JSON.parse(content));
             } catch (e) {
                 return reject(e);
             }
         });
     }
+
+
+    return new Promise(function (resolve, reject) {
+        // Verify cache indices and time-to-live before starting
+        cache.checkIndexes(ttl, function (err) {
+            if (err) {
+                logger.error(`Thesesfr: failed to verify indexes : ${err}`);
+                return reject(new Error('failed to verify indexes for the cache of Thesesfr'));
+            }
+
+            Promise.all([promiseCodeCourt,promiseIdP]).then((promises) => {
+                list_code_court = promises[0];
+                list_idp = promises[1];
+                resolve(process);
+            });
+        });
+    });
+
 
     /**
      * Process a packet of ECs
