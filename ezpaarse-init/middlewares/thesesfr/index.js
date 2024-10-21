@@ -43,14 +43,14 @@ module.exports = function () {
     let baseUrl = "https://theses.fr/api/v1/theses/recherche/";
 
     if (isNaN(baseWaitTime)) {
-        baseWaitTime = 10;
-    } //1000
+        baseWaitTime = 1000;
+    }
     if (isNaN(maxTries)) {
         maxTries = 5;
     }
     if (isNaN(throttle)) {
-        throttle = 10;
-    } //100
+        throttle = 100;
+    }
     if (isNaN(ttl)) {
         ttl = 3600 * 24 * 7;
     }
@@ -168,7 +168,6 @@ module.exports = function () {
                 }
             };
 
-            resolveIdP("resolveIdP");
         });
     });
 
@@ -197,11 +196,16 @@ module.exports = function () {
                 return reject(new Error('failed to verify indexes for the cache of Thesesfr'));
             }
 
-            Promise.all([promiseCodeCourt,promiseIdP]).then((promises) => {
-                list_code_court = promises[0];
-                list_idp = promises[1];
-                resolve(process);
-            });
+            Promise.all([promiseCodeCourt,promiseIdP])
+                .then((promises) => {
+                    list_code_court = promises[0];
+                    list_idp = promises[1];
+                    resolve(process);
+                })
+                .catch(function(err) {
+                    logger.error(`Thesesfr: erreur chargement des mappings : ${err}`);
+                    return reject(new Error('Thesesfr: erreur chargement des mappings'));
+                });
         });
     });
 
