@@ -176,6 +176,9 @@ Les images d'ezstats-batch-theses et d'ezstats-batch-logs sont ici :
 - https://github.com/abes-esr/ezstats-batch-theses
 - https://github.com/abes-esr/ezstats-batch-logs
 
+La configuration de BiblioMap pour theses.fr est ici : 
+- https://github.com/abes-esr/ezstats-bibliomap-theses
+
 Les codes sources d'EZPaarse (et lib NodeJS), EZMesure (et lib NodeJS) et EZReport (maintenus par l'INIST) sont ici : 
 - https://github.com/ezpaarse-project/ezpaarse
 - https://github.com/ezpaarse-project/node-ezpaarse
