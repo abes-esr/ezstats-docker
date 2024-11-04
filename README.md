@@ -166,6 +166,64 @@ Le ``pull`` aura pour effet de télécharger l'éventuelle dernière images dock
 
 Ou bien [lancer le conteneur ``ezstats-watchtower``](https://github.com/abes-esr/ezstats-docker/blob/develop/README.md#d%C3%A9ploiement-continu) qui le fera automatiquement toutes les quelques secondes pour vous.
 
+## Rejouer les logs
+
+1) Supprimer les logs copiés et anonymisés provenant Logstash :
+```bash
+sudo docker exec ezstats-batch-logs sh -c "rm -fr /home/node/logtheses/logs/data/thesesfr/logs/*"
+```
+
+2) Supprimer les résultats du traitement EZPaarse et du chargement EZMesure :
+```bash
+sudo docker exec ezstats-batch-logs sh -c "rm -fr /home/node/logtheses/logs/data/thesesfr/results/*"
+```
+
+3) Relancer l'anonymisation des logs Logstash :
+```bash
+sudo docker exec -it ezstats-batch-logs sh 
+date
+```
+Puis, récupérer les minutes et l'heure et mettre à jour le crontab pour zip.sh, afin qu'il se lance une minute plus tard
+```bash
+crontab -e
+```
+
+4) Rejouer les logs du 01 au 15 mars 2024 avec recupRaw.sh
+```bash
+sudo docker exec -it ezstats-batch-logs sh 
+./recupRaw.sh
+```
+
+5) Relancer le traitement des logs par EZPaarse :
+```bash
+sudo docker exec -it ezstats-batch-theses bash 
+date
+```
+Puis, récupérer les minutes et l'heure et mettre à jour le crontab pour launch-ezp.sh, afin qu'il se lance une minute plus tard
+```bash
+crontab -e
+```
+On peut aussi ajouter dans launch-ezp.sh les paramètres : -H "thesesfr-base-wait-time: 10" \  -H "thesesfr-throttle: 10" \ afin que le temps entre 2 appels à l'API theses.fr soit plus court (par défaut : 1000 ms et 100 ms).
+
+6) Effacer l'index (indice) EZMesure :
+
+```bash
+sudo docker exec -it ezstats-batch-theses bash 
+ezmesure -u https://ezmesure.couperin.org/api -t "${EZMESURE_TOKEN}" indices delete z-abes-ezpaarse-thesesfr
+```
+
+7) Relancer le traitement des logs par EZMesure :
+```bash
+sudo docker exec -it ezstats-batch-theses bash 
+date
+```
+Puis, récupérer les minutes et l'heure et mettre à jour le crontab pour launch-ezm.sh, afin qu'il se lance une minute plus tard
+```bash
+crontab -e
+```
+
+
+
 ## Architecture
 
 <img alt="schéma d'architecture" src="https://docs.google.com/drawings/d/e/2PACX-1vR4EXYWBmah6Jeh1FJWdL_sVCiwUjtShgdIc0Uaa64bmpRFgH0wJGjQJhezEYRhzxGJYs0rVV_-5Qvv/pub?w=1135&h=564">
