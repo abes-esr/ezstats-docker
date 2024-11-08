@@ -303,7 +303,8 @@ module.exports = function () {
         var eltCodeCourt = list_code_court.results.bindings.find(elt => elt.ppn.value ===  result.etabSoutenancePpn);
         if (eltCodeCourt) {
             ec['codeCourt'] = eltCodeCourt.codeCourt.value;
-            ec['platform_name'] = eltCodeCourt.codeCourt.value;
+            // remplacer codeCourt par etabSoutenanceN
+            // ec['platform_name'] = eltCodeCourt.codeCourt.value;
 
         }
         //statut > obligatoire
@@ -411,6 +412,10 @@ module.exports = function () {
         ec['idp_etab_nom'] = 'sans objet';
         ec['idp_etab_ppn'] = 'sans objet';
         ec['idp_etab_code_court'] = 'sans objet';
+
+        // pour BilioMap affichage du libelé complet de l'étab dans platform_name qui permet le filtre par etab + la discipline dans le champ reservé au titre
+        ec['platform_name'] =   ec['etabSoutenanceN'];
+        ec['publication_title'] = ec['discipline'];
 
         /*
          ******* Spécificités pour Thèse en cours : status = 'enCours'******

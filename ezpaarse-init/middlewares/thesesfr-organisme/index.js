@@ -62,7 +62,7 @@ module.exports = function () {
             if (!cacheEnabled) { return true; }
 
             return findInCache(ec.unitid).then(cachedDoc => {
-            
+
             //TMX cas ou il y a un objet : dans le cas de thesesfr-organismes il sera forcemment vide {} = convention identique aux autres middlewares
                 if (cachedDoc && (typeof cachedDoc === 'object')) {
 
@@ -93,7 +93,7 @@ module.exports = function () {
                      enrichEc(ec, cachedDoc);
                      return false;
                     }
-                    
+
                 }
 
 
@@ -125,42 +125,42 @@ module.exports = function () {
 
         if (ecs.length === 0) { return; }
 
-for (const [ec, done] of ecs) {
+        for (const [ec, done] of ecs) {
 
-        let id;
-        id = ec.unitid;
+            let id;
+            id = ec.unitid;
 
-        
 
-        const maxAttempts = 5;
-        let tries = 0;
-        let doc;
 
-        //logger.info('dans onPacket thesesfr-organisme avant le while pour unitid '+id+' ec.rtype'+ec.rtype);
+            const maxAttempts = 5;
+            let tries = 0;
+            let doc;
 
-        while (!doc) {
-            if (++tries > maxAttempts) {
-                const err = new Error(`Failed to query Thesesfr from thesesfr-organisme ${maxAttempts} times in a row`);
-                return Promise.reject(err);
-            }
+            //logger.info('dans onPacket thesesfr-organisme avant le while pour unitid '+id+' ec.rtype'+ec.rtype);
 
-            try {
-                //logger.info('avant query dans thesesfr-organisme');
-                if (ec.rtype === 'RECORD') {
-                   doc = yield query(id);
-                   logger.info('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr-organisme');
+            while (!doc) {
+                if (++tries > maxAttempts) {
+                    const err = new Error(`Failed to query Thesesfr from thesesfr-organisme ${maxAttempts} times in a row`);
+                    return Promise.reject(err);
                 }
-               else 
-                    {
-                       doc={};
-                    }
-            } catch (e) {
-                logger.error(`Thesesfr erreur yield query dans thesesfr-organisme : ${e.message}`);
-            }
 
-            yield wait(throttle);
-            yield wait(tries === 0 ? throttle : baseWaitTime * Math.pow(2, tries));
-        }
+                try {
+                    //logger.info('avant query dans thesesfr-organisme');
+                    if (ec.rtype === 'RECORD') {
+                        doc = yield query(id);
+                        logger.info('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr-organisme');
+                    }
+                    else
+                    {
+                        doc={};
+                    }
+                } catch (e) {
+                    logger.error(`Thesesfr erreur yield query dans thesesfr-organisme : ${e.message}`);
+                }
+
+                yield wait(throttle);
+                yield wait(tries === 0 ? throttle : baseWaitTime * Math.pow(2, tries));
+            }
 
 
 
@@ -175,31 +175,31 @@ for (const [ec, done] of ecs) {
 
             if (doc && (typeof doc === 'object')) {
 
-                    //logger.info ('la réponse de onPacket query est un objet');
+                //logger.info ('la réponse de onPacket query est un objet');
 
 
-                    if(Object.keys(doc).length === 0){
-                            //logger.info('objet réponse est VIDE  ');
-                     }
-                    else {
-                            logger.info ('CAS IMPREVU !!! objet réponse est un objet NON VIDE avec '+ Object.keys(doc).length +' propriétés');
+                if(Object.keys(doc).length === 0){
+                    //logger.info('objet réponse est VIDE  ');
+                }
+                else {
+                    logger.info ('CAS IMPREVU !!! objet réponse est un objet NON VIDE avec '+ Object.keys(doc).length +' propriétés');
 
-                    }
+                }
             }
 
             if (doc && typeof doc !== 'object') {
 
-                    //logger.info ('la réponse de onPacket query différent de objet : '+typeof doc);
+                //logger.info ('la réponse de onPacket query différent de objet : '+typeof doc);
 
-                    if(doc.length === 0){
-                            logger.info('objet réponse DIFFERENT de objet mais taille 0 pour id '+id);
-                     }
-                    else {
+                if(doc.length === 0){
+                    logger.info('objet réponse DIFFERENT de objet mais taille 0 pour id '+id);
+                }
+                else {
 
-                     enrichEc(ec, doc);
-                    }
+                    enrichEc(ec, doc);
+                }
 
-           }
+            }
 
             done();
         }
@@ -215,67 +215,68 @@ for (const [ec, done] of ecs) {
  	# -H "Output-Fields: +nnt, +numSujet, +doiThese, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +accessible, +source, +discipline, +domaine, +langue, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +cotutelleN, +cotutellePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +idp_etab_nom, +idp_etab_ppn, +idp_etab_code_court, +platform_name " \
     */
     function enrichEc(ec, result) {
-            if( result && (typeof result === 'object') && (Object.keys(result).length === 0)) {
-                logger.info ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
-            }
-            //il s'agit d'un Organisme (PPN)
-            if (result && (typeof result === 'string') && (result.length !== 0)) {
-                ec['organismeN'] = result;
-                ec['organismePpn'] = ec.unitid;
-                ec.rtype = 'ORGANISME';
-                logger.info(' organisme enrichi ==> ' + ec['rtype'] + ' ' + ec['organismeN'] + ' ' +ec['organismePpn']);
-                ec['nnt']= 'sans objet';
-                ec['numSujet']= 'sans objet';
-                /*//doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                  //ec['doiThese]'= 'sans objet';*/
-                ec['etabSoutenanceN']= 'sans objet';
-                ec['etabSoutenancePpn']= 'sans objet';
-                ec['codeCourt']= 'sans objet';
-                ec['dateSoutenance']= 'sans objet';
-                ec['anneeSoutenance']= 'sans objet';
-                ec['dateInscription']= 'sans objet';
-                ec['anneeInscription']= 'sans objet';
-                ec['statut']= 'sans objet';
-                /*// accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                ec['accessible'] = 'sans objet';*/
-                /*// source > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                ec['source']= 'sans objet';
-                }*/
-                ec['discipline']= 'sans objet';
-                /*// domaine > obligatoire  > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                ec['domaine'] = 'sans objet';
-                }*/
-                /*// langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                              ec['langue'] = 'sans objet';*/
-                ec['ecoleDoctoraleN']= 'sans objet';
-                ec['ecoleDoctoralePpn']= 'sans objet';
-                ec['partenaireRechercheN']= 'sans objet';
-                ec['partenaireRecherchePpn']= 'sans objet';
-                /*//coTutelleN, coTutellePpn > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)*/
-                ec['auteurN']= 'sans objet';
-                ec['auteurPpn']= 'sans objet';
-                ec['directeurN']= 'sans objet';
-                ec['directeurPpn']= 'sans objet';
-                ec['presidentN']= 'sans objet';
-                ec['presidentPpn']= 'sans objet';
-                ec['rapporteursN']= 'sans objet';
-                ec['rapporteursPpn']= 'sans objet';
-                ec['membresN']= 'sans objet';
-                ec['membresPpn']= 'sans objet';
-                ec['personneN']= 'sans objet';
-                ec['personnePpn']= 'sans objet';
-                ec['idp_etab_nom'] = 'sans objet';
-                ec['idp_etab_ppn'] = 'sans objet';
-                ec['idp_etab_code_court'] = 'sans objet';
-                ec['platform_name']= 'sans objet';
-            }
+        if( result && (typeof result === 'object') && (Object.keys(result).length === 0)) {
+            logger.info ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
+        }
+        //il s'agit d'un Organisme (PPN)
+        if (result && (typeof result === 'string') && (result.length !== 0)) {
+            ec['organismeN'] = result;
+            ec['organismePpn'] = ec.unitid;
+            ec.rtype = 'ORGANISME';
+            logger.info(' organisme enrichi ==> ' + ec['rtype'] + ' ' + ec['organismeN'] + ' ' +ec['organismePpn']);
+            ec['nnt']= 'sans objet';
+            ec['numSujet']= 'sans objet';
+            /*//doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+              //ec['doiThese]'= 'sans objet';*/
+            ec['etabSoutenanceN']= 'sans objet';
+            ec['etabSoutenancePpn']= 'sans objet';
+            ec['codeCourt']= 'sans objet';
+            ec['dateSoutenance']= 'sans objet';
+            ec['anneeSoutenance']= 'sans objet';
+            ec['dateInscription']= 'sans objet';
+            ec['anneeInscription']= 'sans objet';
+            ec['statut']= 'sans objet';
+            /*// accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            ec['accessible'] = 'sans objet';*/
+            /*// source > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            ec['source']= 'sans objet';
+            }*/
+            ec['discipline']= 'sans objet';
+            /*// domaine > obligatoire  > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            ec['domaine'] = 'sans objet';
+            }*/
+            /*// langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+                          ec['langue'] = 'sans objet';*/
+            ec['ecoleDoctoraleN']= 'sans objet';
+            ec['ecoleDoctoralePpn']= 'sans objet';
+            ec['partenaireRechercheN']= 'sans objet';
+            ec['partenaireRecherchePpn']= 'sans objet';
+            /*//coTutelleN, coTutellePpn > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)*/
+            ec['auteurN']= 'sans objet';
+            ec['auteurPpn']= 'sans objet';
+            ec['directeurN']= 'sans objet';
+            ec['directeurPpn']= 'sans objet';
+            ec['presidentN']= 'sans objet';
+            ec['presidentPpn']= 'sans objet';
+            ec['rapporteursN']= 'sans objet';
+            ec['rapporteursPpn']= 'sans objet';
+            ec['membresN']= 'sans objet';
+            ec['membresPpn']= 'sans objet';
+            ec['personneN']= 'sans objet';
+            ec['personnePpn']= 'sans objet';
+            ec['idp_etab_nom'] = 'sans objet';
+            ec['idp_etab_ppn'] = 'sans objet';
+            ec['idp_etab_code_court'] = 'sans objet';
+            ec['platform_name']= 'Organisme';
+
+        }
     }
 
 
-   /**
-    * Request metadata from ThesesFr API for given IDs
-    * @param {Array} unitids the ids to query
-    */
+    /**
+     * Request metadata from ThesesFr API for given IDs
+     * @param {Array} unitids the ids to query
+     */
 
 
     function query(id) {
@@ -287,7 +288,7 @@ for (const [ec, done] of ecs) {
             const options = {
                 method: 'GET',
                 headers: {
-                           'User-Agent': userAgent
+                    'User-Agent': userAgent
                 },
                 uri: `${baseUrl}${id}`
             };

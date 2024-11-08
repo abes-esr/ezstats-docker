@@ -65,11 +65,11 @@ module.exports = function () {
                 if (cachedDoc) {
 
                     if(Object.keys(cachedDoc).length === 0){
-                       logger.warn('missed cache, doc from thesesfr-personne est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
-                     }
+                        logger.warn('missed cache, doc from thesesfr-personne est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
+                    }
                     else {
-                    logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-personne');
-                     enrichEc(ec, cachedDoc);
+                        logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-personne');
+                        enrichEc(ec, cachedDoc);
                     }
                     return false;
                 }
@@ -107,7 +107,7 @@ module.exports = function () {
         let tries = 0;
         let docs;
 
-                //logger.info('dans onPacket avant le while');
+        //logger.info('dans onPacket avant le while');
 
         while (!docs) {
             if (++tries > maxAttempts) {
@@ -167,57 +167,57 @@ module.exports = function () {
     function enrichEc(ec, result) {
 
         //il s'agit d'une Personne (PPN)
-            if (result.nom && result.prenom) {
-                ec['personneN'] = result.nom+ " "+result.prenom;
+        if (result.nom && result.prenom) {
+            ec['personneN'] = result.nom+ " "+result.prenom;
             ec['personnePpn'] = ec.unitid;
             // TMX changer le ec.rtype pour 'BIO' afin de les ignorer dans le middleware suivant qui devra traiter uniquement les ec d'organismes restant toujours à 'RECORD'
             ec.rtype = 'BIO'
             logger.info(' personne enrichie ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
-                ec['nnt']= 'sans objet';
-                ec['numSujet']= 'sans objet';
-                /*//doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                  //ec['doiThese]'= 'sans objet';*/
-                ec['etabSoutenanceN']= 'sans objet';
-                ec['etabSoutenancePpn']= 'sans objet';
-                ec['codeCourt']= 'sans objet';
-                ec['dateSoutenance']= 'sans objet';
-                ec['anneeSoutenance']= 'sans objet';
-                ec['dateInscription']= 'sans objet';
-                ec['anneeInscription']= 'sans objet';
-                ec['statut']= 'sans objet';
-                /*// accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                ec['accessible'] = 'sans objet';*/
-                /*// source > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                ec['source']= 'sans objet';
-                }*/
-                ec['discipline']= 'sans objet';
-                /*// domaine > obligatoire  > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                ec['domaine'] = 'sans objet';
-                }*/
-                /*// langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                              ec['langue'] = 'sans objet';*/
-                ec['ecoleDoctoraleN']= 'sans objet';
-                ec['ecoleDoctoralePpn']= 'sans objet';
-                ec['partenaireRechercheN']= 'sans objet';
-                ec['partenaireRecherchePpn']= 'sans objet';
-                /*//coTutelleN, coTutellePpn > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)*/
-                ec['auteurN']= 'sans objet';
-                ec['auteurPpn']= 'sans objet';
-                ec['directeurN']= 'sans objet';
-                ec['directeurPpn']= 'sans objet';
-                ec['presidentN']= 'sans objet';
-                ec['presidentPpn']= 'sans objet';
-                ec['rapporteursN']= 'sans objet';
-                ec['rapporteursPpn']= 'sans objet';
-                ec['membresN']= 'sans objet';
-                ec['membresPpn']= 'sans objet';
-                ec['organismeN']= 'sans objet';
-                ec['organismePpn']= 'sans objet';
-                ec['idp_etab_nom'] = 'sans objet';
-                ec['idp_etab_ppn'] = 'sans objet';
-                ec['idp_etab_code_court'] = 'sans objet';
-                ec['platform_name']= 'sans objet';
-            }
+            ec['nnt']= 'sans objet';
+            ec['numSujet']= 'sans objet';
+            /*//doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+              //ec['doiThese]'= 'sans objet';*/
+            ec['etabSoutenanceN']= 'sans objet';
+            ec['etabSoutenancePpn']= 'sans objet';
+            ec['codeCourt']= 'sans objet';
+            ec['dateSoutenance']= 'sans objet';
+            ec['anneeSoutenance']= 'sans objet';
+            ec['dateInscription']= 'sans objet';
+            ec['anneeInscription']= 'sans objet';
+            ec['statut']= 'sans objet';
+            /*// accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            ec['accessible'] = 'sans objet';*/
+            /*// source > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            ec['source']= 'sans objet';
+            }*/
+            ec['discipline']= 'sans objet';
+            /*// domaine > obligatoire  > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+            ec['domaine'] = 'sans objet';
+            }*/
+            /*// langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+                          ec['langue'] = 'sans objet';*/
+            ec['ecoleDoctoraleN']= 'sans objet';
+            ec['ecoleDoctoralePpn']= 'sans objet';
+            ec['partenaireRechercheN']= 'sans objet';
+            ec['partenaireRecherchePpn']= 'sans objet';
+            /*//coTutelleN, coTutellePpn > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)*/
+            ec['auteurN']= 'sans objet';
+            ec['auteurPpn']= 'sans objet';
+            ec['directeurN']= 'sans objet';
+            ec['directeurPpn']= 'sans objet';
+            ec['presidentN']= 'sans objet';
+            ec['presidentPpn']= 'sans objet';
+            ec['rapporteursN']= 'sans objet';
+            ec['rapporteursPpn']= 'sans objet';
+            ec['membresN']= 'sans objet';
+            ec['membresPpn']= 'sans objet';
+            ec['organismeN']= 'sans objet';
+            ec['organismePpn']= 'sans objet';
+            ec['idp_etab_nom'] = 'sans objet';
+            ec['idp_etab_ppn'] = 'sans objet';
+            ec['idp_etab_code_court'] = 'sans objet';
+            ec['platform_name']= 'Personne';
+        }
     }
 
     /**
@@ -248,7 +248,7 @@ module.exports = function () {
                 method: 'GET',
                 json: true,
                 headers: {
-                           'User-Agent': userAgent
+                    'User-Agent': userAgent
                 },
                 uri: `${baseUrl}${query}`
             };
