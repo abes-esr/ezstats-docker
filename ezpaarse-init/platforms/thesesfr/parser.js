@@ -45,8 +45,9 @@ module.exports = new Parser(function analyseEC(parsedUrl, ec) {
   let match;
 
   const userAgentezPAARSE = 'ezPAARSE (https://readmetrics.org; mailto:ezteam@couperin.org)';
+  const userAgentezPAARSEAnon = 'ezPAARSE (https://readmetrics.org; mailto:)';
 
-  if ((ec['User-Agent'] === 'node') || (ec['User-Agent'] === userAgentezPAARSE)) {
+  if ((ec['User-Agent'] === 'node') || (ec['User-Agent'] === userAgentezPAARSE) || (ec['User-Agent'] === userAgentezPAARSEAnon)) {
     //NOP
 
   } else if (
