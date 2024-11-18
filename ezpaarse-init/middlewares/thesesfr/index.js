@@ -413,9 +413,10 @@ module.exports = function () {
         ec['idp_etab_ppn'] = 'sans objet';
         ec['idp_etab_code_court'] = 'sans objet';
 
-        // pour BilioMap affichage du libelé complet de l'étab dans platform_name qui permet le filtre par etab + la discipline dans le champ reservé au titre
-        ec['platform_name'] =   ec['etabSoutenanceN'];
-        ec['publication_title'] = ec['discipline'];
+        // pour BilioMap affichage du codeCourt de l'étab dans platform_name qui permet le filtre par etab + dans le champ reservé au titre "libelé de l'étab complet -  discipline"
+        ec['platform_name'] =   ec['codeCourt'];
+        ec['publication_title'] = ec['etabSoutenanceN'] + " - " +  ec['discipline'];
+
 
         /*
          ******* Spécificités pour Thèse en cours : status = 'enCours'******
