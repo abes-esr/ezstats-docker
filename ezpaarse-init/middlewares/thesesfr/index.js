@@ -43,13 +43,13 @@ module.exports = function () {
     let baseUrl = "https://theses.fr/api/v1/theses/recherche/";
 
     if (isNaN(baseWaitTime)) {
-        baseWaitTime = 100; //1000
+        baseWaitTime = 1000;
     }
     if (isNaN(maxTries)) {
         maxTries = 5;
     }
     if (isNaN(throttle)) {
-        throttle = 25; //100
+        throttle = 100;
     }
     if (isNaN(ttl)) {
         ttl = 3600 * 24 * 7;
