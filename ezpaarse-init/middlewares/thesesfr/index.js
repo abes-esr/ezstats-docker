@@ -415,7 +415,7 @@ module.exports = function () {
 
         // pour BilioMap affichage du codeCourt de l'étab dans platform_name qui permet le filtre par etab + dans le champ reservé au titre "libelé de l'étab complet -  discipline"
         ec['platform_name'] =   ec['codeCourt'];
-        ec['publication_title'] = ec['etabSoutenanceN'] + " - " +  ec['discipline'];
+        ec['publication_title'] = ec['etabSoutenanceN'] + "<br/>" +  ec['discipline'];
 
 
         /*
