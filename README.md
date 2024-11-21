@@ -67,6 +67,12 @@ Alors il faut vérifier que le répertoire contenant les logs est bien existant.
 - Retours à la ligne à changer si installation sous Windows :  
 Ouvrir avec un éditeur de texte le fichier webdav/docker-entrypoint.sh et changer "Windows CR+LF" en "UNIX LF" pour le fichier : webdav/docker-entrypoint.sh
 
+
+- Ajouter les utilisateurs du WebDav, pour cela lancer cette commande, ils auront des droits en lecture et écriture  :  
+```bash 
+htdigest user.passwd WebDAV {eMail de l'utilisateur}
+```
+
 ## Démarrage et arrêt
 
 ```bash
