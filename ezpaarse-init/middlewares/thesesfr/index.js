@@ -623,7 +623,7 @@ module.exports = function () {
                 const missingSize= uniqueSize-respondedSize;
                     
                 if (missingSize > 0) {
-                    logger.info('il manque '+missingSize+' documents dans la réponse API !');
+                    logger.warn('il manque '+missingSize+' documents dans la réponse API !');
 					//TODO TMX : lequels ?
                 }
 
