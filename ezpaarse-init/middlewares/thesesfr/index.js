@@ -578,6 +578,9 @@ module.exports = function () {
         }
 
         //ACT TODO : traiter les PPN
+		
+		const uniques = new Set(nnts.concat(numSujets));
+		
         const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
         logger.info(' query ==> ' + query);
 
@@ -612,6 +615,16 @@ module.exports = function () {
                 if (!Array.isArray(result && result.theses)) {
                     report.inc('thesesfr', 'thesesfr-query-fails');
                     return reject(new Error('invalid response'));
+                }
+				
+				
+				const uniqueSize=Number(uniques.size);
+                const respondedSize=Number(result.totalHits);
+                const missingSize= uniqueSize-respondedSize;
+                    
+                if (missingSize > 0) {
+                    logger.info('il manque '+missingSize+' documents dans la réponse API !');
+					//TODO TMX : lequels ?
                 }
 
                 return resolve(result.theses);
