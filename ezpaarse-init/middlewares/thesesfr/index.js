@@ -265,16 +265,8 @@ module.exports = function () {
             }
 
             if (doc) {
-               //TMX détecter si doc est naturel ou genéré avec missing:true
-               if (doc.missing)  {
-                   logger.warn('le doc '+doc.id+' pour enrichEc un ' + ec.rtype + ' a été forgé car absent de la réponse API');
-                   enrichForgedEc(ec, doc);
-                  }
-                else {
                      logger.info('le doc pour enrichEc un ' + ec.rtype + ' provient de onPacket thesesfr');
-                     enrichEc(ec, doc);
-                     }
-
+                     enrichEc(ec, doc);                  
             }
 
             done();
@@ -340,6 +332,16 @@ module.exports = function () {
      */
     function enrichEc(ec, result) {
         logger.info(' debut enrich ');
+
+        //TMX détecter si doc est naturel ou genéré avec missing:true
+        if (result.missing)  {
+           logger.warn('le doc '+result.id+' pour enrichEc un ' + ec.rtype + ' a été forgé car absent de la réponse API');
+           enrichForgedEc(ec, result);
+           return; //on sort
+        }
+
+
+
         /*
          ******Tronc commun*****
          */
