@@ -579,7 +579,7 @@ module.exports = function () {
 
         //ACT TODO : traiter les PPN
 		
-		const uniques = new Set(nnts.concat(numSujets));
+	const uniques = new Set(nnts.concat(numSujets));
 		
         const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
         logger.info(' query ==> ' + query);
@@ -618,13 +618,26 @@ module.exports = function () {
                 }
 				
 				
-				const uniqueSize=Number(uniques.size);
+		const uniqueSize=Number(uniques.size);
                 const respondedSize=Number(result.totalHits);
                 const missingSize= uniqueSize-respondedSize;
                     
                 if (missingSize > 0) {
-                    logger.warn('il manque '+missingSize+' documents dans la réponse API !');
-					//TODO TMX : lequels ?
+                    //logger.warn('il manque '+missingSize+' documents dans la réponse API, sur les '+uniqueSize+' demandés !');
+		    
+                    const responseIds = result.theses.map(o => o.id);
+		    const responseAPI = new Set(responseIds);
+
+                    //ES2015 only
+                    //const diffSet=uniques.difference(responseAPI);
+
+                    //ECMAScript 6
+                    const diffSet = new Set([...uniques].filter(x => !responseAPI.has(x)));
+                    for (let value of diffSet.values()) {
+                        logger.warn('id '+value+' ne donne rien dans le réponse depuis API '+baseUrl);
+                    }
+
+
                 }
 
                 return resolve(result.theses);
