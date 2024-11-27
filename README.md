@@ -70,7 +70,7 @@ Ouvrir avec un éditeur de texte le fichier webdav/docker-entrypoint.sh et chang
 
 - Ajouter les utilisateurs du WebDav, pour cela lancer cette commande, ils auront des droits en lecture et écriture  :  
 ```bash 
-htdigest user.passwd WebDAV {eMail de l'utilisateur}
+htdigest user.passwd WebDAV {Nom de famille de l'utilisateur}
 ```
 
 ## Démarrage et arrêt
