@@ -90,6 +90,8 @@ services:
       - "co.elastic.logs/processors.add_fields.target="
       - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
       - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-webdav"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
 
   ezstats-watchtower:
     image: containrrr/watchtower:1.4.0
