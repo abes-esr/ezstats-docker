@@ -172,6 +172,13 @@ module.exports = function () {
             } catch (e) {
                 report.inc('thesesfr-organisme erreur yield cacheResult ', 'thesesfr-cache-fails');
             }
+			
+			if (doc && doc.missing) {
+					logger.info(`Missing data for ID ${id}. Enriching with default values.`);
+					enrichEc(ec, { missing: true });
+					continue; // Passe à l'élément suivant sans exécuter le reste
+				}
+				
 
             if (doc && (typeof doc === 'object')) {
 
@@ -218,6 +225,53 @@ module.exports = function () {
         if( result && (typeof result === 'object') && (Object.keys(result).length === 0)) {
             logger.info ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
         }
+		
+
+		if (result && result.missing)
+          {
+            ec['rtype']='OTHER';
+			ec['nnt'] ='NOT_FOUND';
+			ec['numSujet'] ='NOT_FOUND';
+			ec['etabSoutenanceN'] ='NOT_FOUND';
+			ec['etabSoutenancePpn'] ='NOT_FOUND';
+			ec['codeCourt'] ='NOT_FOUND';
+			ec['dateSoutenance'] ='NOT_FOUND';
+			ec['anneeSoutenance'] ='NOT_FOUND';
+			ec['dateInscription'] ='NOT_FOUND';
+			ec['anneeInscription'] ='NOT_FOUND';
+			ec['statut'] ='NOT_FOUND';
+			ec['discipline'] ='NOT_FOUND';
+			ec['ecoleDoctoraleN'] ='NOT_FOUND';
+			ec['ecoleDoctoralePpn'] ='NOT_FOUND';
+			ec['partenaireRechercheN'] ='NOT_FOUND';
+			ec['partenaireRecherchePpn'] ='NOT_FOUND';
+			ec['auteurN'] ='NOT_FOUND';
+			ec['auteurPpn'] ='NOT_FOUND';
+			ec['directeurN'] ='NOT_FOUND';
+			ec['directeurPpn'] ='NOT_FOUND';
+			ec['presidentN'] ='NOT_FOUND';
+			ec['presidentPpn'] ='NOT_FOUND';
+			ec['rapporteursN'] ='NOT_FOUND';
+			ec['rapporteursPpn'] ='NOT_FOUND';
+			ec['membresN'] ='NOT_FOUND';
+			ec['membresPpn'] ='NOT_FOUND';
+			ec['personneN'] ='NOT_FOUND';
+			ec['personnePpn'] ='NOT_FOUND';
+			ec['organismeN'] ='NOT_FOUND';
+			ec['organismePpn'] ='NOT_FOUND';
+			ec['idp_etab_nom'] ='NOT_FOUND';
+			ec['idp_etab_ppn'] ='NOT_FOUND';
+			ec['idp_etab_code_court'] ='NOT_FOUND';
+			ec['platform_name'] ='NOT_FOUND';
+			ec['publication_title'] ='NOT_FOUND';
+
+
+            logger.info(`EnrichedEC  ${ec.unitid} is 'NOT_FOUND`);
+            return;
+        }
+
+
+
         //il s'agit d'un Organisme (PPN)
         if (result && (typeof result === 'string') && (result.length !== 0)) {
             ec['organismeN'] = result;
@@ -306,6 +360,11 @@ module.exports = function () {
                 if (response.statusCode !== 200 && response.statusCode !== 304) {
                     report.inc('thesesfr-organisme', 'thesesfr-query-fails');
                     return reject(new Error(`${response.statusCode} ${response.statusMessage}`));
+                }
+				
+				if ((response.statusCode === 200) && (!(Number(response.headers['content-length']) > 0))) {               
+                    report.inc('thesesfr-organisme', 'thesesfr-query-empty-response');
+                    return resolve({ missing: true });
                 }
 
                 if (!(Number(response.headers['content-length']) > 0)) {
