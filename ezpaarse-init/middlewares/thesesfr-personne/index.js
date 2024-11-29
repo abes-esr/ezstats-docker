@@ -33,9 +33,9 @@ module.exports = function () {
 
     let baseUrl = "https://theses.fr/api/v1/personnes/recherche/";
 
-    if (isNaN(baseWaitTime)) { baseWaitTime = 1000; }
+    if (isNaN(baseWaitTime)) { baseWaitTime = 100; } //1000
     if (isNaN(maxTries)) { maxTries = 5; }
-    if (isNaN(throttle)) { throttle = 100; }
+    if (isNaN(throttle)) { throttle = 25; } //100
     if (isNaN(ttl)) { ttl = 3600 * 24 * 7; }
 
     if (!cache) {
@@ -154,6 +154,53 @@ module.exports = function () {
 
     }
 
+   /**
+     * Enrich an EC using a forged result (absent from quey response)
+     * @param {Object} ec the EC to be enriched
+     * @param {Object} result the forged document used to enrich the EC
+     */
+   function enrichForgedEc(ec, result) {
+
+                        ec['rtype']='OTHER';
+
+			ec['nnt'] ='NOT_FOUND';
+			ec['numSujet'] ='NOT_FOUND';
+			ec['etabSoutenanceN'] ='NOT_FOUND';
+			ec['etabSoutenancePpn'] ='NOT_FOUND';
+			ec['codeCourt'] ='NOT_FOUND';
+			ec['dateSoutenance'] ='NOT_FOUND';
+			ec['anneeSoutenance'] ='NOT_FOUND';
+			ec['dateInscription'] ='NOT_FOUND';
+			ec['anneeInscription'] ='NOT_FOUND';
+			ec['statut'] ='NOT_FOUND';
+			ec['discipline'] ='NOT_FOUND';
+			ec['ecoleDoctoraleN'] ='NOT_FOUND';
+			ec['ecoleDoctoralePpn'] ='NOT_FOUND';
+			ec['partenaireRechercheN'] ='NOT_FOUND';
+			ec['partenaireRecherchePpn'] ='NOT_FOUND';
+			ec['auteurN'] ='NOT_FOUND';
+			ec['auteurPpn'] ='NOT_FOUND';
+			ec['directeurN'] ='NOT_FOUND';
+			ec['directeurPpn'] ='NOT_FOUND';
+			ec['presidentN'] ='NOT_FOUND';
+			ec['presidentPpn'] ='NOT_FOUND';
+			ec['rapporteursN'] ='NOT_FOUND';
+			ec['rapporteursPpn'] ='NOT_FOUND';
+			ec['membresN'] ='NOT_FOUND';
+			ec['membresPpn'] ='NOT_FOUND';
+			ec['personneN'] ='NOT_FOUND';
+			ec['personnePpn'] ='NOT_FOUND';
+			ec['organismeN'] ='NOT_FOUND';
+			ec['organismePpn'] ='NOT_FOUND';
+			ec['idp_etab_nom'] ='NOT_FOUND';
+			ec['idp_etab_ppn'] ='NOT_FOUND';
+			ec['idp_etab_code_court'] ='NOT_FOUND';
+			ec['platform_name'] ='NOT_FOUND';
+			ec['publication_title'] ='NOT_FOUND';
+
+
+}
+
     /**
      * Enrich an EC using the result of a query
      * @param {Object} ec the EC to be enriched
@@ -165,6 +212,13 @@ module.exports = function () {
      */
 
     function enrichEc(ec, result) {
+
+    //TMX détecter si doc est naturel ou genéré avec missing:true
+        if (result.missing)  {
+           logger.warn('le doc '+result.id+' pour enrichEc un ' + ec.rtype + ' a été forgé car absent de la réponse API');
+           enrichForgedEc(ec, result);
+           return; //on sort
+        }
 
         //il s'agit d'une Personne (PPN)
         if (result.nom && result.prenom) {
@@ -238,6 +292,8 @@ module.exports = function () {
             subQueries.push(`${ppns.join(' OR ')}`);
         }
 
+	const uniques = new Set(ppns);
+
         const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
         logger.info(' query ==> ' + query);
 
@@ -252,6 +308,8 @@ module.exports = function () {
                 },
                 uri: `${baseUrl}${query}`
             };
+
+            let pseudoResponse =  new Set();
 
             request(options, (err, response, result) => {
                 if (err) {
@@ -273,7 +331,41 @@ module.exports = function () {
                     return reject(new Error('invalid response'));
                 }
 
-                return resolve(result.personnes);
+		const uniqueSize=Number(uniques.size);
+                const respondedSize=Number(result.totalHits);
+                const missingSize= uniqueSize-respondedSize;
+                    
+                if (missingSize > 0) {
+                    //logger.warn('il manque '+missingSize+' documents dans la réponse API, sur les '+uniqueSize+' demandés !');
+		    
+                    const responseIds = result.personnes.map(o => o.id);
+		            const responseAPI = new Set(responseIds);
+
+                    //ES2015 only
+                    //const diffSet=uniques.difference(responseAPI);
+
+                    //ECMAScript 6
+                    const diffSet = new Set([...uniques].filter(x => !responseAPI.has(x)));
+
+                    pseudoResponse =  new Set();
+
+
+                    for (let value of diffSet.values()) {
+                        //logger.warn('id '+value+' ne donne rien dans le réponse depuis API '+baseUrl);
+                      
+			//TMX créer une pseudeo-réponse qui sera ajoutée ensuite à result.personnes[]
+                        let pseudoObj = { id:value, missing: true };
+                        pseudoObj['id']=value;
+			pseudoResponse.add(pseudoObj);
+                    }
+
+                    for (let value of pseudoResponse.values()) {
+                          logger.warn('pseudo reponse '+value.id+ ' missing '+value.missing);
+		        }
+
+                }
+
+                return resolve(result.personnes.concat([...pseudoResponse]));
             });
         });
     }
