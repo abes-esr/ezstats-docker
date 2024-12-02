@@ -108,7 +108,7 @@ module.exports = function () {
         // Verify cache indices and time-to-live before starting
         cache.checkIndexes(ttl, function (err) {
             if (err) {
-                logger.error(`Thesesfr: failed to verify indexes : ${err}`);
+                logger.error(`Thesesfr:  failed to verify indexes : ${err}`);
                 return reject(new Error('failed to verify indexes for the cache of Thesesfr'));
             }
 
