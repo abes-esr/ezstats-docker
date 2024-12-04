@@ -108,7 +108,7 @@ module.exports = function () {
         // Verify cache indices and time-to-live before starting
         cache.checkIndexes(ttl, function (err) {
             if (err) {
-                logger.error(`Thesesfr: failed to verify indexes : ${err}`);
+                logger.error(`Thesesfr:  failed to verify indexes : ${err}`);
                 return reject(new Error('failed to verify indexes for the cache of Thesesfr'));
             }
 
@@ -172,13 +172,8 @@ module.exports = function () {
             } catch (e) {
                 report.inc('thesesfr-organisme erreur yield cacheResult ', 'thesesfr-cache-fails');
             }
-			
-			if (doc && doc.missing) {
-					logger.info(`Missing data for ID ${id}. Enriching with default values.`);
-					enrichEc(ec, { missing: true });
-					continue; // Passe à l'élément suivant sans exécuter le reste
-				}
-				
+
+
 
             if (doc && (typeof doc === 'object')) {
 
@@ -193,6 +188,12 @@ module.exports = function () {
 
                 }
             }
+
+            if (doc && doc.missing) {
+                logger.info(`Missing data for ID ${id}. Enriching with default values.`);
+                enrichEc(ec, doc);
+            }
+
 
             if (doc && typeof doc !== 'object') {
 
@@ -225,7 +226,7 @@ module.exports = function () {
         if( result && (typeof result === 'object') && (Object.keys(result).length === 0)) {
             logger.info ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
         }
-		
+
 
 		if (result && result.missing)
           {
