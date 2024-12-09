@@ -248,9 +248,11 @@ module.exports = function () {
      * @param {Object} result the forged document used to enrich the EC
      */
     function enrichForgedEc(ec, result) {
+        /** version Check EC qualification : middleware qualifier-other + middleware qualifer */
+        /*    ec.rtype = 'OTHER'*/
 
+      /** version rtype OTHER et tous les champs 'NOT_FOUND'*/
         ec['rtype']='OTHER';
-
         ec['nnt'] ='NOT_FOUND';
         ec['numSujet'] ='NOT_FOUND';
         ec['etabSoutenanceN'] ='NOT_FOUND';
@@ -286,8 +288,8 @@ module.exports = function () {
         ec['platform_name'] ='NOT_FOUND';
         ec['publication_title'] ='NOT_FOUND';
 
-
     }
+
 
     /**
      * Enrich an EC using the result of a query
@@ -295,9 +297,6 @@ module.exports = function () {
      * @param {Object} result the document used to enrich the EC
      */
 
-    /* ERM header cible
-  	# -H "Output-Fields: +nnt, +numSujet, +doiThese, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +accessible, +source, +discipline, +domaine, +langue, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +cotutelleN, +cotutellePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +idp_etab_nom, +idp_etab_ppn, +idp_etab_code_court, +platform_name " \
-     */
     function enrichEc(ec, result) {
         logger.info(' debut enrich ');
 
