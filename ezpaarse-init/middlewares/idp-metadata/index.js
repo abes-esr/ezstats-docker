@@ -10,20 +10,20 @@ module.exports = function () {
     const report = this.report;
     const req = this.request;
 
-    logger.info('Initializing ABES federation-identite middleware');
+    logger.info('Initializing ABES idp-metadata middleware');
 
     // Maximum number of Theses or Persons to query
-    let packetSize = parseInt(req.header('thesesfr-packet-size'));
+    let packetSize = parseInt(req.header('idp-metadata-packet-size'));
     // Minimum number of ECs to keep before resolving them
-    let bufferSize = parseInt(req.header('thesesfr-buffer-size'));
+    let bufferSize = parseInt(req.header('idp-metadata-buffer-size'));
     if (isNaN(packetSize)) { packetSize = 100; } //Default : 50
     if (isNaN(bufferSize)) { bufferSize = 1000; } //Default : 1000
 
     let list_idp;
 
-    report.set('federation-identite', 'thesesfr-queries', 0);
-    report.set('federation-identite', 'thesesfr-query-fails', 0);
-    report.set('federation-identite', 'thesesfr-cache-fails', 0);
+    report.set('idp-metadata', 'idp-metadata-queries', 0);
+    report.set('idp-metadata', 'idp-metadata-query-fails', 0);
+    report.set('idp-metadata', 'idp-metadata-cache-fails', 0);
 
     const process = bufferedProcess(this, {
         packetSize,
@@ -76,8 +76,8 @@ module.exports = function () {
                     resolve(process);
                 })
                 .catch(function(err) {
-                    logger.error(`Thesesfr: erreur chargement des mappings : ${err}`);
-                    return reject(new Error('Thesesfr: erreur chargement des mappings'));
+                    logger.error(`idp-metadata: erreur chargement des mappings : ${err}`);
+                    return reject(new Error('idp-metadata: erreur chargement des mappings'));
                 });
     });
 
