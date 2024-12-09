@@ -213,6 +213,57 @@ module.exports = function () {
         }
 
     }
+
+
+    /**
+     * Enrich an EC using a forged result (absent from quey response)
+     * @param {Object} ec the EC to be enriched
+     * @param {Object} result the forged document used to enrich the EC
+     */
+    function enrichForgedEc(ec, result) {
+
+        ec['rtype']='OTHER';
+
+        ec['nnt'] ='NOT_FOUND';
+        ec['numSujet'] ='NOT_FOUND';
+        ec['etabSoutenanceN'] ='NOT_FOUND';
+        ec['etabSoutenancePpn'] ='NOT_FOUND';
+        ec['codeCourt'] ='NOT_FOUND';
+        ec['dateSoutenance'] ='NOT_FOUND';
+        ec['anneeSoutenance'] ='NOT_FOUND';
+        ec['dateInscription'] ='NOT_FOUND';
+        ec['anneeInscription'] ='NOT_FOUND';
+        ec['statut'] ='NOT_FOUND';
+        ec['discipline'] ='NOT_FOUND';
+        ec['ecoleDoctoraleN'] ='NOT_FOUND';
+        ec['ecoleDoctoralePpn'] ='NOT_FOUND';
+        ec['partenaireRechercheN'] ='NOT_FOUND';
+        ec['partenaireRecherchePpn'] ='NOT_FOUND';
+        ec['auteurN'] ='NOT_FOUND';
+        ec['auteurPpn'] ='NOT_FOUND';
+        ec['directeurN'] ='NOT_FOUND';
+        ec['directeurPpn'] ='NOT_FOUND';
+        ec['presidentN'] ='NOT_FOUND';
+        ec['presidentPpn'] ='NOT_FOUND';
+        ec['rapporteursN'] ='NOT_FOUND';
+        ec['rapporteursPpn'] ='NOT_FOUND';
+        ec['membresN'] ='NOT_FOUND';
+        ec['membresPpn'] ='NOT_FOUND';
+        ec['personneN'] ='NOT_FOUND';
+        ec['personnePpn'] ='NOT_FOUND';
+        ec['organismeN'] ='NOT_FOUND';
+        ec['organismePpn'] ='NOT_FOUND';
+        ec['idp_etab_nom'] ='NOT_FOUND';
+        ec['idp_etab_ppn'] ='NOT_FOUND';
+        ec['idp_etab_code_court'] ='NOT_FOUND';
+        ec['platform_name'] ='NOT_FOUND';
+        ec['publication_title'] ='NOT_FOUND';
+
+
+    }
+
+
+
     /**
      * Enrich an EC using the result of a query
      * @param {Object} ec the EC to be enriched
@@ -227,51 +278,11 @@ module.exports = function () {
             logger.info ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
         }
 
-
-		if (result && result.missing)
-          {
-            ec['rtype']='OTHER';
-			ec['nnt'] ='NOT_FOUND';
-			ec['numSujet'] ='NOT_FOUND';
-			ec['etabSoutenanceN'] ='NOT_FOUND';
-			ec['etabSoutenancePpn'] ='NOT_FOUND';
-			ec['codeCourt'] ='NOT_FOUND';
-			ec['dateSoutenance'] ='NOT_FOUND';
-			ec['anneeSoutenance'] ='NOT_FOUND';
-			ec['dateInscription'] ='NOT_FOUND';
-			ec['anneeInscription'] ='NOT_FOUND';
-			ec['statut'] ='NOT_FOUND';
-			ec['discipline'] ='NOT_FOUND';
-			ec['ecoleDoctoraleN'] ='NOT_FOUND';
-			ec['ecoleDoctoralePpn'] ='NOT_FOUND';
-			ec['partenaireRechercheN'] ='NOT_FOUND';
-			ec['partenaireRecherchePpn'] ='NOT_FOUND';
-			ec['auteurN'] ='NOT_FOUND';
-			ec['auteurPpn'] ='NOT_FOUND';
-			ec['directeurN'] ='NOT_FOUND';
-			ec['directeurPpn'] ='NOT_FOUND';
-			ec['presidentN'] ='NOT_FOUND';
-			ec['presidentPpn'] ='NOT_FOUND';
-			ec['rapporteursN'] ='NOT_FOUND';
-			ec['rapporteursPpn'] ='NOT_FOUND';
-			ec['membresN'] ='NOT_FOUND';
-			ec['membresPpn'] ='NOT_FOUND';
-			ec['personneN'] ='NOT_FOUND';
-			ec['personnePpn'] ='NOT_FOUND';
-			ec['organismeN'] ='NOT_FOUND';
-			ec['organismePpn'] ='NOT_FOUND';
-			ec['idp_etab_nom'] ='NOT_FOUND';
-			ec['idp_etab_ppn'] ='NOT_FOUND';
-			ec['idp_etab_code_court'] ='NOT_FOUND';
-			ec['platform_name'] ='NOT_FOUND';
-			ec['publication_title'] ='NOT_FOUND';
-
-
-            logger.info(`EnrichedEC  ${ec.unitid} is 'NOT_FOUND`);
-            return;
+        if (result && result.missing)  {
+            logger.warn('le doc '+result.id+' pour enrichEc un ' + ec.rtype + ' a été forgé car absent de la réponse API');
+            enrichForgedEc(ec, result);
+            return; //on sort
         }
-
-
 
         //il s'agit d'un Organisme (PPN)
         if (result && (typeof result === 'string') && (result.length !== 0)) {
