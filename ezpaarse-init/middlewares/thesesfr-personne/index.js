@@ -68,7 +68,7 @@ module.exports = function () {
                         logger.warn('missed cache, doc from thesesfr-personne est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
                     }
                     else {
-                        logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-personne');
+                        //logger.debug('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-personne');
                         enrichEc(ec, cachedDoc);
                     }
                     return false;
@@ -107,8 +107,6 @@ module.exports = function () {
         let tries = 0;
         let docs;
 
-        //logger.info('dans onPacket avant le while');
-
         while (!docs) {
             if (++tries > maxAttempts) {
                 const err = new Error(`Failed to query Thesesfr ${maxAttempts} times in a row`);
@@ -116,7 +114,6 @@ module.exports = function () {
             }
 
             try {
-                //logger.info('avant query');
                 docs = yield query(unitids);
             } catch (e) {
                 logger.error(`Thesesfr: ${e.message}`);
@@ -145,7 +142,7 @@ module.exports = function () {
             }
 
             if (doc) {
-                logger.info('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr-personne');
+                //logger.debug('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr-personne');
                 enrichEc(ec, doc);
             }
 
@@ -172,7 +169,7 @@ module.exports = function () {
             ec['personnePpn'] = ec.unitid;
             // TMX changer le ec.rtype pour 'BIO' afin de les ignorer dans le middleware suivant qui devra traiter uniquement les ec d'organismes restant toujours à 'RECORD'
             ec.rtype = 'BIO'
-            logger.info(' personne enrichie ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
+            //logger.debug(' personne enrichie ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
             ec['nnt']= 'sans objet';
             ec['numSujet']= 'sans objet';
             /*//doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
@@ -239,7 +236,7 @@ module.exports = function () {
         }
 
         const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
-        logger.info(' query ==> ' + query);
+        //logger.debug(' query ==> ' + query);
 
         const userAgent = 'ezPAARSE (https://readmetrics.org; mailto:ezteam@couperin.org)';
 

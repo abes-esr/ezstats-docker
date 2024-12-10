@@ -89,7 +89,7 @@ module.exports = function () {
                     if (Object.keys(cachedDoc).length === 0) {
                         logger.warn('missed cache, doc from thesesfr est un objet vide pour ec.unitid ' + ec.unitid + ' ec.rtype ' + ec.rtype);
                     } else {
-                        logger.info('le doc pour enrichEc un ' + ec.rtype + ' provient du cache thesesfr');
+                        //logger.debug('le doc pour enrichEc un ' + ec.rtype + ' provient du cache thesesfr');
                         enrichEc(ec, cachedDoc);
                     }
                     return false;
@@ -195,8 +195,6 @@ module.exports = function () {
         let tries = 0;
         let docs;
 
-        //logger.info('dans onPacket avant le while');
-
         while (!docs) {
             if (++tries > maxAttempts) {
                 const err = new Error(`Failed to query Thesesfr ${maxAttempts} times in a row`);
@@ -204,7 +202,6 @@ module.exports = function () {
             }
 
             try {
-                //logger.info('avant query');
                 docs = yield query(unitids);
             } catch (e) {
                 logger.error(`Thesesfr: ${e.message}`);
@@ -233,7 +230,7 @@ module.exports = function () {
             }
 
             if (doc) {
-                logger.info('le doc pour enrichEc un ' + ec.rtype + ' provient de onPacket thesesfr');
+                //logger.debug('le doc pour enrichEc un ' + ec.rtype + ' provient de onPacket thesesfr');
                 enrichEc(ec, doc);
             }
 
@@ -298,11 +295,10 @@ module.exports = function () {
      */
 
     function enrichEc(ec, result) {
-        logger.info(' debut enrich ');
 
         //TMX détecter si doc est naturel ou genéré avec missing:true
         if (result.missing)  {
-            logger.warn('le doc '+result.id+' pour enrichEc un ' + ec.rtype + ' a été forgé car absent de la réponse API');
+            //logger.debug('le doc '+result.id+' pour enrichEc un ' + ec.rtype + ' a été forgé car absent de la réponse API');
             enrichForgedEc(ec, result);
             return; //on sort
         }
@@ -591,10 +587,9 @@ module.exports = function () {
         const uniques = new Set(nnts.concat(numSujets));
 
         const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
-        logger.info(' query ==> ' + query);
+        //logger.debug(' query ==> ' + query);
 
         const userAgent = 'ezPAARSE (https://readmetrics.org; mailto:ezteam@couperin.org)';
-        //const userAgent = 'toto';
 
         return new Promise((resolve, reject) => {
             const options = {
@@ -634,7 +629,6 @@ module.exports = function () {
                 const missingSize= uniqueSize-respondedSize;
 
                 if (missingSize > 0) {
-                    //logger.warn('il manque '+missingSize+' documents dans la réponse API, sur les '+uniqueSize+' demandés !');
 
                     const responseIds = result.theses.map(o => o.id);
                     const responseAPI = new Set(responseIds);
@@ -649,16 +643,11 @@ module.exports = function () {
 
 
                     for (let value of diffSet.values()) {
-                        //logger.warn('id '+value+' ne donne rien dans le réponse depuis API '+baseUrl);
 
                         //TMX créer une pseudeo-réponse qui sera ajoutée ensuite à result.theses[]
                         let pseudoObj = { id:value, missing: true };
                         pseudoObj['id']=value;
                         pseudoResponse.add(pseudoObj);
-                    }
-
-                    for (let value of pseudoResponse.values()) {
-                        logger.warn('pseudo reponse '+value.id+ ' missing '+value.missing);
                     }
 
                 }

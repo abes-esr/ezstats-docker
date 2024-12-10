@@ -66,14 +66,14 @@ module.exports = function () {
             //TMX cas ou il y a un objet : dans le cas de thesesfr-organismes il sera forcemment vide {} = convention identique aux autres middlewares
                 if (cachedDoc && (typeof cachedDoc === 'object')) {
 
-                    logger.info ('cached doc est un objet');
+                    //logger.debug ('cached doc est un objet');
 
                     if(Object.keys(cachedDoc).length === 0){
                             logger.warn('missed cache, doc from thesesfr-organisme est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
                      }
                     else {
-                    logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-organisme');
-                    logger.info('cached doc est un objet NON VIDE avec '+ Object.keys(cachedDoc).length +' propriétés');
+                    //logger.debug('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-organisme');
+                    //logger.debug('cached doc est un objet NON VIDE avec '+ Object.keys(cachedDoc).length +' propriétés');
 
                      enrichEc(ec, cachedDoc);
                      return false;
@@ -83,13 +83,11 @@ module.exports = function () {
             //TMX cas "normal" dans thesesfr-organisme la réponse est une chaine de texte, deux sous-cas : vide ou pas vide
                 if (cachedDoc && typeof cachedDoc !== 'object') {
 
-                    //logger.info ('cached doc différent de objet : '+typeof cachedDoc);
-
                     if(cachedDoc.length === 0){
                             logger.warn('missed cache, doc from thesesfr-organisme DIFFERENT de objet mais taille 0 pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
                      }
                     else {
-                    logger.info('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-organisme');
+                    //logger.debug('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-organisme');
                      enrichEc(ec, cachedDoc);
                      return false;
                     }
@@ -136,8 +134,6 @@ module.exports = function () {
             let tries = 0;
             let doc;
 
-            //logger.info('dans onPacket thesesfr-organisme avant le while pour unitid '+id+' ec.rtype'+ec.rtype);
-
             while (!doc) {
                 if (++tries > maxAttempts) {
                     const err = new Error(`Failed to query Thesesfr from thesesfr-organisme ${maxAttempts} times in a row`);
@@ -145,10 +141,9 @@ module.exports = function () {
                 }
 
                 try {
-                    //logger.info('avant query dans thesesfr-organisme');
                     if (ec.rtype === 'RECORD') {
                         doc = yield query(id);
-                        logger.info('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr-organisme');
+                        //logger.debug('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr-organisme');
                     }
                     else
                     {
@@ -177,30 +172,26 @@ module.exports = function () {
 
             if (doc && (typeof doc === 'object')) {
 
-                //logger.info ('la réponse de onPacket query est un objet');
-
-
                 if(Object.keys(doc).length === 0){
-                    //logger.info('objet réponse est VIDE  ');
+                  //NOP
                 }
                 else {
-                    logger.info ('CAS IMPREVU !!! objet réponse est un objet NON VIDE avec '+ Object.keys(doc).length +' propriétés');
+                    logger.warn ('CAS IMPREVU !!! objet réponse est un objet NON VIDE avec '+ Object.keys(doc).length +' propriétés');
 
                 }
             }
 
             if (doc && doc.missing) {
-                logger.info(`Missing data for ID ${id}. Enriching with default values.`);
+                //logger.debug(`Missing data for ID ${id}. Enriching with default values.`);
                 enrichEc(ec, doc);
             }
 
 
             if (doc && typeof doc !== 'object') {
 
-                //logger.info ('la réponse de onPacket query différent de objet : '+typeof doc);
-
                 if(doc.length === 0){
-                    logger.info('objet réponse DIFFERENT de objet mais taille 0 pour id '+id);
+                    //logger.debug('objet réponse DIFFERENT de objet mais taille 0 pour id '+id);
+                    //NOP
                 }
                 else {
 
@@ -272,11 +263,12 @@ module.exports = function () {
 
     function enrichEc(ec, result) {
         if( result && (typeof result === 'object') && (Object.keys(result).length === 0)) {
-            logger.info ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
+            //logger.debug ('result est un objet NON VIDE avec '+ Object.keys(result).length +' propriétés, contenu : '+result)
+            //NOP
         }
 
         if (result && result.missing)  {
-            logger.warn('le doc '+result.id+' pour enrichEc un ' + ec.rtype + ' a été forgé car absent de la réponse API');
+            //logger.debug('le doc '+result.id+' pour enrichEc un ' + ec.rtype + ' a été forgé car absent de la réponse API');
             enrichForgedEc(ec, result);
             return; //on sort
         }
@@ -286,7 +278,7 @@ module.exports = function () {
             ec['organismeN'] = result;
             ec['organismePpn'] = ec.unitid;
             ec.rtype = 'ORGANISME';
-            logger.info(' organisme enrichi ==> ' + ec['rtype'] + ' ' + ec['organismeN'] + ' ' +ec['organismePpn']);
+            //logger.debug(' organisme enrichi ==> ' + ec['rtype'] + ' ' + ec['organismeN'] + ' ' +ec['organismePpn']);
             ec['nnt']= 'sans objet';
             ec['numSujet']= 'sans objet';
             /*//doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
@@ -378,7 +370,6 @@ module.exports = function () {
 
                 if (!(Number(response.headers['content-length']) > 0)) {
                     report.inc('thesesfr-organisme', 'thesesfr-query-empty-response');
-                    //return reject(new Error('thesesfr-organism invalid response'));
                     return resolve({});
                 }
 
