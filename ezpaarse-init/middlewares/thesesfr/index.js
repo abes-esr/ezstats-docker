@@ -7,12 +7,14 @@ const path = require('path');
 const { bufferedProcess, wait } = require('../utils.js');
 const cache = ezpaarse.lib('cache')('thesesfr');
 
+const oneDay = 24 * 60 * 60 * 1000;
+let lastRefresh = Date.now();
+let list_code_court;
+
 module.exports = function () {
     const logger = this.logger;
     const report = this.report;
     const req = this.request;
-
-    let list_code_court;
 
     logger.info('Initializing ABES thesesfr middleware');
 
@@ -112,6 +114,10 @@ module.exports = function () {
      */
     const promiseCodeCourt = new Promise((resolveCodeCourt, rejectCodeCourt) => {
 
+        if (list_code_court && ((Date.now() - lastRefresh) < oneDay)) { return resolveCodeCourt(list_code_court); }
+
+        logger.info('Rafraichissement du mapping : list_code_court');
+
         //Chargement du mapping par appel au web service Movies
         const optionsCodeCourt = {
             method: 'GET',
@@ -129,6 +135,8 @@ module.exports = function () {
             if (!errCodeCourt && responseCodeCourt.statusCode == 200) {
                 if (Array.isArray(resultCodeCourt.results.bindings)) {
                     logger.info('Chargement du mapping Code court, par web service OK');
+
+                    lastRefresh = Date.now();
                     resolveCodeCourt(resultCodeCourt);
                 }
                 else {

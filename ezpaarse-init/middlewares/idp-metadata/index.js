@@ -5,6 +5,10 @@ const request = require('request');
 const { bufferedProcess, wait } = require('../utils.js');
 const xmlMapping = require('xml-mapping')
 
+const oneDay = 24 * 60 * 60 * 1000;
+let lastRefresh = Date.now();
+let list_idp;
+
 module.exports = function () {
     const logger = this.logger;
     const report = this.report;
@@ -18,8 +22,6 @@ module.exports = function () {
     let bufferSize = parseInt(req.header('idp-metadata-buffer-size'));
     if (isNaN(packetSize)) { packetSize = 100; } //Default : 50
     if (isNaN(bufferSize)) { bufferSize = 1000; } //Default : 1000
-
-    let list_idp;
 
     report.set('idp-metadata', 'idp-metadata-queries', 0);
     report.set('idp-metadata', 'idp-metadata-query-fails', 0);
@@ -37,7 +39,7 @@ module.exports = function () {
         onPacket: co.wrap(onPacket)
     });
 
-     //Chargement du mapping par fichier (list_idp.xml)
+    //Chargement du mapping par fichier (list_idp.xml)
     function chargeMapping(nomFichier, resolve, reject){
         fs.readFile(path.resolve(__dirname, nomFichier), 'utf8', (err, content) => {
             if (err) {
@@ -53,7 +55,14 @@ module.exports = function () {
         });
     }
 
+
+
     const promiseIdP = new Promise((resolveIdP, rejectIdP) => {
+
+        if (list_idp && ((Date.now() - lastRefresh) < oneDay)) { return resolveIdP(list_idp); }
+
+        logger.info('Rafraichissement du mapping : list_idp');
+
         //Chargement du mapping par appel au web service Renater
         const optionsIdP = {
             method: 'GET',
@@ -65,20 +74,22 @@ module.exports = function () {
             if (errIdP || responseIdP.statusCode !== 200) {
                 chargeMapping('list_idp.xml', resolveIdP, rejectIdP);
             };
+
+            lastRefresh = Date.now();
             resolveIdP(resultIdP)
         });
     });
 
     return new Promise(function (resolve, reject) {
-            Promise.all([promiseIdP])
-                .then((promises) => {
-                    list_idp = xmlMapping.tojson(promises[0]);
-                    resolve(process);
-                })
-                .catch(function(err) {
-                    logger.error(`idp-metadata: erreur chargement des mappings : ${err}`);
-                    return reject(new Error('idp-metadata: erreur chargement des mappings'));
-                });
+        Promise.all([promiseIdP])
+            .then((promises) => {
+                list_idp = xmlMapping.tojson(promises[0]);
+                resolve(process);
+            })
+            .catch(function(err) {
+                logger.error(`idp-metadata: erreur chargement des mappings : ${err}`);
+                return reject(new Error('idp-metadata: erreur chargement des mappings'));
+            });
     });
 
     /**
