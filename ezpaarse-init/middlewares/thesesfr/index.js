@@ -116,7 +116,7 @@ module.exports = function () {
 
         if (list_code_court && ((Date.now() - lastRefresh) < oneDay)) { return resolveCodeCourt(list_code_court); }
 
-        logger.info('Rafraichissement du mapping : list_code_court');
+        logger.info('Rafraichissement du mapping : movies CodeCourt');
 
         //Chargement du mapping par appel au web service Movies
         const optionsCodeCourt = {
