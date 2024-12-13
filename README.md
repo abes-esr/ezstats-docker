@@ -194,10 +194,11 @@ Puis, récupérer les minutes et l'heure et mettre à jour le crontab pour zip.s
 crontab -e
 ```
 
-4) Rejouer les logs du 01 au 15 mars 2024 avec recupRaw.sh
+4) Rejouer les logs du 01 au 15 mars 2024 avec recupRaw.sh et du 30 septembre au 10 octobre avec recupRaw0924.sh 
 ```bash
 sudo docker exec -it ezstats-batch-logs sh 
 ./recupRaw.sh
+./recupRaw0924.sh
 ```
 
 5) Relancer le traitement des logs par EZPaarse :
@@ -209,7 +210,11 @@ Puis, récupérer les minutes et l'heure et mettre à jour le crontab pour launc
 ```bash
 crontab -e
 ```
-On peut aussi ajouter dans launch-ezp.sh les paramètres : -H "thesesfr-base-wait-time: 10" \  -H "thesesfr-throttle: 10" \ afin que le temps entre 2 appels à l'API theses.fr soit plus court (par défaut : 1000 ms et 100 ms).
+On peut modifier, dans launch-ezp.sh, les paramètres :  
+`-H "thesesfr-base-wait-time: 10" \ `  
+`-H "thesesfr-throttle: 10" \  `  
+afin que le temps entre 2 appels à l'API theses.fr soit plus court (par défaut : 1000 ms et 100 ms).
+
 
 6) Effacer l'index (indice) EZMesure :
 
