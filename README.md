@@ -213,6 +213,10 @@ crontab -e
 On peut modifier, dans launch-ezp.sh, les paramètres :  
 `-H "thesesfr-base-wait-time: 10" \ `  
 `-H "thesesfr-throttle: 10" \  `  
+`-H "thesesfr-personne-base-wait-time: 10" \ `  
+`-H "thesesfr-personne-throttle: 10" \  `  
+`-H "thesesfr-organisme-base-wait-time: 10" \ `   
+`-H "thesesfr-organisme-throttle: 10" \  `  
 afin que le temps entre 2 appels à l'API theses.fr soit plus court (par défaut : 1000 ms et 100 ms).
 
 
