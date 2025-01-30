@@ -6,10 +6,10 @@ This middleware is used only for log from these.fr.
 ## Enriched fields
 
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name | Type   | Description |
+| --- |--------| --- |
 | rtype | String | type de consultation (ABS = notice de thèse vue ; PDF_THESIS = fichier de thèse téléchargé ; BIO = notice de personne vue ; ORGANISME = notice d'organisme vue) |
-| nnt | | Numéro National de Thèse |
+| nnt | string | Numéro National de Thèse |
 | numSujet | String | identifiant de la thèse en préparation dans la base STEP |
 | etabSoutenanceN | String | nom de l'établissement de soutenance de la thèse |
 | etabSoutenancePpn | String | identifiant (PPN) de l'établissement de soutenance de la thèse |
