@@ -1,58 +1,61 @@
 # thesesfr-personne
 
 Fetches thesesfr-personne API from ABES.
-This middleware is used only for log from these.fr. 
+This middleware is used only for log from these.fr.
 
 ## Enriched fields
 
-| Name | Type    | Description |
-| --- |---------| --- |
-| rtype | string  | type de consultation (ABS = notice de thèse vue ; PDF_THESIS = fichier de thèse téléchargé ; BIO = notice de personne vue ; ORGANISME = notice d'organisme vue) |
-| nnt | string  | Numéro National de Thèse |
-| numSujet | string  | identifiant de la thèse en préparation dans la base STEP |
-| etabSoutenanceN | string  | nom de l'établissement de soutenance de la thèse |
-| etabSoutenancePpn | string  | identifiant (PPN) de l'établissement de soutenance de la thèse |
-| codeCourt | string  | code court de l'établissement de soutenance de la thèse |
-| dateSoutenance | string  | date de soutenance de la thèse |
-| anneeSoutenance | string  | année de soutenance de la thèse |
-| dateInscription | string  | date d'inscription en doctorat |
-| anneeInscription | string  | année d'inscription en doctorat |
-| statut | string  | statut de la thèse : soutenue ou en préparation |
-| discipline | string  | discipline de la thèse |
-| ecoleDoctoraleN | string  | nom de l'école doctorale liée à la thèse |
-| ecoleDoctoralePpn | string  | identifiant (PPN) de l'école doctorale liée à la thèse |
-| partenaireRechercheN | string  | nom du partenaire de recherche (laboratoire, entreprise, équipe de recherche, fondation, etc) |
-| partenaireRecherchePpn | string  | identifiant (PPN) du partenaire de recherche (laboratoire, entreprise, équipe de recherche, fondation, etc) |
-| auteurN | string  | nom de l'auteur de la tèse |
-| auteurPpn | string  | identifiant (PPN) de l'auteur de la thèse |
-| directeurN | string  | nom du directeur de thèse |
-| directeurPpn | string  | identifiant (PPN) du directeur de thèse |
-| presidentN | string  | nom du président du jury |
-| presidentPpn | string  | identifiant (PPN) du président du jury |
-| rapporteursN | string  | nom des rapporteurs |
-| rapporteursPpn | string  | identifiant (PPN) des rapporteurs |
-| membresN | string  | nom des membres du jury |
-| membresPpn | string  | identifiant (PPN) des membres du jury |
-| personneN | string  | nom de la personne quel que soit son rôle (auteur, directeur, membre du jury, rapporteur, président du jury, etc) |
-| personnePpn | string  | identifiant (PPN) de la personne quel que soit son rôle (auteur, directeur, membre du jury, rapporteur, président du jury, etc) |
-| organismeN | string  | nom de l'organisme quel que soit son rôle (établissement de soutenance, école doctorale, partenaire de recherche, etc) |
-| organismePpn | string  | identifiant (PPN) de l'organisme quel que soit son rôle (établissement de soutenance, école doctorale, partenaire de recherche, etc) |
-| idp_etab_nom | string  | dans les logs Apache : nom de l'établissement de rattachement de l'utilisateur (quand connexion via Renater) |
-| idp_etab_ppn | string  | dans les logs Apache : identifiant (PPN) de l'établissement de rattachement de l'utilisateur (quand connexion via Renater) |
-| idp_etab_code_court | string  | dans les logs Apache : code court de l'établissement de rattachement de l'utilisateur (quand connexion via Renater) |
-| platform_name | string  | nom long de la plateforme d'hébergement de la ressource : theses.fr |
-| publication_title | string  | titre de la ressource |
-| accessible | string  | thèse accessible en ligne : oui ou non |
-| source | string  | source des données : STEP, STAR, Sudoc |
-| domain | string  | domaine de la plateforme de la ressource (domaine apparaissant dans l'URL de la ressource) |
-| langue | string  | langue de rédaction de la thèse |
-| doiThese | string  | DOI attribué à la thèse |
+| Name | Type   | Description |
+| --- |--------| --- |
+| rtype | String | type of consultation (BIO = person notice viewed; RECORD = in process) |
+| nnt | String | "sans objet" (irrelevant) |
+| numSujet | String | "sans objet" (irrelevant) |
+| etabSoutenanceN | String | "sans objet" (irrelevant) |
+| etabSoutenancePpn | String | "sans objet" (irrelevant) |
+| codeCourt | String | "sans objet" (irrelevant) |
+| dateSoutenance | String | "sans objet" (irrelevant) |
+| anneeSoutenance | String | "sans objet" (irrelevant) |
+| dateInscription | String | "sans objet" (irrelevant) |
+| anneeInscription | String | "sans objet" (irrelevant) |
+| statut | String | "sans objet" (irrelevant) |
+| discipline | String | "sans objet" (irrelevant) |
+| ecoleDoctoraleN | String | "sans objet" (irrelevant) |
+| ecoleDoctoralePpn | String | "sans objet" (irrelevant) |
+| partenaireRechercheN | String | "sans objet" (irrelevant) |
+| partenaireRecherchePpn | String | "sans objet" (irrelevant) |
+| auteurN | String | "sans objet" (irrelevant) |
+| auteurPpn | String | "sans objet" (irrelevant) |
+| directeurN | String | "sans objet" (irrelevant) |
+| directeurPpn | String | "sans objet" (irrelevant) |
+| presidentN | String | "sans objet" (irrelevant) |
+| presidentPpn | String | "sans objet" (irrelevant) |
+| rapporteursN | String | "sans objet" (irrelevant) |
+| rapporteursPpn | String | "sans objet" (irrelevant) |
+| membresN | String | "sans objet" (irrelevant) |
+| membresPpn | String | "sans objet" (irrelevant) |
+| personneN | String | name of the person regardless of their role (author, supervisor, jury member, rapporteur, jury president, etc.) |
+| personnePpn | String | identifier (PPN) of the person regardless of their role (author, supervisor, jury member, rapporteur, jury president, etc.) |
+| organismeN | String | "sans objet" (irrelevant) |
+| organismePpn | String | "sans objet" (irrelevant) |
+| idp_etab_nom | String | "sans objet" (irrelevant) |
+| idp_etab_ppn | String | "sans objet" (irrelevant) |
+| idp_etab_code_court | String | "sans objet" (irrelevant) |
+| platform_name | String | "sans objet" (irrelevant) |
+| publication_title | String | "sans objet" (irrelevant) |
+| source | String | Upcoming : data source: STEP, STAR, Sudoc |
+| domaine | String | Upcoming : thematic domain associated with the thesis |
+| doiThese | String | Upcoming : DOI assigned to the thesis |
+| accessible | String | Upcoming : is the thesis accessible online: yes or no |
+| langue | String | Upcoming : language of the thesis writing | 
 
 ## Prerequisites
 
 Ec needs unitid and rtype equal to RECORD.
 
 **You must use thesesfr-personne after filter, parser, deduplicator middleware.**
+
+**You must use the 3 middlewares at once, in this order : thesesfr, thesesfr-personne, thesesfr-organisme**  
+``` -H "ezPAARSE-Middlewares: thesesfr,thesesfr-personne,thesesfr-organisme" ```
 
 ## Recommendation
 
@@ -84,32 +87,40 @@ You can use thesesfr-personne for an enrichment process. You just add the middle
 
 ### ezp
 
-You can use thesesfr-personne for an enrichment process with [ezp](https://github.com/ezpaarse-project/node-ezpaarse) like this:
+You can use thesesfr for an enrichment process with [ezp](https://github.com/ezpaarse-project/node-ezpaarse) like this:
 
 ```bash
 # enrich with one file
 ezp process <path of your file> \
   --host <host of your ezPAARSE instance> \
   --settings <settings-id> \
-  --header "ezPAARSE-Middlewares: thesesfr-personne" 
+  --header "ezPAARSE-Filter-Redirects: false" \
+  --header "ezPAARSE-Middlewares: thesesfr,thesesfr-personne,thesesfr-organisme"
+  --header "Output-Fields: +nnt, +numSujet, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +discipline, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +platform_name, +publication_title, +libelle_idp"
+  --header "Log-Format-apache: %h %l %{login}<.*> %t \"%r\" %>s %b \"%{Referer}<.*>\" \"%{User-Agent}<.*>\" \"%{Shib-Identity-Provider}<.*>\" \"%{eppn}<.*>\" \"%{primary-affiliation}<.*>\" \"%{supannEtablissement}<.*>\""
   --out ./result.csv
+
 
 # enrich with multiples files
 ezp bulk <path of your directory> \
   --host <host of your ezPAARSE instance> \
-  --settings <settings-id> \
-  --header "ezPAARSE-Middlewares: thesesfr-personne" 
-
+  --settings <settings-id> 
+  --header "ezPAARSE-Filter-Redirects: false" \
+  --header "ezPAARSE-Middlewares: thesesfr,thesesfr-personne,thesesfr-organisme" 
+  --header "Output-Fields: +nnt, +numSujet, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +discipline, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +platform_name, +publication_title, +libelle_idp"
+  --header "Log-Format-apache: %h %l %{login}<.*> %t \"%r\" %>s %b \"%{Referer}<.*>\" \"%{User-Agent}<.*>\" \"%{Shib-Identity-Provider}<.*>\" \"%{eppn}<.*>\" \"%{primary-affiliation}<.*>\" \"%{supannEtablissement}<.*>\""
 ```
 
 ### curl
 
-You can use thesesfr-personne for an enrichment process with curl like this:
+You can use thesesfr for an enrichment process with curl like this:
 
 ```bash
 curl -X POST -v http://localhost:59599 \
-  -H "ezPAARSE-Middlewares: thesesfr-personne" \
-  -H "Log-Format-Ezproxy: <line format>" \
-  -F "file=@<log file path>"
+  -H "ezPAARSE-Filter-Redirects: false" \
+  -H "ezPAARSE-Middlewares: thesesfr,thesesfr-personne,thesesfr-organisme,idp-metadata" \
+  -H "Output-Fields: +nnt, +numSujet, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +discipline, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +platform_name, +publication_title, +libelle_idp" \
+  -H "Log-Format-apache: %h %l %{login}<.*> %t \"%r\" %>s %b \"%{Referer}<.*>\" \"%{User-Agent}<.*>\" \"%{Shib-Identity-Provider}<.*>\" \"%{eppn}<.*>\" \"%{primary-affiliation}<.*>\" \"%{supannEtablissement}<.*>\""
+-F "file=@<log file path>"
 
 ```
