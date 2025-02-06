@@ -117,9 +117,12 @@ module.exports = function () {
     function enrichEc(ec) {
         if(ec['Shib-Identity-Provider']) {
             logger.info(`Tentative de recherche du libellé d'IDP ${ec['Shib-Identity-Provider']} pour l'EC ${ec.unitid}`);
-            const etab = list_idp.md$EntitiesDescriptor.md$EntityDescriptor.find((entityDescriptor) => entityDescriptor.entityID === ec['Shib-Identity-Provider'])
-            const info = etab.md$IDPSSODescriptor.md$Extensions.mdui$UIInfo
-            ec.libelle_idp = info.mdui$DisplayName.find((displayName) => displayName.xml$lang === "fr")?.$t;
+            const etab = list_idp.md$EntitiesDescriptor.md$EntityDescriptor.find((entityDescriptor) => entityDescriptor.entityID === ec['Shib-Identity-Provider']);
+            ec.libelle_idp = "";
+            if (etab) {
+                const info = etab.md$IDPSSODescriptor.md$Extensions.mdui$UIInfo;
+                ec.libelle_idp = info.mdui$DisplayName.find((displayName) => displayName.xml$lang === "fr")?.$t;
+            }
         }
         if (!ec.libelle_idp) {
             ec.libelle_idp = "sans objet"
