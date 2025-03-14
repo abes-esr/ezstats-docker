@@ -47,7 +47,7 @@ module.exports = function () {
             }
 
             try {
-                logger.info('Erreur chargement du mapping par web service : chargement par le fichier '+nomFichier+' OK');
+                logger.info('[idp-metadata]: Fail to request main-idps-renater-metadata.xml from web service : load file '+nomFichier+' OK');
                 return resolve(content);
             } catch (e) {
                 return reject(e);
@@ -61,7 +61,7 @@ module.exports = function () {
 
         if (list_idp && ((Date.now() - lastRefresh) < oneDay)) { return resolveIdP(list_idp); }
 
-        logger.info('Rafraichissement du mapping : idp-metadata Renater');
+        logger.info('[idp-metadata]: mapping reload');
 
         //Chargement du mapping par appel au web service Renater
         const optionsIdP = {
@@ -88,8 +88,8 @@ module.exports = function () {
                 resolve(process);
             })
             .catch(function(err) {
-                logger.error(`idp-metadata: erreur chargement des mappings : ${err}`);
-                return reject(new Error('idp-metadata: erreur chargement des mappings'));
+                logger.error(`[idp-metadata]: fail to load the mapping : ${err}`);
+                return reject(new Error('[idp-metadata]: fail to load the mapping'));
             });
     });
 
@@ -113,7 +113,7 @@ module.exports = function () {
      */
     function enrichEc(ec) {
         if(ec['Shib-Identity-Provider']) {
-            logger.info(`Tentative de recherche du libellé d'IDP ${ec['Shib-Identity-Provider']} pour l'EC ${ec.unitid}`);
+            logger.info(`[idp-metadata]: try to find an IDP label for ${ec['Shib-Identity-Provider']} , to the EC ${ec.unitid}`);
             const etab = list_idp.md$EntitiesDescriptor.md$EntityDescriptor.find((entityDescriptor) => entityDescriptor.entityID === ec['Shib-Identity-Provider']);
             ec.libelle_idp = "";
             if (etab) {
