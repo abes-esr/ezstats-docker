@@ -105,15 +105,12 @@ module.exports = function () {
             done();
         }
     }
+
     /**
      * Enrich an EC using the result of a query
      * @param {Object} ec the EC to be enriched
      * @param {Object} result the document used to enrich the EC
      */
-
-    /* ERM header cible
- 	# -H "Output-Fields: +nnt, +numSujet, +doiThese, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +accessible, +source, +discipline, +domaine, +langue, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +cotutelleN, +cotutellePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +idp_etab_nom, +idp_etab_ppn, +idp_etab_code_court, +platform_name " \
-    */
     function enrichEc(ec) {
         if(ec['Shib-Identity-Provider']) {
             logger.info(`Tentative de recherche du libellé d'IDP ${ec['Shib-Identity-Provider']} pour l'EC ${ec.unitid}`);
