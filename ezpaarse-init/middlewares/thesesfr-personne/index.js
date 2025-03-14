@@ -1,45 +1,48 @@
-'use strict';
-
 const co = require('co');
 const request = require('request');
 const { bufferedProcess, wait } = require('../utils.js');
+
 const cache = ezpaarse.lib('cache')('thesesfr-personne');
 
 module.exports = function () {
-    const logger = this.logger;
-    const report = this.report;
+    const { logger } = this;
+    const { report } = this;
     const req = this.request;
 
-    logger.info('Initializing ABES thesesfr-personne middleware');
+    logger.info('[thesesfr-personne]: Initializing');
 
     const cacheEnabled = !/^false$/i.test(req.header('thesesfr-personne-cache'));
 
-    logger.info(`Thesesfr cache: ${cacheEnabled ? 'enabled' : 'disabled'}`);
+    logger.info(`[thesesfr-personne]: cache: ${cacheEnabled ? 'enabled' : 'disabled'}`);
 
     // Time-to-live of cached documents
-    let ttl = parseInt(req.header('thesesfr-ttl'));
+    let ttl = parseInt(req.header('thesesfr-personne-ttl'), 10);
     // Minimum wait time before each request (in ms)
-    let throttle = parseInt(req.header('thesesfr-throttle'));
-    // Maximum enrichment attempts
-    let maxTries = parseInt(req.header('thesesfr-max-tries'));
+    let throttle = parseInt(req.header('thesesfr-personne-throttle'), 10);
     // Base wait time after a request fails
-    let baseWaitTime = parseInt(req.header('thesesfr-base-wait-time'));
+    let baseWaitTime = parseInt(req.header('thesesfr-personne-base-wait-time'), 10);
     // Maximum number of Theses or Persons to query
-    let packetSize = parseInt(req.header('thesesfr-packet-size'));
+    let packetSize = parseInt(req.header('thesesfr-personne-packet-size'), 10);
     // Minimum number of ECs to keep before resolving them
-    let bufferSize = parseInt(req.header('thesesfr-buffer-size'));
-    if (isNaN(packetSize)) { packetSize = 100; } //Default : 50
-    if (isNaN(bufferSize)) { bufferSize = 1000; } //Default : 1000
+    let bufferSize = parseInt(req.header('thesesfr-personne-buffer-size'), 10);
+    // Maximum number of trials before passing the EC in error
+    let maxAttempts = parseInt(req.header('thesesfr-personne-max-attempts'), 10);
+    // Specify what to send in the `User-Agent` header when querying thesesfr-personne API
+    let userAgent = req.header('thesesfr-personne-user-agent');
 
-    let baseUrl = "https://theses.fr/api/v1/personnes/recherche/";
+    if (Number.isNaN(packetSize)) { packetSize = 100; }
+    if (Number.isNaN(bufferSize)) { bufferSize = 1000; }
+    if (Number.isNaN(baseWaitTime)) { baseWaitTime = 1000; }
+    if (Number.isNaN(throttle)) { throttle = 100; }
+    if (Number.isNaN(ttl)) { ttl = 3600 * 24 * 7; }
+    if (Number.isNaN(maxAttempts)) { maxAttempts = 5; }
+    if (!userAgent) { userAgent = 'ezPAARSE (https://readmetrics.org; mailto:ezteam@couperin.org)'; }
 
-    if (isNaN(baseWaitTime)) { baseWaitTime = 1000; }
-    if (isNaN(maxTries)) { maxTries = 5; }
-    if (isNaN(throttle)) { throttle = 100; }
-    if (isNaN(ttl)) { ttl = 3600 * 24 * 7; }
+
+    const baseUrl = 'https://theses.fr/api/v1/personnes/recherche/';
 
     if (!cache) {
-        const err = new Error('failed to connect to mongodb, cache not available for Thesesfr');
+        const err = new Error('[thesesfr-personne]: failed to connect to mongodb, cache not available for Thesesfr');
         err.status = 500;
         return err;
     }
@@ -56,39 +59,39 @@ module.exports = function () {
          * @param {Object} ec
          * @returns {Boolean|Promise} true if the EC should be enriched, false otherwise
          */
-        filter: ec => {
+        filter: (ec) => {
             if (!ec.unitid) { return false; }
-            if (!(ec.rtype === 'RECORD')) { return false; } //pas la peine d'interroger le cache mongodb si l'EC n'est pas une personne/organisme
+            if (ec.rtype !== 'RECORD') { return false; } // Only enrich thesis records
             if (!cacheEnabled) { return true; }
 
-            return findInCache(ec.unitid).then(cachedDoc => {
-                if (cachedDoc) {
-
-                    if(Object.keys(cachedDoc).length === 0){
-                        logger.warn('missed cache, doc from thesesfr-personne est un objet vide pour ec.unitid '+ec.unitid+ ' ec.rtype '+ec.rtype);
-                    }
-                    else {
-                        //logger.debug('le doc pour enrichEc un '+ec.rtype+' provient du cache thesesfr-personne');
-                        enrichEc(ec, cachedDoc);
-                    }
-                    return false;
+            return findInCache(ec.unitid).then((cachedDoc) => {
+                if (!cachedDoc) {
+                    return true;
                 }
-                return true;
+
+                if (Object.keys(cachedDoc).length === 0) {
+                    logger.warn(`[thesefr-organisme]: missed cache, doc from thesesfr-organisme is empty for unitid: [${ec.unitid}] rtype: ${ec.rtype}`);
+                } else {
+                    logger.debug(`[thesefr-organisme]: unitid: [${ec.unitid}] rtype :[${ec.rtype}] come from cache`);
+                    enrichEc(ec, cachedDoc);
+                }
+
+                return false;
             });
         },
 
-        onPacket: co.wrap(onPacket)
+        onPacket: co.wrap(onPacket),
     });
 
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         // Verify cache indices and time-to-live before starting
-        cache.checkIndexes(ttl, function (err) {
+        cache.checkIndexes(ttl, (err) => {
             if (err) {
                 logger.error(`Thesesfr: failed to verify indexes : ${err}`);
                 return reject(new Error('failed to verify indexes for the cache of Thesesfr'));
             }
 
-            resolve(process);
+            return resolve(process);
         });
     });
 
@@ -98,20 +101,20 @@ module.exports = function () {
      * @param {Map<String, Set<String>>} groups
      */
     function* onPacket({ ecs }) {
-
         if (ecs.length === 0) { return; }
 
-        const unitids = ecs.filter(([ec, done]) => ec.rtype === 'RECORD').map(([ec, done]) => ec.unitid);
+        const unitids = ecs.filter(([ec]) => ec.rtype === 'RECORD').map(([ec]) => ec.unitid);
 
-        const maxAttempts = 5;
         let tries = 0;
         let docs;
 
         while (!docs) {
-            if (++tries > maxAttempts) {
-                const err = new Error(`Failed to query Thesesfr ${maxAttempts} times in a row`);
-                return Promise.reject(err);
+            if (tries > maxAttempts) {
+                logger.error(`[thesesfr-personne]: Cannot request thesesfr-personne ${maxAttempts} times in a row`);
+                return;
             }
+
+            tries += 1;
 
             try {
                 docs = yield query(unitids);
@@ -119,19 +122,18 @@ module.exports = function () {
                 logger.error(`Thesesfr: ${e.message}`);
             }
 
-            yield wait(throttle);
-            yield wait(tries === 0 ? throttle : baseWaitTime * Math.pow(2, tries));
+            yield wait(tries === 0 ? throttle : baseWaitTime * 2 ** tries);
         }
 
         const docResults = new Map();
-        docs.forEach(doc => {
+        docs.forEach((doc) => {
             if (doc && doc.id) {
                 docResults.set(doc.id, doc);
             }
         });
 
         for (const [ec, done] of ecs) {
-            const unitid = ec.unitid;
+            const { unitid } = ec;
             const doc = docResults.get(unitid);
 
             try {
@@ -142,112 +144,97 @@ module.exports = function () {
             }
 
             if (doc) {
-                //logger.debug('le doc pour enrichEc un '+ec.rtype+' provient de onPacket thesesfr-personne');
                 enrichEc(ec, doc);
             }
 
             done();
         }
-
     }
 
     /**
      * Enrich an EC using the result of a query
+     *
      * @param {Object} ec the EC to be enriched
      * @param {Object} result the document used to enrich the EC
      */
-
-    /* ERM header cible
-  	# -H "Output-Fields: +nnt, +numSujet, +doiThese, +etabSoutenanceN, +etabSoutenancePpn, +codeCourt, +dateSoutenance, +anneeSoutenance, +dateInscription, +anneeInscription, +statut, +accessible, +source, +discipline, +domaine, +langue, +ecoleDoctoraleN, +ecoleDoctoralePpn, +partenaireRechercheN, +partenaireRecherchePpn, +cotutelleN, +cotutellePpn, +auteurN, +auteurPpn, +directeurN, +directeurPpn, +presidentN, +presidentPpn, +rapporteursN, +rapporteursPpn, +membresN, +membresPpn, +personneN, +personnePpn, +organismeN, +organismePpn, +idp_etab_nom, +idp_etab_ppn, +idp_etab_code_court, +platform_name " \
-     */
-
     function enrichEc(ec, result) {
-
-        //il s'agit d'une Personne (PPN)
-        if (result.nom && result.prenom) {
-            ec['personneN'] = result.nom+ " "+result.prenom;
-            ec['personnePpn'] = ec.unitid;
-            // TMX changer le ec.rtype pour 'BIO' afin de les ignorer dans le middleware suivant qui devra traiter uniquement les ec d'organismes restant toujours à 'RECORD'
-            ec.rtype = 'BIO'
-            //logger.debug(' personne enrichie ==> ' + ec['rtype'] + ' ' + ec['personneN'] + ' ' +ec['personnePpn']);
-            ec['nnt']= 'sans objet';
-            ec['numSujet']= 'sans objet';
-            /*//doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-              //ec['doiThese]'= 'sans objet';*/
-            ec['etabSoutenanceN']= 'sans objet';
-            ec['etabSoutenancePpn']= 'sans objet';
-            ec['codeCourt']= 'sans objet';
-            ec['dateSoutenance']= 'sans objet';
-            ec['anneeSoutenance']= 'sans objet';
-            ec['dateInscription']= 'sans objet';
-            ec['anneeInscription']= 'sans objet';
-            ec['statut']= 'sans objet';
-            /*// accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-            ec['accessible'] = 'sans objet';*/
-            /*// source > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-            ec['source']= 'sans objet';
-            }*/
-            ec['discipline']= 'sans objet';
-            /*// domaine > obligatoire  > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-            ec['domaine'] = 'sans objet';
-            }*/
-            /*// langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
-                          ec['langue'] = 'sans objet';*/
-            ec['ecoleDoctoraleN']= 'sans objet';
-            ec['ecoleDoctoralePpn']= 'sans objet';
-            ec['partenaireRechercheN']= 'sans objet';
-            ec['partenaireRecherchePpn']= 'sans objet';
-            /*//coTutelleN, coTutellePpn > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)*/
-            ec['auteurN']= 'sans objet';
-            ec['auteurPpn']= 'sans objet';
-            ec['directeurN']= 'sans objet';
-            ec['directeurPpn']= 'sans objet';
-            ec['presidentN']= 'sans objet';
-            ec['presidentPpn']= 'sans objet';
-            ec['rapporteursN']= 'sans objet';
-            ec['rapporteursPpn']= 'sans objet';
-            ec['membresN']= 'sans objet';
-            ec['membresPpn']= 'sans objet';
-            ec['organismeN']= 'sans objet';
-            ec['organismePpn']= 'sans objet';
-            ec['idp_etab_nom'] = 'sans objet';
-            ec['idp_etab_ppn'] = 'sans objet';
-            ec['idp_etab_code_court'] = 'sans objet';
-            ec['platform_name']= 'Personne';
+        // il s'agit d'une Personne (PPN)
+        if (!result.nom || !result.prenom) {
+            return;
         }
+
+        ec.personneN = `${result.nom} ${result.prenom}`;
+        ec.personnePpn = ec.unitid;
+        ec.rtype = 'BIO'; // update rtype to BIO to ignore it for the next middleware
+        ec.platform_name = 'Personne';
+
+        const emptyLabel = 'sans objet';
+
+        ec.nnt = emptyLabel;
+        ec.numSujet = emptyLabel;
+        // TODO doiThese > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+        // ec.doiThese = emptyLabel;
+        ec.etabSoutenanceN = emptyLabel;
+        ec.etabSoutenancePpn = emptyLabel;
+        ec.codeCourt = emptyLabel;
+        ec.dateSoutenance = emptyLabel;
+        ec.anneeSoutenance = emptyLabel;
+        ec.dateInscription = emptyLabel;
+        ec.anneeInscription = emptyLabel;
+        ec.statut = emptyLabel;
+        // TODO accessible > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+        // ec.accessible = emptyLabel;
+        // TODO source > sans objet > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+        // ec.source = emptyLabel;
+        ec.discipline = emptyLabel;
+        // TODO domaine > obligatoire  > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+        // ec.domaine = emptyLabel;
+        // TODO langue > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+        // ec['langue'] = emptyLabel;
+        ec.ecoleDoctoraleN = emptyLabel;
+        ec.ecoleDoctoralePpn = emptyLabel;
+        ec.partenaireRechercheN = emptyLabel;
+        ec.partenaireRecherchePpn = emptyLabel;
+        // TODO coTutelleN, coTutellePpn > à masquer tant que non présent dans l'API theses > supprimé provisoirement du header (champs pour la sortie)
+        ec.auteurN = emptyLabel;
+        ec.auteurPpn = emptyLabel;
+        ec.directeurN = emptyLabel;
+        ec.directeurPpn = emptyLabel;
+        ec.presidentN = emptyLabel;
+        ec.presidentPpn = emptyLabel;
+        ec.rapporteursN = emptyLabel;
+        ec.rapporteursPpn = emptyLabel;
+        ec.membresN = emptyLabel;
+        ec.membresPpn = emptyLabel;
+        ec.organismeN = emptyLabel;
+        ec.organismePpn = emptyLabel;
+        ec.idp_etab_nom = emptyLabel;
+        ec.idp_etab_ppn = emptyLabel;
+        ec.idp_etab_code_court = emptyLabel;
     }
 
     /**
      * Request metadata from ThesesFr API for given IDs
+     *
      * @param {Array} unitids the ids to query
      */
     function query(unitids) {
         report.inc('thesesfr-personne', 'thesesfr-queries');
 
-        const subQueries = [];
-        const ppns  = [];
-
-        unitids.forEach(id => {
-            ppns.push(id);
-        });
-
-        if (ppns.length > 0) {
-            subQueries.push(`${ppns.join(' OR ')}`);
-        }
-
-        const query = `?nombre=200&q=${subQueries.join(' OR ')}`;
-        //logger.debug(' query ==> ' + query);
-
-        const userAgent = 'ezPAARSE (https://readmetrics.org; mailto:ezteam@couperin.org)';
+        const queryParams = {
+            nombre: 200,
+            q: unitids.join(' OR '),
+        };
 
         return new Promise((resolve, reject) => {
             const options = {
                 method: 'GET',
                 json: true,
                 headers: {
-                    'User-Agent': userAgent
+                    'User-Agent': userAgent,
                 },
-                uri: `${baseUrl}${query}`
+                uri: baseUrl,
+                qs: queryParams,
             };
 
             request(options, (err, response, result) => {
@@ -277,15 +264,22 @@ module.exports = function () {
 
     /**
      * Cache an item with a given ID
+     *
      * @param {String} id the ID of the item
      * @param {Object} item the item to cache
      */
     function cacheResult(id, item) {
         return new Promise((resolve, reject) => {
-            if (!id || !item) { return resolve(); }
+            if (!id || !item) {
+                resolve();
+                return;
+            }
 
             cache.set(id, item, (err, result) => {
-                if (err) { return reject(err); }
+                if (err) {
+                    reject(err);
+                    return;
+                }
                 resolve(result);
             });
         });
@@ -297,10 +291,16 @@ module.exports = function () {
      */
     function findInCache(identifier) {
         return new Promise((resolve, reject) => {
-            if (!identifier) { return resolve(); }
+            if (!identifier) {
+                resolve();
+                return;
+            }
 
             cache.get(identifier, (err, cachedDoc) => {
-                if (err) { return reject(err); }
+                if (err) {
+                    reject(err);
+                    return;
+                }
                 resolve(cachedDoc);
             });
         });
