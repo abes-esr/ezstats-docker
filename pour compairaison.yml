@@ -1,0 +1,175 @@
+# EZStats docker-compose.yml
+
+services:
+
+  ezstats-rp:
+    container_name: ezstats-rp
+    image: nginx:1.26.1
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./reverse-proxy/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - default
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-rp"
+
+  ezstats-ezpaarse:
+    container_name: ezstats-ezpaarse
+    image: ezpaarseproject/ezpaarse:3.10.2
+    environment:
+      #  http_proxy:  ${http_proxy}
+      #  https_proxy: ${https_proxy}
+      #  no_proxy: ${no_proxy}
+      NODE_ENV: "production"
+      EZPAARSE_MONGO_URL: "mongodb://ezstats-ezpaarse-db:27017/ezpaarse"
+    volumes:
+      - ./ezpaarse/platforms:/opt/ezpaarse/platforms
+      - ./ezpaarse/middlewares:/opt/ezpaarse/middlewares
+      - ./ezpaarse/resources:/opt/ezpaarse/resources
+      - ./ezpaarse/exclusions:/opt/ezpaarse/exclusions
+      - ./ezpaarse-init/config.local.json:/opt/ezpaarse/config.local.json
+      # Sert juste à copier au démarrage les middlewares /tmp/thesesfr[...]/index.js dans le répertoire middlewares (si ce dernier était vide)
+      - ./ezpaarse-init:/tmp
+      - ./ezpaarse-init/Makefile:/opt/ezpaarse/Makefile
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    ports:
+      - 59599:59599
+    depends_on:
+      - ezstats-ezpaarse-db
+    restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-ezpaarse"
+
+  ezstats-ezpaarse-db:
+    container_name: ezstats-ezpaarse-db
+    image: mongo:3.6.23
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+#    ports:
+#      - 27017:27017
+    restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-ezpaarse-db"
+
+  ezstats-webdav:
+    container_name: ezstats-webdav
+    image: abesesr/ezstats:develop-ezstats-webdav
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    ports:
+      - "58080:80"
+    volumes:
+      - ezstats-logs:/var/lib/dav
+      # Utilisation des variables USERNAME et PASSWORD pour avoir un user admin.
+      # Sinon, on peut utiliser la commande : htdigest user.passwd WebDAV "user" pour définir d'autres utilisateurs
+      - ./webdav/user.passwd:/user.passwd
+    environment:
+      USERNAME: ${EZSTATS_WEBDAV_USERNAME}
+      PASSWORD: ${EZSTATS_WEBDAV_PASSWORD}
+    restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-webdav"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
+
+  ezstats-watchtower:
+    image: containrrr/watchtower:1.4.0
+    container_name: ezstats-watchtower
+    restart: unless-stopped
+    networks:
+      - default
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_POLL_INTERVAL: 60
+      WATCHTOWER_DEBUG: "false"
+      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
+      WATCHTOWER_WARN_ON_HEAD_FAILURE: "never"
+      WATCHTOWER_RUN_ONCE: ${EZSTATS_WATCHTOWER_RUN_ONCE}
+      #WATCHTOWER_NOTIFICATIONS: "slack"
+      #WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: ${EZSTATS_WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL}
+      #WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: ${EZSTATS_WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER}
+      #WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#notif-ezstats"
+      WATCHTOWER_SCOPE: "ezstats-watchtower-scope"
+    labels:
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
+
+  ezstats-batch-theses:
+    container_name: ezstats-batch-theses
+    image: abesesr/ezstats:develop-ezstats-batch-theses
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    environment:
+      EZMESURE_URL: ${EZMESURE_URL}
+      EZMESURE_TOKEN: ${EZMESURE_TOKEN}
+      EZMESURE_THESESFR_INDEX: ${EZMESURE_THESESFR_INDEX}
+    volumes:
+      - ezstats-logs:/home/node/logtheses
+    depends_on:
+      - ezstats-ezpaarse
+    restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-batch-theses"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
+
+  ezstats-batch-logs:
+    container_name: ezstats-batch-logs
+    image: abesesr/ezstats:develop-ezstats-batch-logs
+    mem_limit: ${EZSTATS_MEM_LIMIT}
+    memswap_limit: ${EZSTATS_MEMSWAP_LIMIT}
+    cpus: ${EZSTATS_CPU_LIMIT}
+    volumes:
+      - ezstats-logs:/home/node/logtheses/logs
+      - ezstats-logstash:/home/node/logstash
+    restart: unless-stopped
+    labels:
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=ezstats"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=ezstats-batch-logs"
+      # pour que les mises à jour de cette image soient auto-déployées par watchtower
+      - "com.centurylinklabs.watchtower.scope=ezstats-watchtower-scope"
+
+volumes:
+  ezstats-logs:
+    driver: local
+    driver_opts:
+      type: ${EZSTATS_VOLUME_TYPE}
+      o: ${EZSTATS_VOLUME_O}
+      device: ${EZSTATS_VOLUME_DEVICE}
+  ezstats-logstash:
+    driver: local
+    driver_opts:
+      type: ${EZSTATS_LOGSTASH_VOLUME_TYPE}
+      o: ${EZSTATS_LOGSTASH_VOLUME_O}
+      device: ${EZSTATS_LOGSTASH_VOLUME_DEVICE}
